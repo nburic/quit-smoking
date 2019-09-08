@@ -8,8 +8,14 @@ import androidx.fragment.app.Fragment
 
 class TrophiesFragment : Fragment() {
 
+    companion object {
+        fun newInstance(): TrophiesFragment {
+            return TrophiesFragment()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_trophies, container)
+        return inflater.inflate(R.layout.fragment_trophies, container, false)
     }
 
 }

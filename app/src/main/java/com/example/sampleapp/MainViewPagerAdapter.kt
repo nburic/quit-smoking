@@ -1,9 +1,11 @@
 package com.example.sampleapp
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.sampleapp.ui.HealthFragment
+import com.example.sampleapp.ui.ProgressFragment
+import com.example.sampleapp.ui.TrophiesFragment
 
 
 class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {

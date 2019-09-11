@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProgressFragment">
+    tools:context=".ui.ProgressFragment">
 
-        <com.example.sampleapp.ProgressCardView
+        <com.example.sampleapp.views.ProgressCardView
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

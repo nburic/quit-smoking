@@ -24,12 +24,13 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdap
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Page $position"
+        return when (position) {
+            0 -> "[TROPHIES]"
+            1 -> "[PROGRESS]"
+            2 -> "[HEALTH]"
+            else -> null
+        }
     }
 
     override fun getCount() = CHILD_FRAGMENTS_COUNT
-
-
-
-
 }

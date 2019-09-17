@@ -3,11 +3,10 @@ package com.example.sampleapp.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.cardview.widget.CardView
 import com.example.sampleapp.R
 
-
-class SmokeFreeStatsItemView : ConstraintLayout {
+class ProgressStatsCardView : CardView {
 
     constructor(context: Context) : super(context) {
         init()
@@ -22,7 +21,7 @@ class SmokeFreeStatsItemView : ConstraintLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.mp_stats_smoke_free_item, this)
+        val view = View.inflate(context, R.layout.mp_card_stats, this)
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.example.sampleapp.ui.SettingsFragment
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +39,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
-            R.id.mi_settings -> Log.d("!!!", "Settings clicked...")
+            R.id.mi_settings -> {
+//                 supportFragmentManager.beginTransaction(). add(SettingsFragment.newInstance(), SettingsFragment.TAG)
+
+            }
         }
 
         return super.onOptionsItemSelected(item)

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.vp_main)
         viewPager.adapter = viewPagerAdapter
+        viewPager.currentItem = 1
 
         tabLayout = findViewById(R.id.tl_main)
         tabLayout.setupWithViewPager(viewPager)

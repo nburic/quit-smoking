@@ -1,9 +1,11 @@
 package com.example.sampleapp
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.sampleapp.ui.HealthFragment
+import com.example.sampleapp.ui.ProgressFragment
+import com.example.sampleapp.ui.TrophiesFragment
 
 
 class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
@@ -22,12 +24,13 @@ class MainViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdap
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Page $position"
+        return when (position) {
+            0 -> "[TROPHIES]"
+            1 -> "[PROGRESS]"
+            2 -> "[HEALTH]"
+            else -> null
+        }
     }
 
     override fun getCount() = CHILD_FRAGMENTS_COUNT
-
-
-
-
 }

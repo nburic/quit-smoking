@@ -2,20 +2,18 @@ package com.example.sampleapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
-import com.example.sampleapp.ui.SettingsFragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
-    private lateinit var viewPager: ViewPager
-    private lateinit var tabLayout: TabLayout
     private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,15 +23,7 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-//        viewPager = findViewById(R.id.vp_main)
-//        viewPager.adapter = MainViewPagerAdapter(supportFragmentManager)
-//        viewPager.currentItem = 1
-//
-//        tabLayout = findViewById(R.id.tl_main)
-//        tabLayout.setupWithViewPager(viewPager)
-
-        bottomNav = findViewById(R.id.nav_main)
-        bottomNav.selectedItemId = R.id.mi_progress
+        setupBottomNavMenu(findNavController(R.id.nav_host_fragment))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -41,15 +31,12 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment)) || super.onOptionsItemSelected(item)
+    }
 
-        when (item?.itemId) {
-            R.id.mi_settings -> {
-//                 supportFragmentManager.beginTransaction(). add(SettingsFragment.newInstance(), SettingsFragment.TAG)
-
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
+    private fun setupBottomNavMenu(navController: NavController) {
+        bottomNav = findViewById(R.id.nav_main)
+        bottomNav.setupWithNavController(navController)
     }
 }

@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sampleapp.R
 
-
 class SettingsFragment : Fragment() {
-    companion object {
-        const val TAG = "SettingsFragment"
 
+    companion object {
         fun newInstance(): SettingsFragment {
             return SettingsFragment()
         }

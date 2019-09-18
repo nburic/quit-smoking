@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.example.sampleapp.ui.SettingsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var viewPager: ViewPager
     private lateinit var tabLayout: TabLayout
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +25,15 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        viewPager = findViewById(R.id.vp_main)
-        viewPager.adapter = MainViewPagerAdapter(supportFragmentManager)
-        viewPager.currentItem = 1
+//        viewPager = findViewById(R.id.vp_main)
+//        viewPager.adapter = MainViewPagerAdapter(supportFragmentManager)
+//        viewPager.currentItem = 1
+//
+//        tabLayout = findViewById(R.id.tl_main)
+//        tabLayout.setupWithViewPager(viewPager)
 
-        tabLayout = findViewById(R.id.tl_main)
-        tabLayout.setupWithViewPager(viewPager)
+        bottomNav = findViewById(R.id.nav_main)
+        bottomNav.selectedItemId = R.id.mi_progress
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

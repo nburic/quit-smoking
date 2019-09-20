@@ -33,7 +33,7 @@
     <com.example.sampleapp.views.SettingsInputView
         android:id="@+id/input_cig_per_day"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -56,7 +56,7 @@
     <com.example.sampleapp.views.SettingsInputView
         android:id="@+id/input_cig_in_pack"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -79,7 +79,7 @@
     <com.example.sampleapp.views.SettingsInputView
         android:id="@+id/input_years"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -102,7 +102,7 @@
     <com.example.sampleapp.views.SettingsInputView
         android:id="@+id/input_price"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -139,9 +139,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/btn_submit_stats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_currency" />

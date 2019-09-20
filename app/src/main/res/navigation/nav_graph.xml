@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/progressFragment">
+
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="com.example.sampleapp.ui.ProgressFragment"
+        android:label="fragment_progress"
+        tools:layout="@layout/fragment_progress" >
+        <action
+            android:id="@+id/action_progressFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/healthFragment"
+        android:name="com.example.sampleapp.ui.HealthFragment"
+        android:label="fragment_health"
+        tools:layout="@layout/fragment_health" >
+        <action
+            android:id="@+id/action_healthFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/trophiesFragment"
+        android:name="com.example.sampleapp.ui.TrophiesFragment"
+        android:label="fragment_trophies"
+        tools:layout="@layout/fragment_trophies" >
+        <action
+            android:id="@+id/action_trophiesFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.example.sampleapp.SettingsActivity"
+        android:label="SettingsActivity" />
+</navigation>

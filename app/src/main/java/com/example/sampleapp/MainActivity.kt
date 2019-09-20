@@ -20,14 +20,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
 
         setupBottomNavMenu(findNavController(R.id.nav_host_fragment))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_settings, menu)
+        menuInflater.inflate(R.menu.menu_toolbar_actions_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

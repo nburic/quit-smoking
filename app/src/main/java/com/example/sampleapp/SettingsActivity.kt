@@ -1,15 +1,16 @@
 package com.example.sampleapp
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.findNavController
 
 
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
+    private lateinit var spinnerCurrency: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +21,14 @@ class SettingsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-    }
 
-    override fun onSupportNavigateUp(): Boolean {
-        Log.d("!!!", "!!!back pressed")
-        return super.onSupportNavigateUp()
+        spinnerCurrency = findViewById(R.id.spinner_currency)
+
+        ArrayAdapter.createFromResource(this, R.array.currencies_array, android.R.layout.simple_spinner_item).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinnerCurrency.adapter = adapter
+        }
     }
 }

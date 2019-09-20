@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">QuitSmoking</string>
+    <string-array name="currencies_array">
+        <item>EUR</item>
+        <item>USD</item>
+        <item>HRK</item>
+        <item>RSD</item>
+        <item>EUR</item>
+        <item>USD</item>
+        <item>HRK</item>
+        <item>RSD</item>
+        <item>EUR</item>
+        <item>USD</item>
+        <item>HRK</item>
+        <item>RSD</item>
+    </string-array>
 </resources>

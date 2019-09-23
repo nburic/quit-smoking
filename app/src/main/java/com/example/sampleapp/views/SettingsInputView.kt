@@ -44,7 +44,7 @@ class SettingsInputView : ConstraintLayout {
         }
     }
 
-    private fun getValue(): Int {
+    fun getValue(): Int {
         return tvValue.text.toString().toInt()
     }
 

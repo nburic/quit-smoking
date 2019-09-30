@@ -6,27 +6,27 @@
     android:layout_height="50dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="[Money saved]"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
+        app:layout_constraintStart_toEndOf="@+id/iv_item_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="[1771.88€]"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

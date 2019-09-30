@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
 
 class ProgressStatsCardView : CardView {
@@ -22,6 +23,9 @@ class ProgressStatsCardView : CardView {
 
     private fun init() {
         val view = View.inflate(context, R.layout.mp_card_stats, this)
+
+
     }
+
 
 }

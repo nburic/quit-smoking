@@ -48,6 +48,11 @@ class SettingsInputView : ConstraintLayout {
         return tvValue.text.toString().toInt()
     }
 
+    fun setValue(value: Int?) {
+        value ?: return
+        tvValue.text = value.toString()
+    }
+
     private fun increaseValue() {
         val currentValue = getValue() + 1
         tvValue.text = currentValue.toString()

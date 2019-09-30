@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-class User(
-    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+@Entity(tableName = "user_table")
+data class User(
+    @PrimaryKey val uid: Int = 0,
     @ColumnInfo(name = "smoked_per_day") val smokedPerDay: Int?,
     @ColumnInfo(name = "in_pack") val inPack: Int?,
     @ColumnInfo(name = "years") val years: Float?,

@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.sampleapp.db.User
+import com.example.sampleapp.repo.AppRepo
 import com.example.sampleapp.ui.SettingsViewModel
 import com.example.sampleapp.views.SettingsInputView
 
@@ -31,6 +32,11 @@ class SettingsActivity : AppCompatActivity() {
         state ?: return@Observer
         onModelStateChanged(state)
     }
+
+//    private val userDataObserver = Observer { userData: User? ->
+//        userData ?: return@Observer
+//        onUserDataChanged(userData)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +74,25 @@ class SettingsActivity : AppCompatActivity() {
 
             val user = User(uid = 0, smokedPerDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
 
-            viewModel.updateUser(user)
+            viewModel.setUserData(user)
+
+            finish()
         }
 
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+
+        viewModel.user.observe(this, Observer { user ->
+            user?.let {
+                inputPerDay.setValue(it.smokedPerDay)
+                inputInPack.setValue(it.inPack)
+                inputYears.setValue(it.years?.toInt())
+                inputPrice.setValue(it.price?.toInt())
+            }
+        })
+    }
+
+    private fun onUserDataChanged(userData: User) {
+        Log.d("!!!", "user data has changed $userData")
     }
 
     private fun onModelStateChanged(state: SettingsViewModel.State) {

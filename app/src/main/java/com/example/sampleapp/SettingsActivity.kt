@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.sampleapp.db.User
-import com.example.sampleapp.repo.AppRepo
 import com.example.sampleapp.ui.SettingsViewModel
 import com.example.sampleapp.views.SettingsInputView
 
@@ -33,10 +32,10 @@ class SettingsActivity : AppCompatActivity() {
         onModelStateChanged(state)
     }
 
-//    private val userDataObserver = Observer { userData: User? ->
-//        userData ?: return@Observer
-//        onUserDataChanged(userData)
-//    }
+    private val userObserver = Observer { user: User? ->
+        user ?: return@Observer
+        onUserDataChanged(user)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +64,7 @@ class SettingsActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.btn_submit_stats)
         btnSubmit.setOnClickListener {
 
-            // set state loading
+            viewModel.setState(SettingsViewModel.State.Loading)
 
             val perDay = inputPerDay.getValue()
             val inPack = inputInPack.getValue()
@@ -75,24 +74,21 @@ class SettingsActivity : AppCompatActivity() {
             val user = User(uid = 0, smokedPerDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
 
             viewModel.setUserData(user)
+            viewModel.setState(SettingsViewModel.State.Done)
 
             finish()
         }
 
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-
-        viewModel.user.observe(this, Observer { user ->
-            user?.let {
-                inputPerDay.setValue(it.smokedPerDay)
-                inputInPack.setValue(it.inPack)
-                inputYears.setValue(it.years?.toInt())
-                inputPrice.setValue(it.price?.toInt())
-            }
-        })
+        viewModel.state.observe(this, stateObserver)
+        viewModel.user.observe(this, userObserver)
     }
 
-    private fun onUserDataChanged(userData: User) {
-        Log.d("!!!", "user data has changed $userData")
+    private fun onUserDataChanged(user: User) {
+        inputPerDay.setValue(user.smokedPerDay)
+        inputInPack.setValue(user.inPack)
+        inputYears.setValue(user.years?.toInt())
+        inputPrice.setValue(user.price?.toInt())
     }
 
     private fun onModelStateChanged(state: SettingsViewModel.State) {

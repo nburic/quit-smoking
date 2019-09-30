@@ -1,8 +1,10 @@
 package com.example.sampleapp.ui
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.db.AppDatabase
 import com.example.sampleapp.db.User
 import com.example.sampleapp.repo.AppRepo
@@ -13,9 +15,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     private val repo: AppRepo
 
-    val user: LiveData<User>
-
-    private val state: MutableLiveData<State> = MutableLiveData()
+    internal val user: LiveData<User>
+    internal val state: MutableLiveData<State> = MutableLiveData()
 
     sealed class State {
         object Done : State()
@@ -29,7 +30,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         user = repo.user
     }
 
-    private fun setState(state: State) {
+    fun setState(state: State) {
         this.state.postValue(state)
     }
 

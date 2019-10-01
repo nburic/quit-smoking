@@ -28,16 +28,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.sampleapp.views.ProgressStatsCardView
+<!--            <com.example.sampleapp.views.ProgressStatsCardView-->
+<!--                android:id="@+id/card_stats"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/progressCardView" />-->
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/card_stats"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/progressCardView" />
+                app:layout_constraintTop_toBottomOf="@id/progressCardView">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_stats"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/mp_item_stats" />
+
+            </androidx.cardview.widget.CardView>
 
             <com.example.sampleapp.views.ProgressHistoryCardView
                 android:layout_width="match_parent"

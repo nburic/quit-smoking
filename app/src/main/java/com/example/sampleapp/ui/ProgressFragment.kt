@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleapp.AdapterCardStats
 import com.example.sampleapp.R
-import com.example.sampleapp.views.ProgressStatsCardView
+import com.example.sampleapp.models.ProgressStatsItem
 
 class ProgressFragment : Fragment() {
 
@@ -17,14 +20,25 @@ class ProgressFragment : Fragment() {
         }
     }
 
-    private lateinit var statsView: ProgressStatsCardView
+    private val statsItems = listOf(
+        ProgressStatsItem("[Money saved]", "879€", R.drawable.mp_ic_money),
+        ProgressStatsItem("[Life regained]", "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
+        ProgressStatsItem("[Cigarettes not smoked]", "2220", R.drawable.mp_ic_smoke_free_black)
+    )
+
+    private lateinit var recyclerView: RecyclerView
+    private var viewAdapter: AdapterCardStats = AdapterCardStats(statsItems)
 
     private lateinit var viewModel: ProgressViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_progress, container, false)
 
-        statsView = view.findViewById(R.id.card_stats)
+        recyclerView = view.findViewById(R.id.rv_stats)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapter
+        }
 
         return view
     }

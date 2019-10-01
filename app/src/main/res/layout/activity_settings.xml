@@ -18,6 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/black" />
 
+    <EditText
+        android:id="@+id/et_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="[Set your quit date]"
+        android:inputType="date"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_settings"/>
+
     <TextView
         android:id="@+id/tv_cig_per_day"
         android:layout_width="0dp"
@@ -28,7 +40,7 @@
         android:text="[Cigarettes smoked per day]"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/et_date" />
 
     <com.example.sampleapp.views.SettingsInputView
         android:id="@+id/input_cig_per_day"

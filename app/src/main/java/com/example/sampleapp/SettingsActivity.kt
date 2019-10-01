@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.sampleapp.db.User
-import com.example.sampleapp.ui.SettingsViewModel
+import com.example.sampleapp.ui.DatePickerFragment
 import com.example.sampleapp.views.SettingsInputView
 
 
@@ -19,6 +20,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var spinnerCurrency: Spinner
     private lateinit var btnSubmit: Button
+
+    internal lateinit var etDate: EditText
 
     private lateinit var inputPerDay: SettingsInputView
     private lateinit var inputInPack: SettingsInputView
@@ -56,6 +59,12 @@ class SettingsActivity : AppCompatActivity() {
             spinnerCurrency.adapter = adapter
         }
 
+        etDate = findViewById(R.id.et_date)
+        etDate.setOnClickListener {
+            val fragment = DatePickerFragment()
+            fragment.show(supportFragmentManager, "DATEPICKER")
+        }
+
         inputPerDay = findViewById(R.id.input_cig_per_day)
         inputInPack = findViewById(R.id.input_cig_in_pack)
         inputYears = findViewById(R.id.input_years)
@@ -71,7 +80,7 @@ class SettingsActivity : AppCompatActivity() {
             val years = inputYears.getValue().toFloat()
             val price = inputPrice.getValue().toFloat()
 
-            val user = User(uid = 0, smokedPerDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
+            val user = User(uid = 0, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
 
             viewModel.setUserData(user)
             viewModel.setState(SettingsViewModel.State.Done)
@@ -85,7 +94,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun onUserDataChanged(user: User) {
-        inputPerDay.setValue(user.smokedPerDay)
+        inputPerDay.setValue(user.perDay)
         inputInPack.setValue(user.inPack)
         inputYears.setValue(user.years?.toInt())
         inputPrice.setValue(user.price?.toInt())

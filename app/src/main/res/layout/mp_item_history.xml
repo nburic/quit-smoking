@@ -6,22 +6,22 @@
     android:layout_height="50dp">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/iv_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mp_ic_ciggarete" />
+        app:srcCompat="@drawable/mp_ic_cigarette" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="[1500 cigarettes smoked]"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        android:text="[Dummy value]"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

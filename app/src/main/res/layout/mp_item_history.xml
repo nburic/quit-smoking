@@ -16,6 +16,16 @@
         app:srcCompat="@drawable/mp_ic_cigarette" />
 
     <TextView
+        android:id="@+id/tv_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="[Dummy title]"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
+        app:layout_constraintStart_toEndOf="@+id/iv_item_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
+
+    <TextView
         android:id="@+id/tv_item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,4 +34,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

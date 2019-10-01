@@ -24,11 +24,13 @@ class AdapterCardHistory(private val items: List<ProgressHistoryItem>) : Recycle
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvTitle: TextView = itemView.findViewById(R.id.tv_item_title)
         private val tvValue: TextView = itemView.findViewById(R.id.tv_item_value)
         private val imgIcon: ImageView = itemView.findViewById(R.id.iv_item_icon)
 
         fun bindData(item: ProgressHistoryItem) {
             imgIcon.setImageResource(item.icon)
+            tvTitle.text = item.title
             tvValue.text = item.value
         }
     }

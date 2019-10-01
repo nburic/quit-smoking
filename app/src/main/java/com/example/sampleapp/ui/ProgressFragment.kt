@@ -12,6 +12,7 @@ import com.example.sampleapp.AdapterCardHistory
 import com.example.sampleapp.AdapterCardStats
 import com.example.sampleapp.R
 import com.example.sampleapp.models.ProgressHistoryItem
+import com.example.sampleapp.models.ProgressHistoryItemType
 import com.example.sampleapp.models.ProgressStatsItem
 
 class ProgressFragment : Fragment() {
@@ -29,9 +30,9 @@ class ProgressFragment : Fragment() {
     )
 
     private val historyItems = listOf(
-        ProgressHistoryItem(R.drawable.mp_ic_cigarette, "1244"),
-        ProgressHistoryItem(R.drawable.mp_ic_attach_money_black, "3000€"),
-        ProgressHistoryItem(R.drawable.mp_ic_sentiment_very_dissatisfied_black, "20d 11h 4m 11s")
+        ProgressHistoryItem(R.drawable.mp_ic_cigarette, "1244", ProgressHistoryItemType.SMOKE),
+        ProgressHistoryItem(R.drawable.mp_ic_attach_money_black, "3000€", ProgressHistoryItemType.MONEY),
+        ProgressHistoryItem(R.drawable.mp_ic_sentiment_very_dissatisfied_black, "20d 11h 4m 11s", ProgressHistoryItemType.LIFE)
     )
 
     private lateinit var recyclerViewStats: RecyclerView

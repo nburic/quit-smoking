@@ -22,7 +22,7 @@ class ProgressStatsItemView : ConstraintLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.mp_item_stats, this)
+        View.inflate(context, R.layout.mp_item_stats, this)
     }
 
 }

@@ -16,6 +16,7 @@ import com.example.sampleapp.db.User
 import com.example.sampleapp.models.SettingsInputItem
 import com.example.sampleapp.models.SettingsInputItemType
 import com.example.sampleapp.ui.DatePickerFragment
+import com.example.sampleapp.util.DateConverters
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -91,12 +92,13 @@ class SettingsActivity : AppCompatActivity() {
 
             viewModel.setState(SettingsViewModel.State.Loading)
 
+            val date = viewModel.dateTimestamp
             val perDay = inputItems[0].value?.toInt()
             val inPack = inputItems[1].value?.toInt()
             val years = inputItems[2].value?.toFloat()
             val price = inputItems[3].value?.toFloat()
 
-            val user = User(uid = 0, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
+            val user = User(uid = 0, date = date, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
 
             viewModel.setUserData(user)
             viewModel.setState(SettingsViewModel.State.Done)
@@ -106,6 +108,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun onUserDataChanged(user: User) {
+        tvDate.text = DateConverters.fromTimestamp(user.date).toString()
+
         inputItems.forEach { item ->
             when (item.type) {
                 SettingsInputItemType.PER_DAY -> {
@@ -126,8 +130,9 @@ class SettingsActivity : AppCompatActivity() {
         viewAdapter.setItems(inputItems)
     }
 
-    private fun onDateSetChanged(date: String) {
-        tvDate.text = date
+    private fun onDateSetChanged(timestamp: Long) {
+        viewModel.dateTimestamp = timestamp
+        tvDate.text = DateConverters.fromTimestamp(timestamp).toString()
     }
 
     private fun onModelStateChanged(state: SettingsViewModel.State) {

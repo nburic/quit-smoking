@@ -20,6 +20,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     internal val user: LiveData<User>
     internal val state: MutableLiveData<State> = MutableLiveData()
 
+    internal var dateTimestamp: Long? = null
+
     sealed class State {
         object Done : State()
         object Loading: State()

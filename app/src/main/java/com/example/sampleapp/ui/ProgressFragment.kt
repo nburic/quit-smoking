@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.AdapterCardHistory
 import com.example.sampleapp.AdapterCardStats
 import com.example.sampleapp.R
+import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressHistoryItemType
 import com.example.sampleapp.models.ProgressStatsItem
+import com.example.sampleapp.views.ProgressCardView
+import java.sql.Date
 
 class ProgressFragment : Fragment() {
 
@@ -41,7 +45,14 @@ class ProgressFragment : Fragment() {
     private lateinit var recyclerViewHistory: RecyclerView
     private var viewAdapterHistory: AdapterCardHistory = AdapterCardHistory(historyItems)
 
+    private lateinit var progressCardView: ProgressCardView
+
     private lateinit var viewModel: ProgressViewModel
+
+    private val userObserver = Observer { user: User? ->
+        user ?: return@Observer
+        onUserDataChanged(user)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_progress, container, false)
@@ -58,7 +69,17 @@ class ProgressFragment : Fragment() {
             adapter = viewAdapterHistory
         }
 
+        progressCardView = view.findViewById(R.id.progressCard)
+
+        viewModel.user.observe(this, userObserver)
+
         return view
+    }
+
+    private fun onUserDataChanged(user: User) {
+        user.date?.let {
+            progressCardView.setProgressValue(viewModel.calculateDifference(user.date))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

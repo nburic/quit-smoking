@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuitSmoking</string>
+
+    <string name="smoke_free_label">Time smoke free</string>
+</resources>

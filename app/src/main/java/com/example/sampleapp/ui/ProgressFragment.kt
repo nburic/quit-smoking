@@ -17,7 +17,6 @@ import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressHistoryItemType
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
-import java.sql.Date
 
 class ProgressFragment : Fragment() {
 

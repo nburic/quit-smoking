@@ -77,7 +77,9 @@ class ProgressFragment : Fragment() {
 
     private fun onUserDataChanged(user: User) {
         user.date?.let {
-            progressCardView.setProgressValue(viewModel.calculateDifference(user.date))
+            progressCardView.setProgressValue(viewModel.setDifference(it))
+            statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
+            viewAdapterStats.setItems(statsItems)
         }
     }
 

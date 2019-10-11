@@ -8,5 +8,7 @@
 
     <color name="white">#fff</color>
     <color name="black">#000</color>
+    
+    <color name="list_item_odd_bg">#41FF9800</color>
 
 </resources>

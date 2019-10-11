@@ -29,7 +29,8 @@ class ProgressCardView : CardView {
         tvProgressValue = view.findViewById(R.id.tv_progress_value)
     }
 
-    fun setProgressValue(value: String) {
+    fun setProgressValue(value: String?) {
+        value ?: return
         tvProgressValue.text = value
     }
 }

@@ -5,15 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.models.ProgressStatsItem
 
 
-class AdapterCardStats(private val items: List<ProgressStatsItem>) : RecyclerView.Adapter<AdapterCardStats.ViewHolder>() {
+class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerView.Adapter<AdapterCardStats.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+
         holder.bindData(item)
+        holder.bindBackground(item, items)
+    }
+
+    fun setItems(items: List<ProgressStatsItem>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = items.size
@@ -24,6 +32,7 @@ class AdapterCardStats(private val items: List<ProgressStatsItem>) : RecyclerVie
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val rootView: ConstraintLayout = itemView.findViewById(R.id.root_view)
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_item_title)
         private val tvValue: TextView = itemView.findViewById(R.id.tv_item_value)
         private val imgIcon: ImageView = itemView.findViewById(R.id.iv_item_icon)
@@ -32,6 +41,13 @@ class AdapterCardStats(private val items: List<ProgressStatsItem>) : RecyclerVie
             tvTitle.text = item.title
             tvValue.text = item.value
             imgIcon.setImageResource(item.icon)
+        }
+
+        fun bindBackground(item: ProgressStatsItem, allItems: List<ProgressStatsItem>) {
+            when (allItems.indexOf(item) % 2 == 0) {
+                true -> {}
+                false -> rootView.setBackgroundResource(R.drawable.mp_list_item_odd)
+            }
         }
     }
 }

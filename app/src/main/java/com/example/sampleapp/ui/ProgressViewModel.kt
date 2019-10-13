@@ -17,7 +17,7 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
     internal val user: LiveData<User>
 
     init {
-        val userDao = AppDatabase.getDatabase(application, viewModelScope).userDao()
+        val userDao = AppDatabase.getDatabase(application).userDao()
         repo = AppRepo(userDao)
         user = repo.user
     }

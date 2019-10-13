@@ -29,7 +29,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     init {
-        val userDao = AppDatabase.getDatabase(application, viewModelScope).userDao()
+        val userDao = AppDatabase.getDatabase(application).userDao()
         repo = AppRepo(userDao)
         user = repo.user
     }

@@ -23,7 +23,7 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun calculateMoneyPerDay(smokedPerDay: Int, packPrice: Float, packCount: Int): Float {
-        return ((smokedPerDay / packCount).toFloat() * packPrice)
+        return (smokedPerDay.toFloat() / packCount.toFloat()) * packPrice
     }
 
     fun calculateSavedMoney(): Float? {

@@ -37,12 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        when (viewModel.inputDataNotSet()) {
-            true -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivityForResult(intent, DATA_SET_CODE)
-            }
-        }
+//        when (viewModel.inputDataNotSet()) {
+//            true -> {
+//                val intent = Intent(this, SettingsActivity::class.java)
+//                startActivityForResult(intent, DATA_SET_CODE)
+//            }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

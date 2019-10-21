@@ -38,6 +38,18 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
         return null
     }
 
+    fun calculateNotSmoked(): Float? {
+        user.value?.let {
+            if (it.perDay == null) {
+                return null
+            }
+
+            val days = calculateDifferenceToDays(it.date) ?: return null
+            return days.toFloat() * it.perDay.toFloat()
+        }
+        return null
+    }
+
     fun setDifference(timestamp: Long?): String? {
         return calculateDifference(timestamp)
     }

@@ -79,6 +79,7 @@ class ProgressFragment : Fragment() {
         user.date?.let {
             progressCardView.setProgressValue(viewModel.setDifference(it))
             statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
+            statsItems[2].value = "${viewModel.calculateNotSmoked()}"
             viewAdapterStats.setItems(statsItems)
         }
     }

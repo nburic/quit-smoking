@@ -1,12 +1,14 @@
-package com.example.sampleapp.ui
+package com.example.sampleapp
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.db.AppDatabase
 import com.example.sampleapp.db.User
+import com.example.sampleapp.models.SettingsInputItem
 import com.example.sampleapp.repo.AppRepo
 import kotlinx.coroutines.launch
 
@@ -18,6 +20,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     internal val user: LiveData<User>
     internal val state: MutableLiveData<State> = MutableLiveData()
 
+    internal var dateTimestamp: Long? = null
+
     sealed class State {
         object Done : State()
         object Loading: State()
@@ -25,7 +29,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     init {
-        val userDao = AppDatabase.getDatabase(application, viewModelScope).userDao()
+        val userDao = AppDatabase.getDatabase(application).userDao()
         repo = AppRepo(userDao)
         user = repo.user
     }
@@ -36,5 +40,24 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun setUserData(user: User) = viewModelScope.launch {
         repo.insert(user)
+    }
+
+    fun incInputValue(input: SettingsInputItem) {
+        val res = input.value?.toInt()?.plus(1)
+        input.value = res.toString()
+    }
+
+    fun decInputValue(input: SettingsInputItem) {
+        val res = input.value?.toInt()
+
+        if (res != null) {
+            when (res > 0) {
+                true -> {
+                    val newVal = res - 1
+                    input.value = newVal.toString()
+                }
+                false -> {}
+            }
+        }
     }
 }

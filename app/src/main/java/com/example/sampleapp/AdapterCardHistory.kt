@@ -7,10 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sampleapp.models.ProgressStatsItem
+import com.example.sampleapp.models.ProgressHistoryItem
 
 
-class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerView.Adapter<AdapterCardStats.ViewHolder>() {
+class AdapterCardHistory(private var items: List<ProgressHistoryItem>) : RecyclerView.Adapter<AdapterCardHistory.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
@@ -19,7 +19,7 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
         holder.bindBackground(item, items)
     }
 
-    fun setItems(items: List<ProgressStatsItem>) {
+    fun setItems(items: List<ProgressHistoryItem>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -27,7 +27,7 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
     override fun getItemCount() = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.mp_item_stats, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.mp_item_history, parent, false)
         return ViewHolder(view)
     }
 
@@ -37,16 +37,16 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
         private val tvValue: TextView = itemView.findViewById(R.id.tv_item_value)
         private val imgIcon: ImageView = itemView.findViewById(R.id.iv_item_icon)
 
-        fun bindData(item: ProgressStatsItem) {
+        fun bindData(item: ProgressHistoryItem) {
+            imgIcon.setImageResource(item.icon)
             tvTitle.text = item.title
             tvValue.text = item.value
-            imgIcon.setImageResource(item.icon)
         }
 
-        fun bindBackground(item: ProgressStatsItem, allItems: List<ProgressStatsItem>) {
+        fun bindBackground(item: ProgressHistoryItem, allItems: List<ProgressHistoryItem>) {
             when (allItems.indexOf(item) % 2 == 0) {
-                true -> {}
-                false -> rootView.setBackgroundResource(R.drawable.mp_list_item_odd)
+                true -> rootView.setBackgroundResource(R.drawable.mp_list_item_odd)
+                false -> {}
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.sampleapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,9 @@ class ProgressFragment : Fragment() {
         }
 
         progressCardView = view.findViewById(R.id.progressCard)
+        progressCardView.ivSetGoal.setOnClickListener {
+            Log.d("!!!", "Open bottom sheet dialog to set goal")
+        }
 
         viewModel.user.observe(this, userObserver)
 

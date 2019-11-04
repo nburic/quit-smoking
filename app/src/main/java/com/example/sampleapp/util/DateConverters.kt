@@ -61,4 +61,8 @@ object DateConverters {
 
         return days
     }
+
+    fun yearsToDays(years: Float): Int {
+        return (years * 365).toInt()
+    }
 }

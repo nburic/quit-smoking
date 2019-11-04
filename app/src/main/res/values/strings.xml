@@ -17,4 +17,11 @@
     </string-array>
 
     <string name="smoke_free_label">Čas brez kajenja</string>
+    <string name="money_saved_label">Prihranjen denar</string>
+    <string name="life_regained_label">Pridobljeno življenje</string>
+    <string name="cigs_not_smoked_label">Nepokajeni cigareti</string>
+    <string name="history_card_title">V tem času:</string>
+    <string name="cigs_smoked_label">Skajene cigarete</string>
+    <string name="money_spent_label">Porabljen denar</string>
+    <string name="life_lost_label">Izgubljeno življenje</string>
 </resources>

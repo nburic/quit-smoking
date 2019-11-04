@@ -14,7 +14,6 @@ import com.example.sampleapp.AdapterCardStats
 import com.example.sampleapp.R
 import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
-import com.example.sampleapp.models.ProgressHistoryItemType
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
 
@@ -26,17 +25,9 @@ class ProgressFragment : Fragment() {
         }
     }
 
-    private val statsItems = listOf(
-        ProgressStatsItem("[Money saved]", "879€", R.drawable.mp_ic_money),
-        ProgressStatsItem("[Life regained]", "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
-        ProgressStatsItem("[Cigarettes not smoked]", "2220", R.drawable.mp_ic_smoke_free_black)
-    )
+    private var statsItems: List<ProgressStatsItem> = listOf()
 
-    private val historyItems = listOf(
-        ProgressHistoryItem(R.drawable.mp_ic_cigarette, "1244", ProgressHistoryItemType.SMOKE),
-        ProgressHistoryItem(R.drawable.mp_ic_attach_money_black, "3000€", ProgressHistoryItemType.MONEY),
-        ProgressHistoryItem(R.drawable.mp_ic_sentiment_very_dissatisfied_black, "20d 11h 4m 11s", ProgressHistoryItemType.LIFE)
-    )
+    private var historyItems: List<ProgressHistoryItem> = listOf()
 
     private lateinit var recyclerViewStats: RecyclerView
     private var viewAdapterStats: AdapterCardStats = AdapterCardStats(statsItems)
@@ -75,12 +66,33 @@ class ProgressFragment : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        statsItems = listOf(
+            ProgressStatsItem(requireContext().resources.getString(R.string.money_saved_label), "879€", R.drawable.mp_ic_money),
+            ProgressStatsItem(requireContext().resources.getString(R.string.life_regained_label), "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
+            ProgressStatsItem(requireContext().resources.getString(R.string.cigs_not_smoked_label), "2220", R.drawable.mp_ic_smoke_free_black)
+        )
+
+        historyItems = listOf(
+            ProgressHistoryItem(requireContext().resources.getString(R.string.cigs_smoked_label), "000", R.drawable.mp_ic_cigarette),
+            ProgressHistoryItem(requireContext().resources.getString(R.string.money_spent_label), "000", R.drawable.mp_ic_attach_money_black),
+            ProgressHistoryItem(requireContext().resources.getString(R.string.life_lost_label), "20d 11h 4m 11s", R.drawable.mp_ic_sentiment_very_dissatisfied_black)
+        )
+    }
+
     private fun onUserDataChanged(user: User) {
         user.date?.let {
             progressCardView.setProgressValue(viewModel.setDifference(it))
             statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
             statsItems[2].value = "${viewModel.calculateNotSmoked()}"
+
+            historyItems[0].value = "${viewModel.calculateSmoked()}"
+            historyItems[1].value = "${viewModel.calculateSpentMoney()}"
+
             viewAdapterStats.setItems(statsItems)
+            viewAdapterHistory.setItems(historyItems)
         }
     }
 

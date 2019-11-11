@@ -30,6 +30,8 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         }
     }
 
+    var goalItems: List<String> = listOf()
+
     private var statsItems: List<ProgressStatsItem> = listOf()
 
     private var historyItems: List<ProgressHistoryItem> = listOf()
@@ -88,20 +90,44 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             ProgressHistoryItem(requireContext().resources.getString(R.string.money_spent_label), "000", R.drawable.mp_ic_attach_money_black),
             ProgressHistoryItem(requireContext().resources.getString(R.string.life_lost_label), "20d 11h 4m 11s", R.drawable.mp_ic_sentiment_very_dissatisfied_black)
         )
+
+        goalItems = listOf(
+            requireContext().resources.getString(R.string.goal_two_days),
+            requireContext().resources.getString(R.string.goal_three_days),
+            requireContext().resources.getString(R.string.goal_four_days),
+            requireContext().resources.getString(R.string.goal_five_days),
+            requireContext().resources.getString(R.string.goal_six_days),
+            requireContext().resources.getString(R.string.goal_one_week),
+            requireContext().resources.getString(R.string.goal_ten_days),
+            requireContext().resources.getString(R.string.goal_two_weeks),
+            requireContext().resources.getString(R.string.goal_three_weeks),
+            requireContext().resources.getString(R.string.goal_one_month),
+            requireContext().resources.getString(R.string.goal_three_months),
+            requireContext().resources.getString(R.string.goal_six_months),
+            requireContext().resources.getString(R.string.goal_one_year),
+            requireContext().resources.getString(R.string.goal_five_years)
+        )
     }
 
     private fun onUserDataChanged(user: User) {
         user.date?.let {
             progressCardView.setProgressValue(viewModel.setDifference(it))
-            statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
-            statsItems[2].value = "${viewModel.calculateNotSmoked()}"
-
-            historyItems[0].value = "${viewModel.calculateSmoked()}"
-            historyItems[1].value = "${viewModel.calculateSpentMoney()}"
-
-            viewAdapterStats.setItems(statsItems)
-            viewAdapterHistory.setItems(historyItems)
         }
+
+        when (user.goalIndex == null) {
+            true -> progressCardView.setGoalValue(goalItems[0])
+            false -> progressCardView.setGoalValue(goalItems[user.goalIndex])
+        }
+
+        statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
+        statsItems[2].value = "${viewModel.calculateNotSmoked()}"
+
+        historyItems[0].value = "${viewModel.calculateSmoked()}"
+        historyItems[1].value = "${viewModel.calculateSpentMoney()}"
+
+        viewAdapterStats.setItems(statsItems)
+        viewAdapterHistory.setItems(historyItems)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,5 +142,6 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
     override fun onGoalClicked(position: Int) {
         Timber.d("goal clicked position = $position")
+        viewModel.setGoal(position)
     }
 }

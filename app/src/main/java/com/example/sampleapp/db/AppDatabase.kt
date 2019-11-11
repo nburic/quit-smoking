@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 
-@Database(entities = [User::class], version = 4)
+@Database(entities = [User::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

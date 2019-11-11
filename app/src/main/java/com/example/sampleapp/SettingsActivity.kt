@@ -100,7 +100,7 @@ class SettingsActivity : AppCompatActivity() {
             val years = inputItems[2].value?.toFloat()
             val price = inputItems[3].value?.toFloat()
 
-            val user = User(uid = 0, date = date, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR")
+            val user = User(uid = 0, date = date, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR", goal = null, goalIndex = null)
 
             viewModel.setUserData(user)
             viewModel.setState(SettingsViewModel.State.Done)

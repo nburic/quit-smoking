@@ -10,4 +10,20 @@
     <string name="cigs_smoked_label">Cigarettes smoked</string>
     <string name="money_spent_label">Spent money</string>
     <string name="life_lost_label">Lost life</string>
+
+    <string name="goal_title">GOAL</string>
+    <string name="goal_two_days">2 days</string>
+    <string name="goal_three_days">3 days</string>
+    <string name="goal_four_days">4 days</string>
+    <string name="goal_five_days">5 days</string>
+    <string name="goal_six_days">6 days</string>
+    <string name="goal_ten_days">10 days</string>
+    <string name="goal_one_week">1 week</string>
+    <string name="goal_two_weeks">2 weeks</string>
+    <string name="goal_three_weeks">3 weeks</string>
+    <string name="goal_one_month">1 month</string>
+    <string name="goal_three_months">3 months</string>
+    <string name="goal_six_months">6 months</string>
+    <string name="goal_one_year">1 year</string>
+    <string name="goal_five_years">5 years</string>
 </resources>

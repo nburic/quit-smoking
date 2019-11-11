@@ -13,5 +13,7 @@ data class User(
     @ColumnInfo(name = "in_pack") val inPack: Int?,
     @ColumnInfo(name = "years") val years: Float?,
     @ColumnInfo(name = "price") val price: Float?,
-    @ColumnInfo(name = "currency") val currency: String?
+    @ColumnInfo(name = "currency") val currency: String?,
+    @ColumnInfo(name = "goal") val goal: Long?,
+    @ColumnInfo(name = "goalIndex") val goalIndex: Int?
 )

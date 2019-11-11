@@ -9,5 +9,6 @@
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingRight="@dimen/list_item_spacing"
     android:paddingBottom="@dimen/list_item_spacing_half"
+    android:textAlignment="center"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-    tools:text="Hello" />
+    tools:text="1 month" />

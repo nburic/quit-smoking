@@ -80,18 +80,33 @@ class GoalDialogFragment : BottomSheetDialogFragment() {
 
     private inner class GoalAdapter internal constructor() : RecyclerView.Adapter<ViewHolder>() {
 
-        private val mItemCount = 10
+        val items: List<String> = listOf(
+            resources.getString(R.string.goal_two_days),
+            resources.getString(R.string.goal_three_days),
+            resources.getString(R.string.goal_four_days),
+            resources.getString(R.string.goal_five_days),
+            resources.getString(R.string.goal_six_days),
+            resources.getString(R.string.goal_one_week),
+            resources.getString(R.string.goal_ten_days),
+            resources.getString(R.string.goal_two_weeks),
+            resources.getString(R.string.goal_three_weeks),
+            resources.getString(R.string.goal_one_month),
+            resources.getString(R.string.goal_three_months),
+            resources.getString(R.string.goal_six_months),
+            resources.getString(R.string.goal_one_year),
+            resources.getString(R.string.goal_five_years)
+        )
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(parent.context), parent)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.text.text = position.toString()
+            holder.text.text = items[position]
         }
 
         override fun getItemCount(): Int {
-            return mItemCount
+            return items.size
         }
     }
 }

@@ -6,19 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.AdapterCardHistory
 import com.example.sampleapp.AdapterCardStats
+import com.example.sampleapp.GoalDialogFragment
 import com.example.sampleapp.R
 import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
 
-class ProgressFragment : Fragment() {
+class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
     companion object {
         fun newInstance(): ProgressFragment {
@@ -62,7 +66,7 @@ class ProgressFragment : Fragment() {
 
         progressCardView = view.findViewById(R.id.progressCard)
         progressCardView.ivSetGoal.setOnClickListener {
-            Log.d("!!!", "Open bottom sheet dialog to set goal")
+            openDialogSheet()
         }
 
         viewModel.user.observe(this, userObserver)
@@ -106,4 +110,11 @@ class ProgressFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ProgressViewModel::class.java)
     }
 
+    private fun openDialogSheet() {
+        GoalDialogFragment.newInstance().show(childFragmentManager, GoalDialogFragment.TAG)
+    }
+
+    override fun onGoalClicked(position: Int) {
+        Timber.d("goal clicked position = $position")
+    }
 }

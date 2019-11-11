@@ -68,6 +68,9 @@ dependencies {
     // custom seekbar
     implementation 'com.github.marcinmoskala:ArcSeekBar:0.31'
 
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-plus:16.0.0'
     testImplementation 'junit:junit:4.12'

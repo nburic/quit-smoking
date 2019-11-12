@@ -13,6 +13,7 @@ import com.marcinmoskala.arcseekbar.ArcSeekBar
 class ProgressCardView : CardView {
 
     private lateinit var tvProgressValue: TextView
+    private lateinit var tvGoalPercentage: TextView
     private lateinit var tvGoalValue: TextView
     private lateinit var seekBar: ArcSeekBar
     lateinit var ivSetGoal: ImageView
@@ -35,6 +36,7 @@ class ProgressCardView : CardView {
 
         seekBar = view.findViewById(R.id.seekArc)
         tvProgressValue = view.findViewById(R.id.tv_progress_value)
+        tvGoalPercentage = view.findViewById(R.id.tv_goal_percentage)
         tvGoalValue = view.findViewById(R.id.tv_goal)
         ivSetGoal = view.findViewById(R.id.iv_set_goal)
     }
@@ -49,7 +51,17 @@ class ProgressCardView : CardView {
         tvGoalValue.text = "${context.resources.getString(R.string.goal_title)} $value"
     }
 
-    fun setSeekBarValue(progress: Int) {
-        seekBar.progress = progress
+    fun setSeekBarValue(progress: Int?) {
+        when (progress == null) {
+            true -> seekBar.progress = 0
+            false -> seekBar.progress = progress
+        }
+    }
+
+    fun setGoalPercentageValue(progress: String?) {
+        when (progress == null) {
+            true -> tvGoalPercentage.text = ""
+            false -> tvGoalPercentage.text = progress
+        }
     }
 }

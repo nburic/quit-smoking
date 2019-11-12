@@ -1,12 +1,10 @@
 package com.example.sampleapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,6 @@ import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
 
 class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
@@ -121,8 +118,8 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             }
             false -> {
                 progressCardView.setGoalValue(goalItems[user.goalIndex])
-                progressCardView.setSeekBarValue(0)
-
+                progressCardView.setSeekBarValue(viewModel.getGoalPercentage())
+                progressCardView.setGoalPercentageValue(viewModel.getGoalPercentageText())
             }
         }
 

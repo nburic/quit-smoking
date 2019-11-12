@@ -38,6 +38,9 @@ object DateConverters {
         }
     }
 
+    /**
+     * Calculates difference from now to past date in days
+     */
     fun calculateDifferenceToDays(timestamp: Long?): Int? {
         timestamp ?: return null
 

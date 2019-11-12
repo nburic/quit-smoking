@@ -9,35 +9,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <com.marcinmoskala.arcseekbar.ArcSeekBar-->
-<!--            android:id="@+id/seekArc"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            app:enabled="false"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/tv_my_progress_title"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:progress="50"-->
-<!--            app:progressBackgroundColor="#C2CACA"-->
-<!--            app:progressBackgroundWidth="20dp"-->
-<!--            app:progressWidth="20dp" />-->
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+        <com.marcinmoskala.arcseekbar.ArcSeekBar
+            android:id="@+id/seekArc"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:focusable="auto"
-            android:progress="70"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp"
+            app:enabled="false"
             app:layout_constraintBottom_toTopOf="@+id/tv_goal_percentage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_set_goal" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_set_goal"
+            app:progress="50"
+            app:progressBackgroundColor="#C2CACA"
+            app:progressBackgroundWidth="20dp"
+            app:progressWidth="20dp" />
+
+<!--        <SeekBar-->
+<!--            android:id="@+id/seekBar"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:focusable="auto"-->
+<!--            android:progress="70"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/tv_goal_percentage"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/iv_set_goal" />-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_my_progress_title"

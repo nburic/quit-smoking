@@ -8,12 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.sampleapp.R
-import java.sql.Date
+import com.marcinmoskala.arcseekbar.ArcSeekBar
 
 class ProgressCardView : CardView {
 
     private lateinit var tvProgressValue: TextView
     private lateinit var tvGoalValue: TextView
+    private lateinit var seekBar: ArcSeekBar
     lateinit var ivSetGoal: ImageView
 
 
@@ -32,6 +33,7 @@ class ProgressCardView : CardView {
     private fun init() {
         val view = View.inflate(context, R.layout.mp_card_progress, this)
 
+        seekBar = view.findViewById(R.id.seekArc)
         tvProgressValue = view.findViewById(R.id.tv_progress_value)
         tvGoalValue = view.findViewById(R.id.tv_goal)
         ivSetGoal = view.findViewById(R.id.iv_set_goal)
@@ -45,5 +47,9 @@ class ProgressCardView : CardView {
     @SuppressLint("SetTextI18n")
     fun setGoalValue(value: String) {
         tvGoalValue.text = "${context.resources.getString(R.string.goal_title)} $value"
+    }
+
+    fun setSeekBarValue(progress: Int) {
+        seekBar.progress = progress
     }
 }

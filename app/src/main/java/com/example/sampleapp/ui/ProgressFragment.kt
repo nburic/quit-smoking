@@ -115,8 +115,15 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         }
 
         when (user.goalIndex == null) {
-            true -> progressCardView.setGoalValue(goalItems[0])
-            false -> progressCardView.setGoalValue(goalItems[user.goalIndex])
+            true -> {
+                progressCardView.setGoalValue(goalItems[0])
+                progressCardView.setSeekBarValue(0)
+            }
+            false -> {
+                progressCardView.setGoalValue(goalItems[user.goalIndex])
+                progressCardView.setSeekBarValue(0)
+
+            }
         }
 
         statsItems[0].value = "${viewModel.calculateSavedMoney()}€"

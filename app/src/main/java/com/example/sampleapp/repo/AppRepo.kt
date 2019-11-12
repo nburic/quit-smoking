@@ -20,4 +20,8 @@ class AppRepo(private val userDao: UserDao) {
     suspend fun insert(user: User) {
         userDao.insert(user)
     }
+
+    suspend fun updateGoal(timestamp: Long, index: Int) {
+        userDao.updateGoal(timestamp, index)
+    }
 }

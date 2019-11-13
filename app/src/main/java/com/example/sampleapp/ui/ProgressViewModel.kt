@@ -148,6 +148,10 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
         val current = System.currentTimeMillis() / 1000 - startDate!!
         val percent = (current.toDouble() / limit.toDouble())
         val progress = (percent * 100).toFloat()
-        return "%.1f".format(progress) + "%"
+
+        return when (progress >= 100) {
+            true -> "100%"
+            false -> "%.1f".format(progress) + "%"
+        }
     }
 }

@@ -16,6 +16,23 @@ object DateConverters {
         return value?.let { Date(it) } ?: Date(0)
     }
 
+    fun daysToDuration(days: Int): String {
+        val mYears = days / 30 / 12
+        val mMonths = days / 30
+
+        return when {
+            mYears > 0 -> {
+                val mDays = days / 30 % 12
+                "${mYears}y ${mMonths}m ${mDays}d"
+            }
+            mMonths > 0 -> {
+                val mDays = days % 30
+                "${mMonths}m ${mDays}d"
+            }
+            else -> "${days}d"
+        }
+    }
+
     fun calculateDifference(timestamp: Long?): String? {
         timestamp ?: return null
 

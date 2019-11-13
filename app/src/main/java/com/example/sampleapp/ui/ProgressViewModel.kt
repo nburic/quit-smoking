@@ -11,6 +11,7 @@ import com.example.sampleapp.repo.AppRepo
 import com.example.sampleapp.util.DateConverters
 import com.example.sampleapp.util.DateConverters.calculateDifference
 import com.example.sampleapp.util.DateConverters.calculateDifferenceToDays
+import com.example.sampleapp.util.DateConverters.daysToDuration
 import com.example.sampleapp.util.DateConverters.getTimestamp
 import com.example.sampleapp.util.DateConverters.yearsToDays
 import kotlinx.coroutines.launch
@@ -53,6 +54,20 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
             return days * moneyPerDay
         }
         return null
+    }
+
+    fun calculateLifeLost(smoked: Float?): String? {
+        smoked ?: return null
+
+        val days = smoked * 11 / 60 / 24
+        return daysToDuration(days.toInt())
+    }
+
+    fun calculateLifeRegained(notSmoked: Float?): String? {
+        notSmoked ?: return null
+
+        val days = notSmoked * 11 / 60 / 24
+        return daysToDuration(days.toInt())
     }
 
     fun calculateNotSmoked(): Float? {

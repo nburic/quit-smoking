@@ -123,11 +123,16 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             }
         }
 
-        statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
-        statsItems[2].value = "${viewModel.calculateNotSmoked()}"
+        val smoked = viewModel.calculateSmoked()
+        val notSmoked = viewModel.calculateNotSmoked()
 
-        historyItems[0].value = "${viewModel.calculateSmoked()}"
+        historyItems[0].value = "$smoked"
         historyItems[1].value = "${viewModel.calculateSpentMoney()}"
+        historyItems[2].value = "${viewModel.calculateLifeLost(smoked)}"
+
+        statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
+        statsItems[1].value = "${viewModel.calculateLifeRegained(notSmoked)}"
+        statsItems[2].value = "$notSmoked"
 
         viewAdapterStats.setItems(statsItems)
         viewAdapterHistory.setItems(historyItems)

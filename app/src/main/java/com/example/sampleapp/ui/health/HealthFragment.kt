@@ -23,10 +23,10 @@ class HealthFragment : Fragment() {
         }
     }
 
-    private var healthItems: List<HealthAchievementItem> = listOf()
+    private var healthItems: MutableList<HealthAchievementItem> = mutableListOf()
 
     private lateinit var recyclerView: RecyclerView
-    private var viewAdapter: AdapterCardsHealth = AdapterCardsHealth(healthItems)
+    private var viewAdapter: AdapterCardsHealth = AdapterCardsHealth()
 
     private lateinit var viewModel: HealthViewModel
 
@@ -67,28 +67,21 @@ class HealthFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun setCards(startDate: Long) {
+        for (i in 0..12) {
+            val card = HealthAchievementItem()
 
-        healthItems = listOf(
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 100, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020"),
-                HealthAchievementItem("[After 20 minutes: Your blood pressure and heart rate decrease.]", 50, "5 May 2020")
-        )
+            context?.let { ctx ->
+                card.setCardData(ctx, i, startDate)
+            }
+
+            healthItems.add(card)
+        }
     }
 
     private fun onUserChanged(user: User) {
-        user.date?.let {
+        user.date?.let { startDate ->
+            setCards(startDate)
             viewAdapter.setItems(healthItems)
         }
     }

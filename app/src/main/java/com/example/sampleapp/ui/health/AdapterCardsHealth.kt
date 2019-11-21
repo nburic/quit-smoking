@@ -1,6 +1,7 @@
 package com.example.sampleapp.ui.health
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,9 @@ import com.example.sampleapp.R
 import com.example.sampleapp.models.health.HealthAchievementItem
 
 
-class AdapterCardsHealth(private var items: List<HealthAchievementItem>) : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>() {
+class AdapterCardsHealth : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>() {
+
+    private var items: List<HealthAchievementItem> = listOf()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
@@ -28,10 +31,10 @@ class AdapterCardsHealth(private var items: List<HealthAchievementItem>) : Recyc
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.mh_card_view, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, parent.context)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
         private val tvProgress: TextView = itemView.findViewById(R.id.tv_progress_value)
         private val tvStatus: TextView = itemView.findViewById(R.id.tv_task_status)
@@ -42,11 +45,16 @@ class AdapterCardsHealth(private var items: List<HealthAchievementItem>) : Recyc
             tvDescription.text = item.description
 
             val progress = item.progress
-            tvProgress.text = "$progress%"
+            when (progress >= 100) {
+                true -> {
+                    tvStatus.text = context.resources.getString(R.string.healt_status_done)
+                    tvProgress.text = "100%"
+                }
+                false -> {
+                    tvStatus.text = item.finishDate
+                    tvProgress.text = "$progress%"
+                }
 
-            when (progress == 100) {
-                true -> tvStatus.text = "[Achieved]"
-                false -> tvStatus.text = item.finishDate
             }
 
             progressBar.progress = progress

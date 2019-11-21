@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/healthFragment"
-        android:name="com.example.sampleapp.ui.HealthFragment"
+        android:name="com.example.sampleapp.ui.health.HealthFragment"
         android:label="fragment_health"
         tools:layout="@layout/fragment_health" >
         <action

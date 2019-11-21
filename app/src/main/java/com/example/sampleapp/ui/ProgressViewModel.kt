@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.sampleapp.GoalDialogFragment
 import com.example.sampleapp.db.AppDatabase
 import com.example.sampleapp.db.User
 import com.example.sampleapp.repo.AppRepo
@@ -12,7 +11,7 @@ import com.example.sampleapp.util.DateConverters
 import com.example.sampleapp.util.DateConverters.calculateDifference
 import com.example.sampleapp.util.DateConverters.calculateDifferenceToDays
 import com.example.sampleapp.util.DateConverters.daysToDuration
-import com.example.sampleapp.util.DateConverters.getTimestamp
+import com.example.sampleapp.util.DateConverters.getEndTimestamp
 import com.example.sampleapp.util.DateConverters.yearsToDays
 import kotlinx.coroutines.launch
 
@@ -110,20 +109,20 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
     private fun getGoalTimestamp(index: Int): Long? {
         user.value?.date?.let { startDate ->
             return when (index) {
-                0 -> getTimestamp(startDate, 2, DateConverters.Duration.DAYS)
-                1 -> getTimestamp(startDate, 3, DateConverters.Duration.DAYS)
-                2 -> getTimestamp(startDate, 4, DateConverters.Duration.DAYS)
-                3 -> getTimestamp(startDate, 5, DateConverters.Duration.DAYS)
-                4 -> getTimestamp(startDate, 6, DateConverters.Duration.DAYS)
-                5 -> getTimestamp(startDate, 1, DateConverters.Duration.WEEKS)
-                6 -> getTimestamp(startDate, 10, DateConverters.Duration.DAYS)
-                7 -> getTimestamp(startDate, 2, DateConverters.Duration.WEEKS)
-                8 -> getTimestamp(startDate, 3, DateConverters.Duration.WEEKS)
-                9 -> getTimestamp(startDate, 1, DateConverters.Duration.MONTHS)
-                10 -> getTimestamp(startDate, 3, DateConverters.Duration.MONTHS)
-                11 -> getTimestamp(startDate, 6, DateConverters.Duration.MONTHS)
-                12 -> getTimestamp(startDate, 1, DateConverters.Duration.YEARS)
-                13 -> getTimestamp(startDate, 5, DateConverters.Duration.YEARS)
+                0 -> getEndTimestamp(startDate, 2, DateConverters.Duration.DAYS)
+                1 -> getEndTimestamp(startDate, 3, DateConverters.Duration.DAYS)
+                2 -> getEndTimestamp(startDate, 4, DateConverters.Duration.DAYS)
+                3 -> getEndTimestamp(startDate, 5, DateConverters.Duration.DAYS)
+                4 -> getEndTimestamp(startDate, 6, DateConverters.Duration.DAYS)
+                5 -> getEndTimestamp(startDate, 1, DateConverters.Duration.WEEKS)
+                6 -> getEndTimestamp(startDate, 10, DateConverters.Duration.DAYS)
+                7 -> getEndTimestamp(startDate, 2, DateConverters.Duration.WEEKS)
+                8 -> getEndTimestamp(startDate, 3, DateConverters.Duration.WEEKS)
+                9 -> getEndTimestamp(startDate, 1, DateConverters.Duration.MONTHS)
+                10 -> getEndTimestamp(startDate, 3, DateConverters.Duration.MONTHS)
+                11 -> getEndTimestamp(startDate, 6, DateConverters.Duration.MONTHS)
+                12 -> getEndTimestamp(startDate, 1, DateConverters.Duration.YEARS)
+                13 -> getEndTimestamp(startDate, 5, DateConverters.Duration.YEARS)
                 else -> null
             }
         }

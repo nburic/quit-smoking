@@ -8,7 +8,7 @@ import java.util.*
 object DateConverters {
 
     enum class Duration {
-        DAYS, WEEKS, MONTHS, YEARS
+        MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
     }
 
     @TypeConverter
@@ -87,13 +87,32 @@ object DateConverters {
     }
 
     /**
+     * Returns progress from 0 to 100 from start to end timestamp
+     */
+    fun getProgress(startDate: Long, endDate: Long): Int {
+        val limit = endDate - startDate
+        val current = System.currentTimeMillis() - startDate
+        val percent = (current.toDouble() / limit.toDouble())
+        val progress = percent * 100
+        return progress.toInt()
+    }
+
+    /**
      * Calculates new timestamp from starting timestamp and duration
      */
-    fun getTimestamp(start: Long, duration: Int, type: Duration): Long {
+    fun getEndTimestamp(start: Long, duration: Int, type: Duration): Long {
         val c = Calendar.getInstance()
         c.timeInMillis = start
 
         return when (type) {
+            Duration.MINUTES -> {
+                c.add(Calendar.MINUTE, duration)
+                c.timeInMillis
+            }
+            Duration.HOURS -> {
+                c.add(Calendar.HOUR, duration)
+                c.timeInMillis
+            }
             Duration.DAYS -> {
                 c.add(Calendar.DATE, duration)
                 c.timeInMillis

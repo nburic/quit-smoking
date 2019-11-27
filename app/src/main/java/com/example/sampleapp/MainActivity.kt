@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                 when (resultCode == Activity.RESULT_OK) {
                     true -> {
                         Toast.makeText(this, "[Data set successfully!]", Toast.LENGTH_SHORT).show()
+                        // TODO start JobService. Default goal is 2 days
                     }
                     false -> {
                         Toast.makeText(this, "[Data not set!]", Toast.LENGTH_SHORT).show()

@@ -49,8 +49,8 @@ class MainApplication: Application() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel() {
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "[CHANNEL GOAL]", NotificationManager.IMPORTANCE_DEFAULT)
+    fun createNotificationChannel() {
+        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "[CHANNEL GOAL]", NotificationManager.IMPORTANCE_HIGH)
         channel.description = "[This is channel goal]"
         channel.enableLights(true)
         channel.lightColor = Color.YELLOW

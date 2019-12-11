@@ -17,7 +17,6 @@ import com.example.sampleapp.db.User
 import com.example.sampleapp.models.SettingsInputItem
 import com.example.sampleapp.models.SettingsInputItemType
 import com.example.sampleapp.ui.DatePickerFragment
-import com.example.sampleapp.util.Constants.DATA_SET_CODE
 import com.example.sampleapp.util.DateConverters
 
 

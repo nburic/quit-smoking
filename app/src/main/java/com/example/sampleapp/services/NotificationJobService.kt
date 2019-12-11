@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import com.example.sampleapp.MainActivity
 import com.example.sampleapp.MainApplication
 import com.example.sampleapp.R
+import timber.log.Timber
 
 
 class NotificationJobService: JobService() {
@@ -25,7 +26,7 @@ class NotificationJobService: JobService() {
     private lateinit var notifyManager: NotificationManager
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        return true
+        return false
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
@@ -36,7 +37,6 @@ class NotificationJobService: JobService() {
 
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setContentTitle("[Goal achieved!]")
-            .setContentText("[Smoke free for 1 year]")
             .setSmallIcon(R.drawable.ic_notification_goal_done)
             .setContentIntent(notificationPendingIntent)
             .setAutoCancel(true)

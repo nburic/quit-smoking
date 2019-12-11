@@ -97,7 +97,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun onUserChanged(user: User) {
         user.goal?.let {
-            scheduleJob(it)
+            if (it > System.currentTimeMillis()) {
+                scheduleJob(it)
+            }
         }
     }
 

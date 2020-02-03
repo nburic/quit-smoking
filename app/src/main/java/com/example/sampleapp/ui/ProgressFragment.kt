@@ -58,8 +58,8 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         }
 
         progressCardView = view.findViewById(R.id.progressCard)
-        progressCardView.ivSetGoal.setOnClickListener {
-            openDialogSheet()
+        progressCardView.apply {
+            onSelectGoalClick = this@ProgressFragment::openDialogSheet
         }
 
         viewModel.user.observe(viewLifecycleOwner, userObserver)

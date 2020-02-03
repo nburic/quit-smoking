@@ -3,7 +3,6 @@ package com.example.sampleapp.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.sql.Date
 
 @Entity(tableName = "user_table")
 data class User(

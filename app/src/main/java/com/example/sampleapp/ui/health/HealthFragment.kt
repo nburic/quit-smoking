@@ -1,14 +1,13 @@
 package com.example.sampleapp.ui.health
 
-import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
@@ -28,17 +27,11 @@ class HealthFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var viewAdapter: AdapterCardsHealth = AdapterCardsHealth()
 
-    private lateinit var viewModel: HealthViewModel
+    private val viewModel by viewModels<HealthViewModel>()
 
     private val userObserver = Observer {user: User? ->
         user ?: return@Observer
         onUserChanged(user)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this).get(HealthViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,7 +55,7 @@ class HealthFragment : Fragment() {
             addItemDecoration(decor)
         }
 
-        viewModel.user.observe(this, userObserver)
+        viewModel.user.observe(viewLifecycleOwner, userObserver)
 
         return view
     }

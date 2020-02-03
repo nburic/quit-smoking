@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var bottomNav: BottomNavigationView
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by viewModels<MainViewModel>()
 
     private lateinit var jobScheduler: JobScheduler
 
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity() {
 
         setupBottomNavMenu(findNavController(R.id.nav_host_fragment))
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.user.observe(this, userObserver)
 
         jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler

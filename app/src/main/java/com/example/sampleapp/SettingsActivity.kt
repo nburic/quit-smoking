@@ -7,10 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.db.User
@@ -37,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: AdapterSettingsInput
 
-    private lateinit var viewModel: SettingsViewModel
+    private val viewModel by viewModels<SettingsViewModel>()
 
     private val stateObserver = Observer { state: SettingsViewModel.State? ->
         state ?: return@Observer
@@ -53,7 +53,6 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         viewModel.state.observe(this, stateObserver)
         viewModel.user.observe(this, userObserver)
 

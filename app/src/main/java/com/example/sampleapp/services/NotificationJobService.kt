@@ -8,12 +8,9 @@ import android.app.job.JobService
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.sampleapp.MainActivity
-import com.example.sampleapp.MainApplication
 import com.example.sampleapp.R
-import timber.log.Timber
 
 
 class NotificationJobService: JobService() {

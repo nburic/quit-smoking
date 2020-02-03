@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.AdapterCardHistory
@@ -41,7 +41,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
     private lateinit var progressCardView: ProgressCardView
 
-    private lateinit var viewModel: ProgressViewModel
+    private val viewModel by viewModels<ProgressViewModel>()
 
     private val userObserver = Observer { user: User? ->
         user ?: return@Observer
@@ -68,7 +68,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             openDialogSheet()
         }
 
-        viewModel.user.observe(this, userObserver)
+        viewModel.user.observe(viewLifecycleOwner, userObserver)
 
         return view
     }
@@ -137,12 +137,6 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         viewAdapterStats.setItems(statsItems)
         viewAdapterHistory.setItems(historyItems)
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this).get(ProgressViewModel::class.java)
     }
 
     private fun openDialogSheet() {

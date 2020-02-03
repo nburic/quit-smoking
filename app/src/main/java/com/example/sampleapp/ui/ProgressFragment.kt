@@ -21,12 +21,6 @@ import timber.log.Timber
 
 class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
-    companion object {
-        fun newInstance(): ProgressFragment {
-            return ProgressFragment()
-        }
-    }
-
     var goalItems: List<String> = listOf()
 
     private var statsItems: List<ProgressStatsItem> = listOf()
@@ -111,17 +105,11 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             progressCardView.setProgressValue(viewModel.setDifference(it))
         }
 
-        when (user.goalIndex == null) {
-            true -> {
-                progressCardView.setGoalValue(goalItems[0])
-                progressCardView.setSeekBarValue(0)
-            }
-            false -> {
-                progressCardView.setGoalValue(goalItems[user.goalIndex])
-                progressCardView.setSeekBarValue(viewModel.getGoalPercentage())
-                progressCardView.setGoalPercentageValue(viewModel.getGoalPercentageText())
-            }
-        }
+        val goalIndex = user.goalIndex ?: 0
+
+        progressCardView.setGoalValue(goalItems[goalIndex])
+        progressCardView.setSeekBarValue(viewModel.getGoalPercentage())
+        progressCardView.setGoalPercentageValue(viewModel.getGoalPercentageText())
 
         val smoked = viewModel.calculateSmoked()
         val notSmoked = viewModel.calculateNotSmoked()

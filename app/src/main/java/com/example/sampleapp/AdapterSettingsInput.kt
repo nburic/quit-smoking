@@ -7,15 +7,26 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.models.SettingsInputItem
+import com.example.sampleapp.models.SettingsInputItemType
 
 
-class AdapterSettingsInput(private var items: List<SettingsInputItem>,
-                           private var onIncrement: ((SettingsInputItem) -> Unit)? = null,
+class AdapterSettingsInput(private var onIncrement: ((SettingsInputItem) -> Unit)? = null,
                            private var onDecrement: ((SettingsInputItem) -> Unit)? = null) : RecyclerView.Adapter<AdapterSettingsInput.ViewHolder>() {
+
+    private var items: List<SettingsInputItem> = listOf(
+        SettingsInputItem("[Cigarettes smoked per day]", SettingsInputItemType.PER_DAY, null),
+        SettingsInputItem("[Cigarettes in a pack]", SettingsInputItemType.IN_PACK, null),
+        SettingsInputItem("[Years of smoking]", SettingsInputItemType.YEARS, null),
+        SettingsInputItem("[Price per pack]", SettingsInputItemType.PRICE, null)
+    )
 
     fun setItems(items: List<SettingsInputItem>) {
         this.items = items
         notifyDataSetChanged()
+    }
+
+    fun getItems(): List<SettingsInputItem> {
+        return items
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -50,7 +61,12 @@ class AdapterSettingsInput(private var items: List<SettingsInputItem>,
 
         fun bindData(item: SettingsInputItem) {
             tvTitle.text = item.title
-            tvValue.text = item.value
+
+            when (item.value == null) {
+                true -> tvValue.text = "0"
+                false -> tvValue.text = item.value.toString()
+            }
+
         }
     }
 }

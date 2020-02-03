@@ -19,7 +19,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     internal val user: LiveData<User>
     internal val state: MutableLiveData<State> = MutableLiveData()
 
-    internal var dateTimestamp: Long? = null
+    internal var dateTimestamp: MutableLiveData<Long> = MutableLiveData()
 
     sealed class State {
         object Done : State()
@@ -42,21 +42,18 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun incInputValue(input: SettingsInputItem) {
-        val res = input.value?.toInt()?.plus(1)
-        input.value = res.toString()
+        if (input.value == null) {
+            input.value = 0
+        }
+
+        input.value = input.value?.plus(1)
     }
 
     fun decInputValue(input: SettingsInputItem) {
-        val res = input.value?.toInt()
+        val res = input.value ?: return
 
-        if (res != null) {
-            when (res > 0) {
-                true -> {
-                    val newVal = res - 1
-                    input.value = newVal.toString()
-                }
-                false -> {}
-            }
+        if (res > 0) {
+            input.value = res - 1
         }
     }
 }

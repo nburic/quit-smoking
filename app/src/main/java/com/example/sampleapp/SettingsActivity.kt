@@ -22,13 +22,6 @@ import com.example.sampleapp.util.DateConverters
 
 class SettingsActivity : AppCompatActivity() {
 
-    private var inputItems = listOf(
-        SettingsInputItem("[Cigarettes smoked per day]", SettingsInputItemType.PER_DAY),
-        SettingsInputItem("[Cigarettes in a pack]", SettingsInputItemType.IN_PACK),
-        SettingsInputItem("[Years of smoking]", SettingsInputItemType.YEARS),
-        SettingsInputItem("[Price per pack]", SettingsInputItemType.PRICE)
-    )
-
     private lateinit var toolbar: Toolbar
     private lateinit var spinnerCurrency: Spinner
     private lateinit var btnSubmit: Button
@@ -79,7 +72,7 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        viewAdapter = AdapterSettingsInput(inputItems, onIncrement = viewModel::incInputValue, onDecrement = viewModel::decInputValue)
+        viewAdapter = AdapterSettingsInput(onIncrement = viewModel::incInputValue, onDecrement = viewModel::decInputValue)
 
         recyclerView = findViewById(R.id.rv_settings)
         recyclerView.apply {
@@ -91,14 +84,25 @@ class SettingsActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener {
 
             viewModel.setState(SettingsViewModel.State.Loading)
+            val items = viewAdapter.getItems()
 
-            val date = viewModel.dateTimestamp
-            val perDay = inputItems[0].value?.toInt()
-            val inPack = inputItems[1].value?.toInt()
-            val years = inputItems[2].value?.toFloat()
-            val price = inputItems[3].value?.toFloat()
+            val date = viewModel.dateTimestamp.value ?: return@setOnClickListener
+            val perDay = items.find { it.type == SettingsInputItemType.PER_DAY }?.value ?: return@setOnClickListener
+            val inPack = items.find { it.type == SettingsInputItemType.IN_PACK }?.value ?: return@setOnClickListener
+            val years = items.find { it.type == SettingsInputItemType.YEARS }?.value ?: return@setOnClickListener
+            val price = items.find { it.type == SettingsInputItemType.PRICE }?.value ?: return@setOnClickListener
 
-            val user = User(uid = 0, date = date, perDay = perDay, inPack = inPack, years = years, price = price, currency = "EUR", goal = null, goalIndex = null)
+            val user = User(
+                uid = 0,
+                date = date,
+                perDay = perDay,
+                inPack = inPack,
+                years = years.toFloat(),
+                price = price.toFloat(),
+                currency = "EUR",
+                goal = DateConverters.getEndTimestamp(date, 2, DateConverters.Duration.DAYS),
+                goalIndex = 0
+            )
 
             viewModel.setUserData(user)
             viewModel.setState(SettingsViewModel.State.Done)
@@ -109,30 +113,23 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun onUserDataChanged(user: User) {
+        viewModel.dateTimestamp.value = viewModel.user.value?.date
+        val perDay = viewModel.user.value?.perDay
+        val inPack = viewModel.user.value?.inPack
+        val years = viewModel.user.value?.years?.toInt()
+        val price = viewModel.user.value?.price?.toInt()
+
         tvDate.text = DateConverters.fromTimestamp(user.date).toString()
-
-        inputItems.forEach { item ->
-            when (item.type) {
-                SettingsInputItemType.PER_DAY -> {
-                    item.value = user.perDay?.toString()
-                }
-                SettingsInputItemType.IN_PACK -> {
-                    item.value = user.inPack?.toString()
-                }
-                SettingsInputItemType.YEARS -> {
-                    item.value = user.years?.toInt().toString()
-                }
-                SettingsInputItemType.PRICE -> {
-                    item.value = user.price?.toInt().toString()
-                }
-            }
-        }
-
-        viewAdapter.setItems(inputItems)
+        viewAdapter.setItems(listOf(
+            SettingsInputItem("[Cigarettes smoked per day]", SettingsInputItemType.PER_DAY, perDay),
+            SettingsInputItem("[Cigarettes in a pack]", SettingsInputItemType.IN_PACK, inPack),
+            SettingsInputItem("[Years of smoking]", SettingsInputItemType.YEARS, years),
+            SettingsInputItem("[Price per pack]", SettingsInputItemType.PRICE, price))
+        )
     }
 
     private fun onDateSetChanged(timestamp: Long) {
-        viewModel.dateTimestamp = timestamp
+        viewModel.dateTimestamp.value = timestamp
         tvDate.text = DateConverters.fromTimestamp(timestamp).toString()
     }
 

@@ -16,7 +16,6 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
         val item = items[position]
 
         holder.bindData(item)
-        holder.bindBackground(item, items)
     }
 
     fun setItems(items: List<ProgressStatsItem>) {
@@ -41,13 +40,6 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
             tvTitle.text = item.title
             tvValue.text = item.value
             imgIcon.setImageResource(item.icon)
-        }
-
-        fun bindBackground(item: ProgressStatsItem, allItems: List<ProgressStatsItem>) {
-            when (allItems.indexOf(item) % 2 == 0) {
-                true -> {}
-                false -> rootView.setBackgroundResource(R.drawable.mp_list_item_odd)
-            }
         }
     }
 }

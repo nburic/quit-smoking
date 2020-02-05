@@ -16,7 +16,6 @@ class AdapterCardHistory(private var items: List<ProgressHistoryItem>) : Recycle
         val item = items[position]
 
         holder.bindData(item)
-        holder.bindBackground(item, items)
     }
 
     fun setItems(items: List<ProgressHistoryItem>) {
@@ -41,13 +40,6 @@ class AdapterCardHistory(private var items: List<ProgressHistoryItem>) : Recycle
             imgIcon.setImageResource(item.icon)
             tvTitle.text = item.title
             tvValue.text = item.value
-        }
-
-        fun bindBackground(item: ProgressHistoryItem, allItems: List<ProgressHistoryItem>) {
-            when (allItems.indexOf(item) % 2 == 0) {
-                true -> rootView.setBackgroundResource(R.drawable.mp_list_item_odd)
-                false -> {}
-            }
         }
     }
 }

@@ -93,7 +93,7 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
         return null
     }
 
-    fun setDifference(timestamp: Long?): String? {
+    fun setDifference(timestamp: Long?): String {
         return calculateDifference(timestamp)
     }
 

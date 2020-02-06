@@ -33,8 +33,8 @@ object DateConverters {
         }
     }
 
-    fun calculateDifference(timestamp: Long?): String? {
-        timestamp ?: return null
+    fun calculateDifference(timestamp: Long?): String {
+        timestamp ?: return String.empty
 
         val diff = System.currentTimeMillis() - timestamp
         val c = Calendar.getInstance()
@@ -43,13 +43,15 @@ object DateConverters {
         val mYear = c.get(Calendar.YEAR) - 1970
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
+        val mHours = c.get(Calendar.HOUR)
         val mMinutes = c.get(Calendar.MINUTE)
         val mSeconds = c.get(Calendar.SECOND)
 
         return when {
             mYear > 0 -> "${mYear}y ${mMonth}m ${mDay}d"
-            mMonth > 0 -> "${mMonth}m ${mDay}d ${mMinutes}min"
-            mDay > 0 -> "${mDay}d ${mMinutes}min ${mSeconds}s"
+            mMonth > 0 -> "${mMonth}m ${mDay}d ${mHours}h"
+            mDay > 0 -> "${mDay}d ${mHours}h ${mMinutes}min"
+            mHours > 0 -> "${mHours}h ${mMinutes}min ${mSeconds}s"
             mMinutes > 0 -> "${mMinutes}min ${mSeconds}s"
             else -> "${mSeconds}s"
         }

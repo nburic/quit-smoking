@@ -16,7 +16,6 @@ import com.example.sampleapp.R
 import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
-import com.example.sampleapp.util.empty
 import com.example.sampleapp.views.ProgressCardView
 import timber.log.Timber
 
@@ -102,7 +101,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     private fun onUserDataChanged(user: User) {
-        progressCardView.setProgressValue(viewModel.setDifference(user.date) ?: String.empty)
+        progressCardView.setProgressValue(viewModel.setDifference(user.date))
 
         val goalIndex = user.goalIndex ?: 0
 

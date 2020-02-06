@@ -21,7 +21,7 @@ import timber.log.Timber
 
 class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
-    var goalItems: List<String> = listOf()
+    private var goalItems: List<String> = listOf()
 
     private var statsItems: List<ProgressStatsItem> = listOf()
 

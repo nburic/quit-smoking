@@ -31,7 +31,6 @@ class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerVie
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val rootView: ConstraintLayout = itemView.findViewById(R.id.root_view)
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_item_title)
         private val tvValue: TextView = itemView.findViewById(R.id.tv_item_value)
         private val imgIcon: ImageView = itemView.findViewById(R.id.iv_item_icon)

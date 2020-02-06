@@ -14,14 +14,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mp_ic_cigarette" />
+        tools:srcCompat="@drawable/mp_ic_cigarette" />
 
     <TextView
         android:id="@+id/tv_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="[Dummy title]"
+        android:textColor="@color/colorSecondaryText"
+        tools:text="Spent money"
         app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
         app:layout_constraintStart_toEndOf="@+id/iv_item_icon"
         app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />
@@ -31,7 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="[Dummy value]"
+        android:textColor="@color/colorSecondaryText"
+        tools:text="3333€"
         app:layout_constraintBottom_toBottomOf="@+id/iv_item_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_item_icon" />

@@ -6,16 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionOverflowButtonStyle">@style/OverflowButton</item>
-        <item name="toolbarNavigationButtonStyle">@style/NavigationButton</item>
     </style>
 
-    <style name="NavigationButton" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="android:colorControlNormal">@color/white</item>
-    </style>
-
-    <style name="OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/white</item>
+    <style name="ActionBarThemeOverlay">
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="ProgressCardMainTitle">

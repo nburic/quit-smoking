@@ -16,6 +16,7 @@ import com.example.sampleapp.R
 import com.example.sampleapp.db.User
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
+import com.example.sampleapp.util.empty
 import com.example.sampleapp.views.ProgressCardView
 import timber.log.Timber
 
@@ -101,15 +102,12 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     private fun onUserDataChanged(user: User) {
-        user.date?.let {
-            progressCardView.setProgressValue(viewModel.setDifference(it))
-        }
+        progressCardView.setProgressValue(viewModel.setDifference(user.date) ?: String.empty)
 
         val goalIndex = user.goalIndex ?: 0
 
         progressCardView.setGoalValue(goalItems[goalIndex])
-        progressCardView.setSeekBarValue(viewModel.getGoalPercentage())
-        progressCardView.setGoalPercentageValue(viewModel.getGoalPercentageText())
+        progressCardView.setGoalPercentage(viewModel.getGoalPercentage())
 
         val smoked = viewModel.calculateSmoked()
         val notSmoked = viewModel.calculateNotSmoked()

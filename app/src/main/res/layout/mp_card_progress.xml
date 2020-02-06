@@ -1,104 +1,89 @@
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.cardview.widget.CardView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:parentTag="androidx.cardview.widget.CardView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <com.marcinmoskala.arcseekbar.ArcSeekBar-->
-<!--            android:id="@+id/seekArc"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            app:enabled="false"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/tv_goal_percentage"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/iv_set_goal"-->
-<!--            app:progress="50"-->
-<!--            app:progressBackgroundColor="#C2CACA"-->
-<!--            app:progressBackgroundWidth="20dp"-->
-<!--            app:progressWidth="20dp" />-->
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:focusable="auto"
-            tools:progress="70"
-            android:progressTint="@color/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/tv_goal_percentage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_set_goal" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_progress_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/smoke_free_label"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_progress_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_progress_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <TextView
             android:id="@+id/tv_goal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            tools:text="GOAL 6 months"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_my_progress_title"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryText"
+            android:drawableStart="@drawable/ic_event_black_24dp"
+            android:drawablePadding="10dp"
+            app:layout_constraintBottom_toTopOf="@id/seekBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="GOAL 6 months" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/ProgressSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="6dp"
+            android:focusable="auto"
+            app:layout_constraintBottom_toTopOf="@+id/tv_goal_percentage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_goal"
+            tools:progress="70" />
+
+        <TextView
+            android:id="@+id/tv_my_progress_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/smoke_free_label"
+            android:textSize="22sp"
+            android:textColor="@color/colorPrimaryText"
+            app:layout_constraintBottom_toTopOf="@id/tv_progress_value"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_goal_percentage" />
+
+        <TextView
+            android:id="@+id/tv_progress_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_my_progress_title"
+            tools:text="10m 28d 11h" />
 
         <TextView
             android:id="@+id/tv_goal_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            tools:text="70.8%"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_goal"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_my_progress_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_set_goal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_more_horiz_black_24dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seekBar"
+            tools:text="70.8%" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

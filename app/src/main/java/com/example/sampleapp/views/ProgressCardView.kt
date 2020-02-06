@@ -1,14 +1,17 @@
 package com.example.sampleapp.views
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
+import android.view.animation.DecelerateInterpolator
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.sampleapp.R
+
 
 class ProgressCardView : CardView {
 
@@ -16,8 +19,6 @@ class ProgressCardView : CardView {
     private lateinit var tvGoalPercentage: TextView
     private lateinit var tvGoalValue: TextView
     private lateinit var seekBar: SeekBar
-    private lateinit var ivSetGoal: ImageView
-
 
     constructor(context: Context) : super(context) {
         init()
@@ -40,14 +41,12 @@ class ProgressCardView : CardView {
         tvProgressValue = view.findViewById(R.id.tv_progress_value)
         tvGoalPercentage = view.findViewById(R.id.tv_goal_percentage)
         tvGoalValue = view.findViewById(R.id.tv_goal)
-        ivSetGoal = view.findViewById(R.id.iv_set_goal)
-        ivSetGoal.setOnClickListener { onSelectGoalClick() }
+        tvGoalValue.setOnClickListener { onSelectGoalClick() }
 
         seekBar.isEnabled = false
     }
 
-    fun setProgressValue(value: String?) {
-        value ?: return
+    fun setProgressValue(value: String) {
         tvProgressValue.text = value
     }
 
@@ -56,17 +55,25 @@ class ProgressCardView : CardView {
         tvGoalValue.text = "${context.resources.getString(R.string.goal_title)} $value"
     }
 
-    fun setSeekBarValue(progress: Int?) {
-        when (progress == null) {
-            true -> seekBar.progress = 0
-            false -> seekBar.progress = progress
+    fun setGoalPercentage(progress: Float) {
+        setSeekBarValue(progress.toInt())
+        setGoalPercentageValue(progress)
+    }
+
+    private fun setSeekBarValue(progress: Int) {
+        ObjectAnimator.ofInt(seekBar, "progress", seekBar.progress, progress).apply {
+            duration = 1000
+            interpolator = DecelerateInterpolator()
+            start()
         }
     }
 
-    fun setGoalPercentageValue(progress: String?) {
-        when (progress == null) {
-            true -> tvGoalPercentage.text = ""
-            false -> tvGoalPercentage.text = progress
+    @SuppressLint("SetTextI18n")
+    private fun setGoalPercentageValue(progress: Float) {
+        tvGoalPercentage.text = when (progress >= 100) {
+            true -> "100%"
+            false -> "%.1f".format(progress) + "%"
         }
+
     }
 }

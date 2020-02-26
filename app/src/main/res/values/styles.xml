@@ -34,4 +34,12 @@
         <item name="android:textSize">26sp</item>
     </style>
 
+    <style name="TextPrimary">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
+    <style name="TextPrimary.20">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

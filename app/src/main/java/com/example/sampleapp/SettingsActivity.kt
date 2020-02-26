@@ -28,7 +28,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var tvDate: TextView
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: AdapterSettingsInput
+    private var adapter: AdapterSettingsInput? = null
 
     private val viewModel by viewModels<SettingsViewModel>()
 
@@ -72,19 +72,19 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        viewAdapter = AdapterSettingsInput(onIncrement = viewModel::incInputValue, onDecrement = viewModel::decInputValue)
+        adapter = AdapterSettingsInput(onIncrement = viewModel::incInputValue, onDecrement = viewModel::decInputValue)
 
         recyclerView = findViewById(R.id.rv_settings)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = viewAdapter
+            adapter = this@SettingsActivity.adapter
         }
 
         btnSubmit = findViewById(R.id.btn_submit_stats)
         btnSubmit.setOnClickListener {
 
             viewModel.setState(SettingsViewModel.State.Loading)
-            val items = viewAdapter.getItems()
+            val items = adapter?.getItems() ?: emptyList()
 
             val date = viewModel.dateTimestamp.value ?: return@setOnClickListener
             val perDay = items.find { it.type == SettingsInputItemType.PER_DAY }?.value ?: return@setOnClickListener
@@ -120,7 +120,7 @@ class SettingsActivity : AppCompatActivity() {
         val price = viewModel.user.value?.price?.toInt()
 
         tvDate.text = DateConverters.fromTimestamp(user.date).toString()
-        viewAdapter.setItems(listOf(
+        adapter?.setItems(listOf(
             SettingsInputItem("[Cigarettes smoked per day]", SettingsInputItemType.PER_DAY, perDay),
             SettingsInputItem("[Cigarettes in a pack]", SettingsInputItemType.IN_PACK, inPack),
             SettingsInputItem("[Years of smoking]", SettingsInputItemType.YEARS, years),

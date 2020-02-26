@@ -22,19 +22,19 @@ class HealthAchievementItem {
 
     private fun setDescription(context: Context, index: Int) {
         when (index) {
-            0 -> description = context.resources.getString(R.string.healt_descr_one)
-            1 -> description = context.resources.getString(R.string.healt_descr_two)
-            2 -> description = context.resources.getString(R.string.healt_descr_three)
-            3 -> description = context.resources.getString(R.string.healt_descr_four)
-            4 -> description = context.resources.getString(R.string.healt_descr_five)
-            5 -> description = context.resources.getString(R.string.healt_descr_six)
-            6 -> description = context.resources.getString(R.string.healt_descr_seven)
-            7 -> description = context.resources.getString(R.string.healt_descr_eight)
-            8 -> description = context.resources.getString(R.string.healt_descr_nine)
-            9 -> description = context.resources.getString(R.string.healt_descr_ten)
-            10 -> description = context.resources.getString(R.string.healt_descr_eleven)
-            11 -> description = context.resources.getString(R.string.healt_descr_twelve)
-            12 -> description = context.resources.getString(R.string.healt_descr_thirteen)
+            0 -> description = context.resources.getString(R.string.health_descr_one)
+            1 -> description = context.resources.getString(R.string.health_descr_two)
+            2 -> description = context.resources.getString(R.string.health_descr_three)
+            3 -> description = context.resources.getString(R.string.health_descr_four)
+            4 -> description = context.resources.getString(R.string.health_descr_five)
+            5 -> description = context.resources.getString(R.string.health_descr_six)
+            6 -> description = context.resources.getString(R.string.health_descr_seven)
+            7 -> description = context.resources.getString(R.string.health_descr_eight)
+            8 -> description = context.resources.getString(R.string.health_descr_nine)
+            9 -> description = context.resources.getString(R.string.health_descr_ten)
+            10 -> description = context.resources.getString(R.string.health_descr_eleven)
+            11 -> description = context.resources.getString(R.string.health_descr_twelve)
+            12 -> description = context.resources.getString(R.string.health_descr_thirteen)
             else -> description = ""
         }
     }

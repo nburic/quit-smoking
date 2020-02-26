@@ -43,20 +43,25 @@
     <string name="goal_five_years">5 let</string>
 
     <!--    Health   -->
-    <string name="healt_status_done">Doseženo</string>
+    <string name="health_status_done">Doseženo</string>
 
-    <string name="healt_descr_one">Po 20 minutah: Krvni pritisk in utrip srca se zmanjšata.</string>
-    <string name="healt_descr_two">Po 8 urah: Raven ogljikovega monoksida v krvi se vrne v normalno stanje.</string>
-    <string name="healt_descr_three">Po 24 urah: Vaša možnost srčnega infarkta se zmanjša.</string>
-    <string name="healt_descr_four">Po 48 urah: Vaša sposobnost okusa in vonja se začne vračati.</string>
-    <string name="healt_descr_five">Po 72 urah: Dihalne poti se začnejo sproščati.</string>
-    <string name="healt_descr_six">Po 5 do 8 dneh: Povprečno število hrepenenj se zmanjša na 3 na dan.</string>
-    <string name="healt_descr_seven">Po 10 do 14 dneh: Krvni obtok v dlesni in zobeh se vrne v normalno stanje. Hrepenenje se pomakne na 2 na dan (povprečno).</string>
-    <string name="healt_descr_eight">Po 2 do 12 tednih: Izboljša se vam prekrvavitev in poveča delovanje pljuč.</string>
-    <string name="healt_descr_nine">Po 3 do 4 tednih: Jeza, tesnoba, nemir in depresija prenehajo.</string>
-    <string name="healt_descr_ten">Po 2 mesecih: Odpornost na inzulin se je normalizirala kljub povprečnemu povečanju telesne mase 5,95 lb (2,7 kg)</string>
-    <string name="healt_descr_eleven">Po 1 do 9 mesecih: Kašelj in zasoplost se zmanjšata.</string>
-    <string name="healt_descr_twelve">Po 1 do 5 letih: Tveganje za smrt zaradi srčnega zastoja je približno polovica od tveganja za kadilca.</string>
-    <string name="healt_descr_thirteen">Po desetih letih: vaše tveganje za pljučnega raka pade na približno polovico od tveganja za kadilca.</string>
+    <string name="health_descr_one">Po 20 minutah: Krvni pritisk in utrip srca se zmanjšata.</string>
+    <string name="health_descr_two">Po 8 urah: Raven ogljikovega monoksida v krvi se vrne v normalno stanje.</string>
+    <string name="health_descr_three">Po 24 urah: Vaša možnost srčnega infarkta se zmanjša.</string>
+    <string name="health_descr_four">Po 48 urah: Vaša sposobnost okusa in vonja se začne vračati.</string>
+    <string name="health_descr_five">Po 72 urah: Dihalne poti se začnejo sproščati.</string>
+    <string name="health_descr_six">Po 5 do 8 dneh: Povprečno število hrepenenj se zmanjša na 3 na dan.</string>
+    <string name="health_descr_seven">Po 10 do 14 dneh: Krvni obtok v dlesni in zobeh se vrne v normalno stanje. Hrepenenje se pomakne na 2 na dan (povprečno).</string>
+    <string name="health_descr_eight">Po 2 do 12 tednih: Izboljša se vam prekrvavitev in poveča delovanje pljuč.</string>
+    <string name="health_descr_nine">Po 3 do 4 tednih: Jeza, tesnoba, nemir in depresija prenehajo.</string>
+    <string name="health_descr_ten">Po 2 mesecih: Odpornost na inzulin se je normalizirala kljub povprečnemu povečanju telesne mase 5,95 lb (2,7 kg)</string>
+    <string name="health_descr_eleven">Po 1 do 9 mesecih: Kašelj in zasoplost se zmanjšata.</string>
+    <string name="health_descr_twelve">Po 1 do 5 letih: Tveganje za smrt zaradi srčnega zastoja je približno polovica od tveganja za kadilca.</string>
+    <string name="health_descr_thirteen">Po desetih letih: vaše tveganje za pljučnega raka pade na približno polovico od tveganja za kadilca.</string>
+
+    <!--   Trophies -->
+    <string name="trophies_header_title_one">Nepokajeni cigareti</string>
+    <string name="trophies_header_title_two">Dnevi brez kajenja</string>
+    <string name="trophies_header_title_three">Pridobljeno živkjenje</string>
 
 </resources>

@@ -47,7 +47,7 @@ class AdapterCardsHealth : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>()
             val progress = item.progress
             when (progress >= 100) {
                 true -> {
-                    tvStatus.text = context.resources.getString(R.string.healt_status_done)
+                    tvStatus.text = context.resources.getString(R.string.health_status_done)
                     tvProgress.text = "100%"
                 }
                 false -> {

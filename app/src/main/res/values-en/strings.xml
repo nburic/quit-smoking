@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QuitSmoking</string>
 
     <string name="smoke_free_label">Time smoke free</string>
     <string name="money_saved_label">Money saved</string>
@@ -29,20 +28,25 @@
     <string name="goal_five_years">5 years</string>
 
     <!--    Health   -->
-    <string name="healt_status_done">Achieved</string>
+    <string name="health_status_done">Achieved</string>
 
-    <string name="healt_descr_one">After 20 minutes: Your blood pressure and heart rate decrease.</string>
-    <string name="healt_descr_two">After 8 hours: The carbon monoxide level in your blood returns to normal.</string>
-    <string name="healt_descr_three">After 24 hours: Your chance of heart attack decreases.</string>
-    <string name="healt_descr_four">After 48 hours: Your ability to taste and smell starts to return.</string>
-    <string name="healt_descr_five">After 72 hours: Your airways start to relax.</string>
-    <string name="healt_descr_six">After 5 to 8 days: The average number of cravings is reduced to 3 per day.</string>
-    <string name="healt_descr_seven">After 10 to 14 days: Blood circulation in your gums and teeth returns to normal. Cravings are reuced to 2 per day (average).</string>
-    <string name="healt_descr_eight">After 2 to 12 weeks: Your circulation improves and your lung function increases.</string>
-    <string name="healt_descr_nine">After 3 to 4 weeks: Cessation related anger, anxiety, restlessness and depression have ended.</string>
-    <string name="healt_descr_ten">After 2 months: Insulin resistance has normalized despite average weight gain of 5.95 lb (2.7kg)</string>
-    <string name="healt_descr_eleven">After 1 to 9 months: Coughing and shortness of breath decrease.</string>
-    <string name="healt_descr_twelve">After 1 to 5 years: Your risk of dying from heart isease is about half that of a smoker.</string>
-    <string name="healt_descr_thirteen">After 10 years: Your risk of lung cancer falls to about half that of a smoker.</string>
+    <string name="health_descr_one">After 20 minutes: Your blood pressure and heart rate decrease.</string>
+    <string name="health_descr_two">After 8 hours: The carbon monoxide level in your blood returns to normal.</string>
+    <string name="health_descr_three">After 24 hours: Your chance of heart attack decreases.</string>
+    <string name="health_descr_four">After 48 hours: Your ability to taste and smell starts to return.</string>
+    <string name="health_descr_five">After 72 hours: Your airways start to relax.</string>
+    <string name="health_descr_six">After 5 to 8 days: The average number of cravings is reduced to 3 per day.</string>
+    <string name="health_descr_seven">After 10 to 14 days: Blood circulation in your gums and teeth returns to normal. Cravings are reuced to 2 per day (average).</string>
+    <string name="health_descr_eight">After 2 to 12 weeks: Your circulation improves and your lung function increases.</string>
+    <string name="health_descr_nine">After 3 to 4 weeks: Cessation related anger, anxiety, restlessness and depression have ended.</string>
+    <string name="health_descr_ten">After 2 months: Insulin resistance has normalized despite average weight gain of 5.95 lb (2.7kg)</string>
+    <string name="health_descr_eleven">After 1 to 9 months: Coughing and shortness of breath decrease.</string>
+    <string name="health_descr_twelve">After 1 to 5 years: Your risk of dying from heart isease is about half that of a smoker.</string>
+    <string name="health_descr_thirteen">After 10 years: Your risk of lung cancer falls to about half that of a smoker.</string>
+
+    <!--   Trophies -->
+    <string name="trophies_header_title_one">Cigarettes not smoked</string>
+    <string name="trophies_header_title_three">Life regained</string>
+    <string name="trophies_header_title_two">Smoke free days</string>
 
 </resources>

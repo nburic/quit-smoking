@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/trophiesFragment"
-        android:name="com.example.sampleapp.ui.TrophiesFragment"
+        android:name="com.example.sampleapp.ui.trophies.TrophiesFragment"
         android:label="fragment_trophies"
         tools:layout="@layout/fragment_trophies" >
         <action

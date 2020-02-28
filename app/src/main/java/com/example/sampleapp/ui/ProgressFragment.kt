@@ -71,15 +71,15 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         super.onViewCreated(view, savedInstanceState)
 
         statsItems = listOf(
-            ProgressStatsItem(requireContext().resources.getString(R.string.money_saved_label), "879€", R.drawable.mp_ic_money),
-            ProgressStatsItem(requireContext().resources.getString(R.string.life_regained_label), "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
-            ProgressStatsItem(requireContext().resources.getString(R.string.cigs_not_smoked_label), "2220", R.drawable.mp_ic_smoke_free_black)
+            ProgressStatsItem(requireContext().resources.getString(R.string.mp_money_saved_label), "879€", R.drawable.mp_ic_money),
+            ProgressStatsItem(requireContext().resources.getString(R.string.mp_life_regained_label), "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
+            ProgressStatsItem(requireContext().resources.getString(R.string.mp_cigs_not_smoked_label), "2220", R.drawable.mp_ic_smoke_free_black)
         )
 
         historyItems = listOf(
-            ProgressHistoryItem(requireContext().resources.getString(R.string.cigs_smoked_label), "000", R.drawable.mp_ic_cigarette),
-            ProgressHistoryItem(requireContext().resources.getString(R.string.money_spent_label), "000", R.drawable.mp_ic_attach_money_black),
-            ProgressHistoryItem(requireContext().resources.getString(R.string.life_lost_label), "20d 11h 4m 11s", R.drawable.mp_ic_sentiment_very_dissatisfied_black)
+            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_cigs_smoked_label), "000", R.drawable.mp_ic_cigarette),
+            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_money_spent_label), "000", R.drawable.mp_ic_attach_money_black),
+            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_life_lost_label), "20d 11h 4m 11s", R.drawable.mp_ic_sentiment_very_dissatisfied_black)
         )
 
         goalItems = listOf(

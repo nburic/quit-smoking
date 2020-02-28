@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="smoke_free_label">Time smoke free</string>
-    <string name="money_saved_label">Money saved</string>
-    <string name="life_regained_label">Life regained</string>
-    <string name="cigs_not_smoked_label">Cigarettes not smoked</string>
-    <string name="history_card_title">During that period:</string>
-    <string name="stats_card_title">As a nonsmoker:</string>
-    <string name="cigs_smoked_label">Cigarettes smoked</string>
-    <string name="money_spent_label">Spent money</string>
-    <string name="life_lost_label">Lost life</string>
+    <string name="nav_progress_title">PROGRESS</string>
+    <string name="nav_trophies_title">TROPHIES</string>
+    <string name="nav_health_title">HEALTH</string>
+
+    <string name="menu_settings_title">Settings</string>
+
+    <string name="common_submit">Submit</string>
+
+    <string name="settings_quit_date_label">Set your quit date</string>
+    <string name="settings_smoked_per_day_label">Cigarettes smoked per day</string>
+    <string name="settings_cigs_in_pack_label">Cigarettes in a pack</string>
+    <string name="settings_years_of_smoking_label">Years of smoking</string>
+    <string name="settings_price_per_pack_label">Price per pack</string>
+    <string name="settings_currency_label">Currency</string>
+
+    <string name="mp_smoke_free_label">Time smoke free</string>
+    <string name="mp_money_saved_label">Money saved</string>
+    <string name="mp_life_regained_label">Life regained</string>
+    <string name="mp_cigs_not_smoked_label">Cigarettes not smoked</string>
+    <string name="mp_history_card_title">During that period:</string>
+    <string name="mp_stats_card_title">As a nonsmoker:</string>
+    <string name="mp_cigs_smoked_label">Cigarettes smoked</string>
+    <string name="mp_money_spent_label">Spent money</string>
+    <string name="mp_life_lost_label">Lost life</string>
 
     <string name="goal_title">GOAL</string>
     <string name="goal_two_days">2 days</string>

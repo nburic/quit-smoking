@@ -1,6 +1,5 @@
 package com.example.sampleapp.ui.trophies
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +18,7 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 
 class TrophiesFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): TrophiesFragment {
-            return TrophiesFragment()
-        }
-    }
-
     private inner class HeaderSection(group: Group) : Section(group) {
-        fun addNewItem(item: Item) {
-            add(item)
-        }
-
         fun addAllItems(items: List<Item>) {
             addAll(items)
         }

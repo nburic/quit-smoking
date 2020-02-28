@@ -121,10 +121,10 @@ class SettingsActivity : AppCompatActivity() {
 
         tvDate.text = DateConverters.fromTimestamp(user.date).toString()
         adapter?.setItems(listOf(
-            SettingsInputItem("[Cigarettes smoked per day]", SettingsInputItemType.PER_DAY, perDay),
-            SettingsInputItem("[Cigarettes in a pack]", SettingsInputItemType.IN_PACK, inPack),
-            SettingsInputItem("[Years of smoking]", SettingsInputItemType.YEARS, years),
-            SettingsInputItem("[Price per pack]", SettingsInputItemType.PRICE, price))
+            SettingsInputItem(resources.getString(R.string.settings_smoked_per_day_label), SettingsInputItemType.PER_DAY, perDay),
+            SettingsInputItem(resources.getString(R.string.settings_cigs_in_pack_label), SettingsInputItemType.IN_PACK, inPack),
+            SettingsInputItem(resources.getString(R.string.settings_years_of_smoking_label), SettingsInputItemType.YEARS, years),
+            SettingsInputItem(resources.getString(R.string.settings_price_per_pack_label), SettingsInputItemType.PRICE, price))
         )
     }
 

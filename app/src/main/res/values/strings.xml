@@ -16,15 +16,30 @@
         <item>RSD</item>
     </string-array>
 
-    <string name="smoke_free_label">Čas brez kajenja</string>
-    <string name="money_saved_label">Prihranjen denar</string>
-    <string name="life_regained_label">Pridobljeno življenje</string>
-    <string name="cigs_not_smoked_label">Nepokajeni cigareti</string>
-    <string name="history_card_title">V tem času:</string>
-    <string name="stats_card_title">Kot nekadilec:</string>
-    <string name="cigs_smoked_label">Skajene cigarete</string>
-    <string name="money_spent_label">Porabljen denar</string>
-    <string name="life_lost_label">Izgubljeno življenje</string>
+    <string name="nav_progress_title">NAPREDEK</string>
+    <string name="nav_trophies_title">ZNAČKE</string>
+    <string name="nav_health_title">ZDRAVJE</string>
+
+    <string name="menu_settings_title">Nastavitve</string>
+
+    <string name="common_submit">Potrdi</string>
+
+    <string name="settings_quit_date_label">Nastavi datum začetka</string>
+    <string name="settings_smoked_per_day_label">Dnevno število pokajenih cigaret</string>
+    <string name="settings_cigs_in_pack_label">Število cigaret v paketu</string>
+    <string name="settings_years_of_smoking_label">Število let kajenja</string>
+    <string name="settings_price_per_pack_label">Cena paketa</string>
+    <string name="settings_currency_label">Valuta</string>
+
+    <string name="mp_smoke_free_label">Čas brez kajenja</string>
+    <string name="mp_money_saved_label">Prihranjen denar</string>
+    <string name="mp_life_regained_label">Pridobljeno življenje</string>
+    <string name="mp_cigs_not_smoked_label">Nepokajeni cigareti</string>
+    <string name="mp_history_card_title">V tem času:</string>
+    <string name="mp_stats_card_title">Kot nekadilec:</string>
+    <string name="mp_cigs_smoked_label">Skajene cigarete</string>
+    <string name="mp_money_spent_label">Porabljen denar</string>
+    <string name="mp_life_lost_label">Izgubljeno življenje</string>
 
     <string name="goal_title">CILJ</string>
     <string name="goal_two_days">2 dni</string>
@@ -62,6 +77,6 @@
     <!--   Trophies -->
     <string name="trophies_header_title_one">Nepokajeni cigareti</string>
     <string name="trophies_header_title_two">Dnevi brez kajenja</string>
-    <string name="trophies_header_title_three">Pridobljeno živkjenje</string>
+    <string name="trophies_header_title_three">Pridobljeno življenje</string>
 
 </resources>

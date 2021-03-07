@@ -7,11 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.example.sampleapp"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,18 +41,18 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     // Groupie
     implementation "com.xwray:groupie:2.7.0"
     implementation "com.xwray:groupie-kotlin-android-extensions:2.7.0"
 
     // recycler
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-beta02'
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
@@ -62,28 +62,29 @@ dependencies {
 
     // Lifecycle components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.3.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 
     // ViewModel Kotlin support
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
 
     // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
 
     // Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.gms:play-services-plus:16.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.gms:play-services-plus:17.0.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 
 }

@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sampleapp.db.User
+import com.example.sampleapp.db.UserEntity
 import com.example.sampleapp.models.SettingsInputItem
 import com.example.sampleapp.models.SettingsInputItemType
 import com.example.sampleapp.ui.DatePickerFragment
@@ -37,9 +37,9 @@ class SettingsActivity : AppCompatActivity() {
         onModelStateChanged(state)
     }
 
-    private val userObserver = Observer { user: User? ->
-        user ?: return@Observer
-        onUserDataChanged(user)
+    private val userObserver = Observer { userEntity: UserEntity? ->
+        userEntity ?: return@Observer
+        onUserDataChanged(userEntity)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         viewModel.state.observe(this, stateObserver)
-        viewModel.user.observe(this, userObserver)
+        viewModel.userEntity.observe(this, userObserver)
 
         toolbar = findViewById(R.id.toolbar_settings)
         setSupportActionBar(toolbar)
@@ -87,21 +87,23 @@ class SettingsActivity : AppCompatActivity() {
             val items = adapter?.getItems() ?: emptyList()
 
             val date = viewModel.dateTimestamp.value ?: return@setOnClickListener
-            val perDay = items.find { it.type == SettingsInputItemType.PER_DAY }?.value ?: return@setOnClickListener
-            val inPack = items.find { it.type == SettingsInputItemType.IN_PACK }?.value ?: return@setOnClickListener
-            val years = items.find { it.type == SettingsInputItemType.YEARS }?.value ?: return@setOnClickListener
-            val price = items.find { it.type == SettingsInputItemType.PRICE }?.value ?: return@setOnClickListener
+            val perDay = items.find { it.type == SettingsInputItemType.PER_DAY }?.value
+                    ?: return@setOnClickListener
+            val inPack = items.find { it.type == SettingsInputItemType.IN_PACK }?.value
+                    ?: return@setOnClickListener
+            val years = items.find { it.type == SettingsInputItemType.YEARS }?.value
+                    ?: return@setOnClickListener
+            val price = items.find { it.type == SettingsInputItemType.PRICE }?.value
+                    ?: return@setOnClickListener
 
-            val user = User(
-                uid = 0,
-                date = date,
-                perDay = perDay,
-                inPack = inPack,
-                years = years.toFloat(),
-                price = price.toFloat(),
-                currency = "EUR",
-                goal = DateConverters.getEndTimestamp(date, 2, DateConverters.Duration.DAYS),
-                goalIndex = 0
+            val user = UserEntity(
+                    uid = 0L,
+                    start = date,
+                    cigPerDay = perDay,
+                    inPack = inPack,
+                    years = years,
+                    price = price.toFloat(),
+                    goal = DateConverters.getEndTimestamp(date, 2, DateConverters.Duration.DAYS)
             )
 
             viewModel.setUserData(user)
@@ -112,19 +114,19 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun onUserDataChanged(user: User) {
-        viewModel.dateTimestamp.value = viewModel.user.value?.date
-        val perDay = viewModel.user.value?.perDay
-        val inPack = viewModel.user.value?.inPack
-        val years = viewModel.user.value?.years?.toInt()
-        val price = viewModel.user.value?.price?.toInt()
+    private fun onUserDataChanged(userEntity: UserEntity) {
+        viewModel.dateTimestamp.value = viewModel.userEntity.value?.start
+        val perDay = viewModel.userEntity.value?.cigPerDay
+        val inPack = viewModel.userEntity.value?.inPack
+        val years = viewModel.userEntity.value?.years?.toInt()
+        val price = viewModel.userEntity.value?.price?.toInt()
 
-        tvDate.text = DateConverters.fromTimestamp(user.date).toString()
+        tvDate.text = DateConverters.fromTimestamp(userEntity.start).toString()
         adapter?.setItems(listOf(
-            SettingsInputItem(resources.getString(R.string.settings_smoked_per_day_label), SettingsInputItemType.PER_DAY, perDay),
-            SettingsInputItem(resources.getString(R.string.settings_cigs_in_pack_label), SettingsInputItemType.IN_PACK, inPack),
-            SettingsInputItem(resources.getString(R.string.settings_years_of_smoking_label), SettingsInputItemType.YEARS, years),
-            SettingsInputItem(resources.getString(R.string.settings_price_per_pack_label), SettingsInputItemType.PRICE, price))
+                SettingsInputItem(resources.getString(R.string.settings_smoked_per_day_label), SettingsInputItemType.PER_DAY, perDay),
+                SettingsInputItem(resources.getString(R.string.settings_cigs_in_pack_label), SettingsInputItemType.IN_PACK, inPack),
+                SettingsInputItem(resources.getString(R.string.settings_years_of_smoking_label), SettingsInputItemType.YEARS, years),
+                SettingsInputItem(resources.getString(R.string.settings_price_per_pack_label), SettingsInputItemType.PRICE, price))
         )
     }
 

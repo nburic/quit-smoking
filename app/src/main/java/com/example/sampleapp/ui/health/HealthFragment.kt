@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
-import com.example.sampleapp.db.User
+import com.example.sampleapp.db.UserEntity
 import com.example.sampleapp.models.health.HealthAchievementItem
 
 class HealthFragment : Fragment() {
@@ -29,9 +29,9 @@ class HealthFragment : Fragment() {
 
     private val viewModel by viewModels<HealthViewModel>()
 
-    private val userObserver = Observer {user: User? ->
-        user ?: return@Observer
-        onUserChanged(user)
+    private val userObserver = Observer { userEntity: UserEntity? ->
+        userEntity ?: return@Observer
+        onUserChanged(userEntity)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,7 +55,7 @@ class HealthFragment : Fragment() {
             addItemDecoration(decor)
         }
 
-        viewModel.user.observe(viewLifecycleOwner, userObserver)
+        viewModel.userEntity.observe(viewLifecycleOwner, userObserver)
 
         return view
     }
@@ -72,8 +72,8 @@ class HealthFragment : Fragment() {
         }
     }
 
-    private fun onUserChanged(user: User) {
-        user.date?.let { startDate ->
+    private fun onUserChanged(userEntity: UserEntity) {
+        userEntity.start?.let { startDate ->
             setCards(startDate)
             viewAdapter.setItems(healthItems)
         }

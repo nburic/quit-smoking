@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.db.AppDatabase
-import com.example.sampleapp.db.User
+import com.example.sampleapp.db.UserEntity
 import com.example.sampleapp.repo.AppRepo
 import com.example.sampleapp.util.DateConverters
 import com.example.sampleapp.util.DateConverters.calculateDifference
@@ -19,12 +19,12 @@ import kotlinx.coroutines.launch
 class ProgressViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo: AppRepo
-    internal val user: LiveData<User>
+    internal val userEntity: LiveData<UserEntity>
 
     init {
         val userDao = AppDatabase.getDatabase(application).userDao()
         repo = AppRepo(userDao)
-        user = repo.user
+        userEntity = repo.userEntity
     }
 
     private fun calculateMoneyPerDay(smokedPerDay: Int, packPrice: Float, packCount: Int): Float {
@@ -32,24 +32,18 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun calculateSavedMoney(): Float? {
-        user.value?.let {
-            if (it.perDay == null || it.price == null || it.inPack == null) {
-                return null
-            }
-            val days = calculateDifferenceToDays(it.date) ?: return null
-            val moneyPerDay = calculateMoneyPerDay(it.perDay, it.price, it.inPack)
+        userEntity.value?.let {
+            val days = calculateDifferenceToDays(it.start) ?: return null
+            val moneyPerDay = calculateMoneyPerDay(it.cigPerDay, it.price, it.inPack)
             return days * moneyPerDay
         }
         return null
     }
 
     fun calculateSpentMoney(): Float? {
-        user.value?.let {
-            if (it.perDay == null || it.price == null || it.inPack == null || it.years == null) {
-                return null
-            }
-            val days = yearsToDays(it.years)
-            val moneyPerDay = calculateMoneyPerDay(it.perDay, it.price, it.inPack)
+        userEntity.value?.let {
+            val days = yearsToDays(it.years.toFloat())
+            val moneyPerDay = calculateMoneyPerDay(it.cigPerDay, it.price, it.inPack)
             return days * moneyPerDay
         }
         return null
@@ -70,25 +64,21 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun calculateNotSmoked(): Float? {
-        user.value?.let {
-            if (it.perDay == null) {
+        userEntity.value?.let {
+            if (it.cigPerDay == null) {
                 return null
             }
 
-            val days = calculateDifferenceToDays(it.date) ?: return null
-            return days.toFloat() * it.perDay.toFloat()
+            val days = calculateDifferenceToDays(it.start) ?: return null
+            return days.toFloat() * it.cigPerDay.toFloat()
         }
         return null
     }
 
     fun calculateSmoked(): Float? {
-        user.value?.let {
-            if (it.years == null || it.perDay == null) {
-                return null
-            }
-
-            val days = yearsToDays(it.years)
-            return days * it.perDay.toFloat()
+        userEntity.value?.let {
+            val days = yearsToDays(it.years.toFloat())
+            return days * it.cigPerDay.toFloat()
         }
         return null
     }
@@ -101,13 +91,13 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             val timestamp = getGoalTimestamp(position)
             timestamp?.let {
-                repo.updateGoal(it, position)
+                repo.updateGoal(it)
             }
         }
     }
 
     private fun getGoalTimestamp(index: Int): Long? {
-        user.value?.date?.let { startDate ->
+        userEntity.value?.start?.let { startDate ->
             return when (index) {
                 0 -> getEndTimestamp(startDate, 2, DateConverters.Duration.DAYS)
                 1 -> getEndTimestamp(startDate, 3, DateConverters.Duration.DAYS)
@@ -133,8 +123,8 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
         var startDate: Long? = null
         var goalDate: Long? = null
 
-        user.value?.date?.let { startDate = it / 1000 }
-        user.value?.goal?.let { goalDate = it / 1000 }
+        userEntity.value?.start?.let { startDate = it / 1000 }
+        userEntity.value?.goal?.let { goalDate = it / 1000 }
 
         if (startDate == null || goalDate == null) {
             return 0f

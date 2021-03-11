@@ -13,7 +13,7 @@ import com.example.sampleapp.AdapterCardHistory
 import com.example.sampleapp.AdapterCardStats
 import com.example.sampleapp.GoalDialogFragment
 import com.example.sampleapp.R
-import com.example.sampleapp.db.User
+import com.example.sampleapp.db.UserEntity
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
@@ -37,9 +37,9 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
     private val viewModel by viewModels<ProgressViewModel>()
 
-    private val userObserver = Observer { user: User? ->
-        user ?: return@Observer
-        onUserDataChanged(user)
+    private val userObserver = Observer { userEntity: UserEntity? ->
+        userEntity ?: return@Observer
+        onUserDataChanged(userEntity)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,7 +62,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             onSelectGoalClick = this@ProgressFragment::openDialogSheet
         }
 
-        viewModel.user.observe(viewLifecycleOwner, userObserver)
+        viewModel.userEntity.observe(viewLifecycleOwner, userObserver)
 
         return view
     }
@@ -100,12 +100,9 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         )
     }
 
-    private fun onUserDataChanged(user: User) {
-        progressCardView.setProgressValue(viewModel.setDifference(user.date))
+    private fun onUserDataChanged(userEntity: UserEntity) {
+        progressCardView.setProgressValue(viewModel.setDifference(userEntity.start))
 
-        val goalIndex = user.goalIndex ?: 0
-
-        progressCardView.setGoalValue(goalItems[goalIndex])
         progressCardView.setGoalPercentage(viewModel.getGoalPercentage())
 
         val smoked = viewModel.calculateSmoked()

@@ -8,15 +8,15 @@ import androidx.room.Query
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user_table WHERE uid = 0")
-    fun get(): LiveData<User>
+    @Query("SELECT * FROM User WHERE uid = 0")
+    fun get(): LiveData<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: User)
+    suspend fun insert(userEntity: UserEntity)
 
-    @Query("DELETE FROM user_table WHERE uid = 0")
+    @Query("DELETE FROM User WHERE uid = 0")
     suspend fun delete()
 
-    @Query("UPDATE user_table SET goal = :timestamp, goalIndex = :index WHERE uid = 0")
-    suspend fun updateGoal(timestamp: Long, index: Int)
+    @Query("UPDATE User SET goal = :timestamp WHERE uid = 0")
+    suspend fun updateGoal(timestamp: Long)
 }

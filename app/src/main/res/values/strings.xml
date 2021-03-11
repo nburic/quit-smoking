@@ -1,21 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">QuitSmoking</string>
 
-    <string-array name="currencies_array">
-        <item>EUR</item>
-        <item>USD</item>
-        <item>HRK</item>
-        <item>RSD</item>
-        <item>EUR</item>
-        <item>USD</item>
-        <item>HRK</item>
-        <item>RSD</item>
-        <item>EUR</item>
-        <item>USD</item>
-        <item>HRK</item>
-        <item>RSD</item>
-    </string-array>
-
     <string name="nav_progress_title">NAPREDEK</string>
     <string name="nav_trophies_title">ZNAČKE</string>
     <string name="nav_health_title">ZDRAVJE</string>
@@ -23,6 +8,7 @@
     <string name="menu_settings_title">Nastavitve</string>
 
     <string name="common_submit">Potrdi</string>
+    <string name="common_set">Določi</string>
 
     <string name="settings_quit_date_label">Nastavi datum začetka</string>
     <string name="settings_smoked_per_day_label">Dnevno število pokajenih cigaret</string>

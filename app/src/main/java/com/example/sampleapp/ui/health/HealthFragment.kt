@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
-import com.example.sampleapp.db.UserEntity
+import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.models.health.HealthAchievementItem
 
 class HealthFragment : Fragment() {
@@ -55,7 +55,7 @@ class HealthFragment : Fragment() {
             addItemDecoration(decor)
         }
 
-        viewModel.userEntity.observe(viewLifecycleOwner, userObserver)
+//        viewModel.userEntity.observe(viewLifecycleOwner, userObserver)
 
         return view
     }

@@ -1,6 +1,5 @@
-package com.example.sampleapp.db
+package com.example.sampleapp.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface UserDao {
     @Query("SELECT * FROM User WHERE uid = 0")
-    fun get(): LiveData<UserEntity>
+    suspend fun get(): UserEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userEntity: UserEntity)

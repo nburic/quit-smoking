@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/progressFragment"
         android:name="com.example.sampleapp.ui.ProgressFragment"
-        android:label="@string/"
+        android:label="fragment_progress"
         tools:layout="@layout/fragment_progress" />
 
     <fragment

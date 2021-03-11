@@ -6,14 +6,16 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.sampleapp.databinding.ActivityMainBinding
 import com.example.sampleapp.util.hide
 import com.example.sampleapp.util.show
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -25,17 +27,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.progressFragment,
-                R.id.healthFragment,
-                R.id.trophiesFragment)
-        )
 
         setSupportActionBar(binding.toolbar)
         setupBottomNavMenu(navController)
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            Timber.d("Current destination ${destination.label}")
+
             when (destination.id) {
                 R.id.settingsFragment -> {
                     binding.toolbar.menu.setGroupVisible(R.id.group_settings, false)
@@ -58,7 +56,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
 
-        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.menu_item_settings -> {
+                navController.navigate(R.id.action_global_settingsFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

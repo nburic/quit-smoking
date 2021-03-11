@@ -5,20 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sampleapp.AdapterCardHistory
-import com.example.sampleapp.AdapterCardStats
-import com.example.sampleapp.GoalDialogFragment
-import com.example.sampleapp.R
-import com.example.sampleapp.db.UserEntity
+import com.example.sampleapp.*
+import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.models.ProgressHistoryItem
 import com.example.sampleapp.models.ProgressStatsItem
 import com.example.sampleapp.views.ProgressCardView
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+
+@AndroidEntryPoint
 class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
     private var goalItems: List<String> = listOf()
@@ -36,13 +38,13 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
     private lateinit var progressCardView: ProgressCardView
 
     private val viewModel by viewModels<ProgressViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
-    private val userObserver = Observer { userEntity: UserEntity? ->
-        userEntity ?: return@Observer
-        onUserDataChanged(userEntity)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_progress, container, false)
 
         recyclerViewStats = view.findViewById(R.id.rv_stats)
@@ -62,7 +64,18 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
             onSelectGoalClick = this@ProgressFragment::openDialogSheet
         }
 
-        viewModel.userEntity.observe(viewLifecycleOwner, userObserver)
+//        mainViewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
+//            Timber.d("User $user")
+//
+//            when (user) {
+//                null -> {
+//                    findNavController().navigate(R.id.action_global_single_top_settingsFragment)
+//                }
+//                else -> {
+//                    onUserDataChanged(user)
+//                }
+//            }
+//        })
 
         return view
     }
@@ -71,15 +84,39 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
         super.onViewCreated(view, savedInstanceState)
 
         statsItems = listOf(
-            ProgressStatsItem(requireContext().resources.getString(R.string.mp_money_saved_label), "879€", R.drawable.mp_ic_money),
-            ProgressStatsItem(requireContext().resources.getString(R.string.mp_life_regained_label), "10d 20h 20m 11s", R.drawable.mp_ic_sentiment_satisfied_black),
-            ProgressStatsItem(requireContext().resources.getString(R.string.mp_cigs_not_smoked_label), "2220", R.drawable.mp_ic_smoke_free_black)
+            ProgressStatsItem(
+                requireContext().resources.getString(R.string.mp_money_saved_label),
+                "879€",
+                R.drawable.mp_ic_money
+            ),
+            ProgressStatsItem(
+                requireContext().resources.getString(R.string.mp_life_regained_label),
+                "10d 20h 20m 11s",
+                R.drawable.mp_ic_sentiment_satisfied_black
+            ),
+            ProgressStatsItem(
+                requireContext().resources.getString(R.string.mp_cigs_not_smoked_label),
+                "2220",
+                R.drawable.mp_ic_smoke_free_black
+            )
         )
 
         historyItems = listOf(
-            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_cigs_smoked_label), "000", R.drawable.mp_ic_cigarette),
-            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_money_spent_label), "000", R.drawable.mp_ic_attach_money_black),
-            ProgressHistoryItem(requireContext().resources.getString(R.string.mp_life_lost_label), "20d 11h 4m 11s", R.drawable.mp_ic_sentiment_very_dissatisfied_black)
+            ProgressHistoryItem(
+                requireContext().resources.getString(R.string.mp_cigs_smoked_label),
+                "000",
+                R.drawable.mp_ic_cigarette
+            ),
+            ProgressHistoryItem(
+                requireContext().resources.getString(R.string.mp_money_spent_label),
+                "000",
+                R.drawable.mp_ic_attach_money_black
+            ),
+            ProgressHistoryItem(
+                requireContext().resources.getString(R.string.mp_life_lost_label),
+                "20d 11h 4m 11s",
+                R.drawable.mp_ic_sentiment_very_dissatisfied_black
+            )
         )
 
         goalItems = listOf(

@@ -3,10 +3,11 @@ package com.example.sampleapp
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.sampleapp.databinding.ActivityMainBinding
 import com.example.sampleapp.util.hide
@@ -19,6 +20,8 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +37,17 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.d("Current destination ${destination.label}")
 
+            val menu = binding.toolbar.menu
+
             when (destination.id) {
                 R.id.settingsFragment -> {
-                    binding.toolbar.menu.setGroupVisible(R.id.group_settings, false)
+                    menu.clear()
                     binding.bottomNav.hide()
                 }
                 else -> {
-                    binding.toolbar.menu.setGroupVisible(R.id.group_settings, true)
+                    if (menu.children.count() == 0) {
+                        menuInflater.inflate(R.menu.menu_toolbar_actions_main, menu)
+                    }
                     binding.bottomNav.show()
                 }
             }
@@ -58,7 +65,11 @@ class MainActivity : AppCompatActivity() {
 
         return when (item.itemId) {
             R.id.menu_item_settings -> {
-                navController.navigate(R.id.action_global_settingsFragment)
+                navController.navigate(NavGraphDirections.actionGlobalSettingsFragment())
+                true
+            }
+            R.id.menu_item_inclusive -> {
+                navController.navigate(NavGraphDirections.actionGlobalInclusiveSettingsFragment())
                 true
             }
             else -> super.onOptionsItemSelected(item)

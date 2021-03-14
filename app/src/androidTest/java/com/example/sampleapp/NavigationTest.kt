@@ -23,7 +23,7 @@ class NavigationTest {
 
         // Open the overflow menu OR open the options menu,
         // depending on if the device has a hardware or software overflow menu button.
-        openActionBarOverflowOrOptionsMenu(appContext);
+        openActionBarOverflowOrOptionsMenu(appContext)
 
         // Click the item.
         onView(withText(R.string.menu_settings_title)).perform(click())

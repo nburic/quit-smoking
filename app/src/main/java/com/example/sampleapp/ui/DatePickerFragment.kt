@@ -31,8 +31,6 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        Log.d("!!!", "date is set to $dayOfMonth.$month.$year")
-
         val timestamp = GregorianCalendar(year, month, dayOfMonth).timeInMillis
         dateSet?.invoke(timestamp)
     }

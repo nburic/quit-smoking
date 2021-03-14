@@ -1,12 +1,25 @@
 package com.example.sampleapp.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+/**
+ * Data Access Object for the user table.
+ */
 @Dao
 interface UserDao {
+
+    /**
+     * Observes user data.
+     *
+     * @return all user fields.
+     */
+    @Query("SELECT * FROM User WHERE uid = 0")
+    fun observeUser(): LiveData<UserEntity>
+
     @Query("SELECT * FROM User WHERE uid = 0")
     suspend fun get(): UserEntity
 

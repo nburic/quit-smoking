@@ -9,6 +9,7 @@ import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.databinding.ActivityMainBinding
 import com.example.sampleapp.util.hide
 import com.example.sampleapp.util.show
@@ -23,13 +24,15 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
 
         setSupportActionBar(binding.toolbar)
         setupBottomNavMenu(navController)
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             val menu = binding.toolbar.menu
 
             when (destination.id) {
+                R.id.datePickerFragment,
                 R.id.settingsFragment -> {
                     menu.clear()
                     binding.bottomNav.hide()
@@ -52,6 +56,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.user.observe(this, { user: UserEntity? ->
+            Timber.d("User observe activity $user")
+
+            when (user) {
+                null -> {
+                    navController.navigate(NavGraphDirections.actionGlobalInclusiveSettingsFragment())
+                }
+                else -> {
+//                    onUserDataChanged(user)
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

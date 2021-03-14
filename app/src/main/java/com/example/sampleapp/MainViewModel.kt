@@ -1,26 +1,16 @@
 package com.example.sampleapp
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewModel() {
 
-    private val _user: MutableLiveData<UserEntity> = MutableLiveData()
-    val user: LiveData<UserEntity> = _user
-
-    init {
-        viewModelScope.launch {
-            _user.value = repository.getUser()
-        }
-    }
+    val user: LiveData<UserEntity> = repository.observeUser()
 
     fun calculateNotSmoked(): Int {
 //        userEntity.value?.let {

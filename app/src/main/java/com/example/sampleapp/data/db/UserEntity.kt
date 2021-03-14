@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "User")
 data class UserEntity(
     @PrimaryKey
-    var uid: Long,
+    var uid: Int = 0,
     var start: Long = 0L,
     var cigPerDay: Int = 0,
     var inPack: Int = 0,

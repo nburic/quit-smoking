@@ -1,5 +1,6 @@
 package com.example.sampleapp.data
 
+import androidx.lifecycle.LiveData
 import com.example.sampleapp.data.db.UserDao
 import com.example.sampleapp.data.db.UserEntity
 import kotlinx.coroutines.Dispatchers
@@ -19,5 +20,9 @@ class AppRepo @Inject constructor(private val userDao: UserDao) {
 
     suspend fun getUser(): UserEntity = withContext(Dispatchers.IO) {
         userDao.get()
+    }
+
+    fun observeUser(): LiveData<UserEntity> {
+        return userDao.observeUser()
     }
 }

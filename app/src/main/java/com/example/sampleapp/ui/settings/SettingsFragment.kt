@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.sampleapp.NavGraphDirections
 import com.example.sampleapp.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -20,6 +22,10 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnDate.setOnClickListener {
+            findNavController().navigate(NavGraphDirections.actionGlobalDatePickerFragment())
+        }
     }
 
     override fun onDestroyView() {

@@ -39,4 +39,13 @@
         app:popUpTo="@id/progressFragment"
         app:popUpToInclusive="true" />
 
+    <dialog
+        android:id="@+id/datePickerFragment"
+        android:name="com.example.sampleapp.ui.DatePickerFragment"
+        android:label="DatePickerFragment" />
+    
+    <action
+        android:id="@+id/action_global_datePickerFragment"
+        app:destination="@id/datePickerFragment" />
+
 </navigation>

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/progressFragment"
-        android:name="com.example.sampleapp.ui.ProgressFragment"
+        android:name="com.example.sampleapp.ui.HomeFragment"
         android:label="fragment_progress"
-        tools:layout="@layout/fragment_progress" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/healthFragment"

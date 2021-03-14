@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.*
@@ -22,7 +19,7 @@ import timber.log.Timber
 
 
 @AndroidEntryPoint
-class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
+class HomeFragment : Fragment(), GoalDialogFragment.Listener {
 
     private var goalItems: List<String> = listOf()
 
@@ -42,7 +39,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
     private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_progress, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerViewStats = view.findViewById(R.id.rv_stats)
         recyclerViewStats.apply {
@@ -58,7 +55,7 @@ class ProgressFragment : Fragment(), GoalDialogFragment.Listener {
 
         progressCardView = view.findViewById(R.id.progressCard)
         progressCardView.apply {
-            onSelectGoalClick = this@ProgressFragment::openDialogSheet
+            onSelectGoalClick = this@HomeFragment::openDialogSheet
         }
 
         mainViewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->

@@ -9,7 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
-import com.example.sampleapp.models.health.HealthAchievementItem
+import com.example.sampleapp.data.models.health.HealthAchievementItem
 
 
 class AdapterCardsHealth : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>() {

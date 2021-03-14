@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <com.example.sampleapp.views.health.HealthCardView-->
+<!--    <com.example.sampleapp.ui.views.health.HealthCardView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_marginStart="8dp"-->

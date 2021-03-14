@@ -1,4 +1,4 @@
-package com.example.sampleapp.views
+package com.example.sampleapp.ui.views.home
 
 import android.content.Context
 import android.util.AttributeSet

@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             val menu = binding.toolbar.menu
 
             when (destination.id) {
-                R.id.datePickerFragment,
                 R.id.settingsFragment -> {
                     menu.clear()
                     binding.bottomNav.hide()

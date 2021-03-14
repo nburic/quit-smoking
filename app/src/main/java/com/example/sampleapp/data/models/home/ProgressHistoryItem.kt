@@ -1,4 +1,4 @@
-package com.example.sampleapp.models
+package com.example.sampleapp.data.models.home
 
 
 class ProgressHistoryItem(

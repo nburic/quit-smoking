@@ -1,13 +1,13 @@
-package com.example.sampleapp
+package com.example.sampleapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sampleapp.models.ProgressStatsItem
+import com.example.sampleapp.R
+import com.example.sampleapp.data.models.home.ProgressStatsItem
 
 
 class AdapterCardStats(private var items: List<ProgressStatsItem>) : RecyclerView.Adapter<AdapterCardStats.ViewHolder>() {

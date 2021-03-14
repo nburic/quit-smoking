@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
 import com.example.sampleapp.data.db.UserEntity
-import com.example.sampleapp.models.health.HealthAchievementItem
+import com.example.sampleapp.data.models.health.HealthAchievementItem
 
 class HealthFragment : Fragment() {
 

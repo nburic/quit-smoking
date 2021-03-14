@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/progressFragment"
-        android:name="com.example.sampleapp.ui.HomeFragment"
+        android:name="com.example.sampleapp.ui.home.HomeFragment"
         android:label="fragment_progress"
         tools:layout="@layout/fragment_home" />
 
@@ -38,14 +38,5 @@
         app:destination="@id/settingsFragment"
         app:popUpTo="@id/progressFragment"
         app:popUpToInclusive="true" />
-
-    <dialog
-        android:id="@+id/datePickerFragment"
-        android:name="com.example.sampleapp.ui.DatePickerFragment"
-        android:label="DatePickerFragment" />
-    
-    <action
-        android:id="@+id/action_global_datePickerFragment"
-        app:destination="@id/datePickerFragment" />
 
 </navigation>

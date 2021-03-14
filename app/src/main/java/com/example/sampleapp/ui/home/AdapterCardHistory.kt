@@ -1,4 +1,4 @@
-package com.example.sampleapp
+package com.example.sampleapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sampleapp.models.ProgressHistoryItem
+import com.example.sampleapp.R
+import com.example.sampleapp.data.models.home.ProgressHistoryItem
 
 
 class AdapterCardHistory(private var items: List<ProgressHistoryItem>) : RecyclerView.Adapter<AdapterCardHistory.ViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.sampleapp
+package com.example.sampleapp.ui.home
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleapp.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_goal_list_dialog.*
 import kotlinx.android.synthetic.main.fragment_goal_list_dialog_item.view.*

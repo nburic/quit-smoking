@@ -1,4 +1,4 @@
-package com.example.sampleapp.ui
+package com.example.sampleapp.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.*
 import com.example.sampleapp.data.db.UserEntity
-import com.example.sampleapp.models.ProgressHistoryItem
-import com.example.sampleapp.models.ProgressStatsItem
-import com.example.sampleapp.views.ProgressCardView
+import com.example.sampleapp.data.models.home.ProgressHistoryItem
+import com.example.sampleapp.data.models.home.ProgressStatsItem
+import com.example.sampleapp.ui.views.home.ProgressCardView
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

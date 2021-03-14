@@ -1,4 +1,4 @@
-package com.example.sampleapp.models.health
+package com.example.sampleapp.data.models.health
 
 import android.content.Context
 import com.example.sampleapp.R

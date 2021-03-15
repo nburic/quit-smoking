@@ -23,8 +23,11 @@ interface UserDao {
     @Query("SELECT * FROM User WHERE uid = 0")
     suspend fun get(): UserEntity
 
+    /**
+     * Sets user data.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(userEntity: UserEntity)
+    suspend fun setUser(userEntity: UserEntity)
 
     @Query("DELETE FROM User WHERE uid = 0")
     suspend fun delete()

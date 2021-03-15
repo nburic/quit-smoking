@@ -39,4 +39,10 @@
         app:popUpTo="@id/progressFragment"
         app:popUpToInclusive="true" />
 
+    <action
+        android:id="@+id/action_global_progressFragment"
+        app:destination="@id/progressFragment"
+        app:popUpTo="@id/settingsFragment"
+        app:popUpToInclusive="true" />
+
 </navigation>

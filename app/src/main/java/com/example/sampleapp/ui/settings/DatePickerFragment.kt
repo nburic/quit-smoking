@@ -18,7 +18,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         }
     }
 
-    internal var dateSet: ((timestamp: Long) -> Unit)? = null
+    internal var onDateSet: ((timestamp: Long) -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
@@ -31,6 +31,6 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val timestamp = GregorianCalendar(year, month, dayOfMonth).timeInMillis
-        dateSet?.invoke(timestamp)
+        onDateSet?.invoke(timestamp)
     }
 }

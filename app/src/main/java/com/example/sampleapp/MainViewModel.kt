@@ -2,15 +2,33 @@ package com.example.sampleapp
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewModel() {
 
     val user: LiveData<UserEntity> = repository.observeUser()
+    private var startEpoch: Long? = null
+
+    fun setStartEpoch(epoch: Long?) {
+        startEpoch = epoch
+    }
+
+    fun getStartEpoch(): Long {
+        return startEpoch ?: 0L
+    }
+
+    fun setUserData(user: UserEntity) {
+        viewModelScope.launch {
+            repository.setUser(user)
+        }
+    }
+
 
     fun calculateNotSmoked(): Int {
 //        userEntity.value?.let {

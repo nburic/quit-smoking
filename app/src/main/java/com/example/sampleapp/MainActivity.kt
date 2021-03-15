@@ -64,7 +64,9 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(NavGraphDirections.actionGlobalInclusiveSettingsFragment())
                 }
                 else -> {
-//                    onUserDataChanged(user)
+                    if (navController.currentDestination?.id == R.id.settingsFragment) {
+                        navController.navigate(NavGraphDirections.actionGlobalProgressFragment())
+                    }
                 }
             }
         })

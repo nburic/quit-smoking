@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class AppRepo @Inject constructor(private val userDao: UserDao) {
 
-    suspend fun insert(userEntity: UserEntity) {
-        userDao.insert(userEntity)
+    suspend fun setUser(userEntity: UserEntity) = withContext(Dispatchers.IO) {
+        userDao.setUser(userEntity)
     }
 
     suspend fun updateGoal(timestamp: Long) {

@@ -46,7 +46,7 @@
         android:id="@+id/tv_cig_in_pack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/settings_years_of_smoking_label"
+        android:text="@string/settings_cigs_in_pack_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sb_cig_per_day" />

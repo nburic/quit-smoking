@@ -1,7 +1,8 @@
 package com.example.sampleapp.util
 
-import androidx.room.TypeConverter
-import java.sql.Date
+import android.content.Context
+import com.example.sampleapp.R
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -11,9 +12,21 @@ object DateConverters {
         MINUTES, HOURS, DAYS, WEEKS, MONTHS, YEARS
     }
 
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date {
-        return value?.let { Date(it) } ?: Date(0)
+
+    private fun formatDate(context: Context): SimpleDateFormat {
+        return SimpleDateFormat(context.getString(R.string.common_date_time_formatting_date_day_month_year), Locale.ROOT)
+    }
+
+    private fun formatTimeHoursMinutes(context: Context): SimpleDateFormat {
+        return SimpleDateFormat(context.getString(R.string.common_date_time_formatting_time_hour_minute), Locale.ROOT)
+    }
+
+    private fun formatDateTime(context: Context): SimpleDateFormat {
+        return SimpleDateFormat("${context.getString(R.string.common_date_time_formatting_date_day_month_year)} ${context.getString(R.string.common_date_time_formatting_time_hour_minute)}", Locale.ROOT)
+    }
+
+    fun toDateTime(context: Context, epoch: Long): String {
+        return formatDateTime(context).format(epoch)
     }
 
     fun daysToDuration(days: Int): String {

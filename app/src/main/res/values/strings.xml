@@ -7,6 +7,8 @@
 
     <string name="menu_settings_title">Nastavitve</string>
 
+    <string name="common_date_time_formatting_date_day_month_year">dd.MM.yyyy</string>
+    <string name="common_date_time_formatting_time_hour_minute">HH:mm</string>
     <string name="common_submit">Potrdi</string>
     <string name="common_set">Določi</string>
 

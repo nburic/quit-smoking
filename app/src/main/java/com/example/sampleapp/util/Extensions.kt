@@ -46,9 +46,9 @@ object Epoch {
         return days * perDay
     }
 
-    fun calcMoney(days: Int, perDay: Int, inPack: Int, price: Float): Float {
+    fun calcMoney(days: Int, perDay: Int, inPack: Int, price: Float): Int {
         val moneyPerDay = (perDay.toFloat() / inPack.toFloat()) * price
-        return days * moneyPerDay
+        return (days * moneyPerDay).toInt()
     }
 
     fun calcLifeLost(smoked: Int): String {

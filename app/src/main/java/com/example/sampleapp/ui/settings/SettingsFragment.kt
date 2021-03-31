@@ -22,7 +22,7 @@ class SettingsFragment : Fragment() {
 
         private const val CIG_IN_PACK_MAX = 200
         private const val CIG_IN_PACK_MIN = 0
-        private const val CIG_IN_PACK_STEP = 10
+        private const val CIG_IN_PACK_STEP = 1
 
         private const val YEARS_MAX = 50
         private const val YEARS_MIN = 0
@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
 
         private const val DEFAULT_GOAL = 172800000L // 2 days, default goal
 
-        private const val CURRENCY = "€"
+        const val CURRENCY = "€"
     }
 
     private var _binding: FragmentSettingsBinding? = null
@@ -159,7 +159,7 @@ class SettingsFragment : Fragment() {
         if (epoch == 0L) return null
 
         val perDay = binding.sbCigPerDay.progress * CIG_PER_DAY_STEP
-        val inPack = binding.sbCigInPack.progress
+        val inPack = binding.sbCigInPack.progress * CIG_IN_PACK_STEP
         val years = binding.sbYears.progress * YEARS_STEP
         val price = binding.sbPrice.progress * PRICE_STEP
 

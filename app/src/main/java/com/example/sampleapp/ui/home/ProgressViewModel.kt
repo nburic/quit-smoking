@@ -112,27 +112,4 @@ class ProgressViewModel(application: Application) : AndroidViewModel(application
 //        }
         return null
     }
-
-    fun getGoalPercentage(): Float {
-//        var startDate: Long? = null
-//        var goalDate: Long? = null
-//
-//        userEntity.value?.start?.let { startDate = it / 1000 }
-//        userEntity.value?.goal?.let { goalDate = it / 1000 }
-//
-//        if (startDate == null || goalDate == null) {
-//            return 0f
-//        }
-//
-//        val limit = goalDate!! - startDate!!
-//        val current = System.currentTimeMillis() / 1000 - startDate!!
-//        val percent = (current.toDouble() / limit.toDouble())
-//        val progress = (percent * 100).toFloat()
-//
-//        return when (progress >= 100) {
-//            true -> 100f
-//            false -> progress
-//        }
-        return 0f
-    }
 }

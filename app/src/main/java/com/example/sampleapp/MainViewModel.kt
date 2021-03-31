@@ -53,4 +53,19 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
     private fun calculateLifeRegained(notSmoked: Int): Int {
         return notSmoked * 11 / 60 / 24
     }
+
+    fun getGoalPercentage(user: UserEntity): Float {
+        val startDate: Long = user.start / 1000
+        val goalDate: Long = user.goal / 1000
+
+        val limit = goalDate - startDate
+        val current = System.currentTimeMillis() / 1000 - startDate
+        val percent = (current.toDouble() / limit.toDouble())
+        val progress = (percent * 100).toFloat()
+
+        return when (progress >= 100) {
+            true -> 100f
+            false -> progress
+        }
+    }
 }

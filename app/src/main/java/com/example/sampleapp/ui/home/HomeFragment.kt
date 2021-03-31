@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.*
 import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
-import com.example.sampleapp.ui.views.home.ProgressCardView
+import com.example.sampleapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -21,62 +21,52 @@ import timber.log.Timber
 @AndroidEntryPoint
 class HomeFragment : Fragment(), GoalDialogFragment.Listener {
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     private var goalItems: List<String> = listOf()
 
     private var statsItems: List<ProgressStatsItem> = listOf()
 
     private var historyItems: List<ProgressHistoryItem> = listOf()
 
-    private lateinit var recyclerViewStats: RecyclerView
     private var viewAdapterStats: AdapterCardStats = AdapterCardStats(statsItems)
 
-    private lateinit var recyclerViewHistory: RecyclerView
     private var viewAdapterHistory: AdapterCardHistory = AdapterCardHistory(historyItems)
-
-    private lateinit var progressCardView: ProgressCardView
 
     private val viewModel by viewModels<ProgressViewModel>()
     private val mainViewModel by activityViewModels<MainViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        recyclerViewStats = view.findViewById(R.id.rv_stats)
-        recyclerViewStats.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = viewAdapterStats
-        }
-
-        recyclerViewHistory = view.findViewById(R.id.rv_history)
-        recyclerViewHistory.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = viewAdapterHistory
-        }
-
-        progressCardView = view.findViewById(R.id.progressCard)
-        progressCardView.apply {
-            onSelectGoalClick = this@HomeFragment::openDialogSheet
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         mainViewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
-            Timber.d("User $user")
-
-//            when (user) {
-//                null -> {
-//                    findNavController().navigate(ProgressFragmentDirections.actionGlobalInclusiveSettingsFragment())
-//                }
-//                else -> {
-//                    onUserDataChanged(user)
-//                }
-//            }
+            when (user) {
+                null -> findNavController().navigate(HomeFragmentDirections.actionGlobalInclusiveSettingsFragment())
+                else -> onUserDataChanged(user)
+            }
         })
 
-        return view
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.rvStats.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapterStats
+        }
+
+        binding.rvHistory.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewAdapterHistory
+        }
+
+        binding.progressCard.apply {
+            onSelectGoalClick = this@HomeFragment::openDialogSheet
+        }
 
         statsItems = listOf(
                 ProgressStatsItem(
@@ -133,9 +123,8 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     private fun onUserDataChanged(userEntity: UserEntity) {
-        progressCardView.setProgressValue(viewModel.setDifference(userEntity.start))
-
-        progressCardView.setGoalPercentage(viewModel.getGoalPercentage())
+        binding.progressCard.setProgressValue(viewModel.setDifference(userEntity.start))
+        binding.progressCard.setGoalPercentage(mainViewModel.getGoalPercentage(userEntity))
 
         val smoked = viewModel.calculateSmoked()
         val notSmoked = viewModel.calculateNotSmoked()
@@ -160,5 +149,10 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
     override fun onGoalClicked(position: Int) {
         Timber.d("goal clicked position = $position")
         viewModel.setGoal(position)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

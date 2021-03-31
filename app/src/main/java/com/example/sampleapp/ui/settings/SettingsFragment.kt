@@ -81,6 +81,8 @@ class SettingsFragment : Fragment() {
 
         binding.btnSubmit.setOnClickListener {
             val user = createUser() ?: return@setOnClickListener
+
+            user.goal = user.start + 172800000 // 2 days, default goal
             viewModel.setUserData(user)
         }
 
@@ -162,7 +164,7 @@ class SettingsFragment : Fragment() {
                 cigPerDay = perDay,
                 inPack = inPack,
                 years = years,
-                price = price.toFloat()
+                price = price
         )
     }
 

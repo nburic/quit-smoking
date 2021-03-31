@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.*
@@ -14,8 +13,15 @@ import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
+import com.example.sampleapp.util.Epoch.calcDifferenceToDays
+import com.example.sampleapp.util.Epoch.calcLifeLost
+import com.example.sampleapp.util.Epoch.calcLifeRegained
+import com.example.sampleapp.util.Epoch.calcMoney
+import com.example.sampleapp.util.Epoch.calcNotSmoked
+import com.example.sampleapp.util.Epoch.calcPassedTime
+import com.example.sampleapp.util.Epoch.calcPercentage
+import com.example.sampleapp.util.Epoch.calcSmoked
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -34,13 +40,12 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
 
     private var viewAdapterHistory: AdapterCardHistory = AdapterCardHistory(historyItems)
 
-    private val viewModel by viewModels<ProgressViewModel>()
-    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        mainViewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
+        viewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
             when (user) {
                 null -> findNavController().navigate(HomeFragmentDirections.actionGlobalInclusiveSettingsFragment())
                 else -> onUserDataChanged(user)
@@ -123,18 +128,18 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     private fun onUserDataChanged(userEntity: UserEntity) {
-        binding.progressCard.setProgressValue(viewModel.setDifference(userEntity.start))
-        binding.progressCard.setGoalPercentage(mainViewModel.getGoalPercentage(userEntity))
+        binding.progressCard.setProgressValue(calcPassedTime(userEntity.start))
+        binding.progressCard.setGoalPercentage(calcPercentage(userEntity.start, userEntity.goal))
 
-        val smoked = viewModel.calculateSmoked()
-        val notSmoked = viewModel.calculateNotSmoked()
+        val smoked = calcSmoked(userEntity.years, userEntity.cigPerDay)
+        val notSmoked = calcNotSmoked(userEntity.start, userEntity.cigPerDay)
 
         historyItems[0].value = "$smoked"
-        historyItems[1].value = "${viewModel.calculateSpentMoney()}"
-        historyItems[2].value = "${viewModel.calculateLifeLost(smoked)}"
+        historyItems[1].value = String.format("%.2f", calcMoney(userEntity.years * 365, userEntity.cigPerDay, userEntity.inPack, userEntity.price))
+        historyItems[2].value = calcLifeLost(smoked)
 
-        statsItems[0].value = "${viewModel.calculateSavedMoney()}€"
-        statsItems[1].value = "${viewModel.calculateLifeRegained(notSmoked)}"
+        statsItems[0].value = String.format("%.2f", calcMoney(calcDifferenceToDays(userEntity.start), userEntity.cigPerDay, userEntity.inPack, userEntity.price))
+        statsItems[1].value = calcLifeRegained(notSmoked)
         statsItems[2].value = "$notSmoked"
 
         viewAdapterStats.setItems(statsItems)
@@ -147,7 +152,6 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     override fun onGoalClicked(position: Int) {
-        Timber.d("goal clicked position = $position")
         viewModel.setGoal(position)
     }
 

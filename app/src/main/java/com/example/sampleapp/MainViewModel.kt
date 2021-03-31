@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +30,13 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
         }
     }
 
+    fun setGoal(position: Int) {
+        viewModelScope.launch {
+            val start = user.value?.start ?: return@launch
+            val timestamp = getGoalTimestamp(position, start)
+            repository.updateGoal(timestamp)
+        }
+    }
 
     fun calculateNotSmoked(): Int {
 //        userEntity.value?.let {
@@ -52,20 +60,5 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
 
     private fun calculateLifeRegained(notSmoked: Int): Int {
         return notSmoked * 11 / 60 / 24
-    }
-
-    fun getGoalPercentage(user: UserEntity): Float {
-        val startDate: Long = user.start / 1000
-        val goalDate: Long = user.goal / 1000
-
-        val limit = goalDate - startDate
-        val current = System.currentTimeMillis() / 1000 - startDate
-        val percent = (current.toDouble() / limit.toDouble())
-        val progress = (percent * 100).toFloat()
-
-        return when (progress >= 100) {
-            true -> 100f
-            false -> progress
-        }
     }
 }

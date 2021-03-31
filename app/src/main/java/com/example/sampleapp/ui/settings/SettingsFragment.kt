@@ -32,6 +32,8 @@ class SettingsFragment : Fragment() {
         private const val PRICE_MIN = 0
         private const val PRICE_STEP = 0.2f
 
+        private const val DEFAULT_GOAL = 172800000L // 2 days, default goal
+
         private const val CURRENCY = "€"
     }
 
@@ -82,7 +84,9 @@ class SettingsFragment : Fragment() {
         binding.btnSubmit.setOnClickListener {
             val user = createUser() ?: return@setOnClickListener
 
-            user.goal = user.start + 172800000 // 2 days, default goal
+            if (user.goal == 0L) {
+                user.goal = user.start + DEFAULT_GOAL
+            }
             viewModel.setUserData(user)
         }
 
@@ -155,7 +159,7 @@ class SettingsFragment : Fragment() {
         if (epoch == 0L) return null
 
         val perDay = binding.sbCigPerDay.progress * CIG_PER_DAY_STEP
-        val inPack = binding.sbCigInPack.progress * CIG_IN_PACK_STEP
+        val inPack = binding.sbCigInPack.progress
         val years = binding.sbYears.progress * YEARS_STEP
         val price = binding.sbPrice.progress * PRICE_STEP
 

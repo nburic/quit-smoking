@@ -29,6 +29,26 @@ object DateConverters {
         return formatDateTime(context).format(epoch)
     }
 
+    fun getGoalTimestamp(position: Int, start: Long): Long {
+        return when (position) {
+            0 -> getEndTimestamp(start, 2, Duration.DAYS)
+            1 -> getEndTimestamp(start, 3, Duration.DAYS)
+            2 -> getEndTimestamp(start, 4, Duration.DAYS)
+            3 -> getEndTimestamp(start, 5, Duration.DAYS)
+            4 -> getEndTimestamp(start, 6, Duration.DAYS)
+            5 -> getEndTimestamp(start, 1, Duration.WEEKS)
+            6 -> getEndTimestamp(start, 10, Duration.DAYS)
+            7 -> getEndTimestamp(start, 2, Duration.WEEKS)
+            8 -> getEndTimestamp(start, 3, Duration.WEEKS)
+            9 -> getEndTimestamp(start, 1, Duration.MONTHS)
+            10 -> getEndTimestamp(start, 3, Duration.MONTHS)
+            11 -> getEndTimestamp(start, 6, Duration.MONTHS)
+            12 -> getEndTimestamp(start, 1, Duration.YEARS)
+            13 -> getEndTimestamp(start, 5, Duration.YEARS)
+            else -> 0L
+        }
+    }
+
     fun daysToDuration(days: Int): String {
         val mYears = days / 30 / 12
         val mMonths = days / 30
@@ -44,61 +64,6 @@ object DateConverters {
             }
             else -> "${days}d"
         }
-    }
-
-    fun calculateDifference(timestamp: Long?): String {
-        timestamp ?: return String.empty
-
-        val diff = System.currentTimeMillis() - timestamp
-        val c = Calendar.getInstance()
-        c.timeInMillis = diff
-
-        val mYear = c.get(Calendar.YEAR) - 1970
-        val mMonth = c.get(Calendar.MONTH)
-        val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
-        val mHours = c.get(Calendar.HOUR)
-        val mMinutes = c.get(Calendar.MINUTE)
-        val mSeconds = c.get(Calendar.SECOND)
-
-        return when {
-            mYear > 0 -> "${mYear}y ${mMonth}m ${mDay}d"
-            mMonth > 0 -> "${mMonth}m ${mDay}d ${mHours}h"
-            mDay > 0 -> "${mDay}d ${mHours}h ${mMinutes}min"
-            mHours > 0 -> "${mHours}h ${mMinutes}min ${mSeconds}s"
-            mMinutes > 0 -> "${mMinutes}min ${mSeconds}s"
-            else -> "${mSeconds}s"
-        }
-    }
-
-    /**
-     * Calculates difference from now to past date in days
-     */
-    fun calculateDifferenceToDays(timestamp: Long?): Int? {
-        timestamp ?: return null
-
-        val diff = System.currentTimeMillis() - timestamp
-        val c = Calendar.getInstance()
-        c.timeInMillis = diff
-
-        val mYear = c.get(Calendar.YEAR) - 1970
-        val mMonth = c.get(Calendar.MONTH)
-        val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
-
-        var days = 0
-
-        when {
-            mYear > 0 -> {
-                days += mYear * 365
-            }
-            mMonth > 0 -> {
-                days += mMonth * 30
-            }
-            mDay > 0 -> {
-                days += mDay
-            }
-        }
-
-        return days
     }
 
     /**
@@ -145,9 +110,5 @@ object DateConverters {
                 c.timeInMillis
             }
         }
-    }
-
-    fun yearsToDays(years: Float): Int {
-        return (years * 365).toInt()
     }
 }

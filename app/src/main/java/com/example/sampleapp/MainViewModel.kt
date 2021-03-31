@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
     }
 
     fun getStartEpoch(): Long {
-        return startEpoch ?: 0L
+        return startEpoch ?: user.value?.start ?: 0L
     }
 
     fun setUserData(user: UserEntity) {

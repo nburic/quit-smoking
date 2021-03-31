@@ -17,19 +17,19 @@ class SettingsFragment : Fragment() {
 
     companion object {
         private const val CIG_PER_DAY_MAX = 60
-        private const val CIG_PER_DAY_MIN = 1
+        private const val CIG_PER_DAY_MIN = 0
         private const val CIG_PER_DAY_STEP = 1
 
         private const val CIG_IN_PACK_MAX = 200
-        private const val CIG_IN_PACK_MIN = 10
+        private const val CIG_IN_PACK_MIN = 0
         private const val CIG_IN_PACK_STEP = 10
 
         private const val YEARS_MAX = 50
-        private const val YEARS_MIN = 1
+        private const val YEARS_MIN = 0
         private const val YEARS_STEP = 1
 
-        private const val PRICE_MAX = 20
-        private const val PRICE_MIN = 1
+        private const val PRICE_MAX = 100 // 100 / 0,2 = 20
+        private const val PRICE_MIN = 0
         private const val PRICE_STEP = 0.2f
 
         private const val CURRENCY = "€"
@@ -40,6 +40,7 @@ class SettingsFragment : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
@@ -50,14 +51,14 @@ class SettingsFragment : Fragment() {
                     binding.tvCigPerDayValue.text = CIG_PER_DAY_MIN.toString()
                     binding.tvCigInPackValue.text = CIG_IN_PACK_MIN.toString()
                     binding.tvYearsValue.text = YEARS_MIN.toString()
-                    binding.tvPriceValue.text = PRICE_MIN.toString()
+                    binding.tvPriceValue.text = "${String.format("%.2f", PRICE_MIN)} $CURRENCY"
                 }
                 else -> {
                     binding.tvDateValue.text = toDateTime(requireContext(), user.start)
                     binding.tvCigPerDayValue.text = user.cigPerDay.toString()
                     binding.tvCigInPackValue.text = user.inPack.toString()
                     binding.tvYearsValue.text = user.years.toString()
-                    binding.tvPriceValue.text = user.price.toString()
+                    binding.tvPriceValue.text = "${String.format("%.2f", user.price)} $CURRENCY"
                 }
             }
         })
@@ -88,11 +89,11 @@ class SettingsFragment : Fragment() {
 
     private fun setSeekBars() {
         binding.sbCigPerDay.apply {
-            max = (CIG_PER_DAY_MAX - CIG_PER_DAY_MIN) / CIG_PER_DAY_STEP
+            max = CIG_PER_DAY_MAX
+            progress = viewModel.user.value?.cigPerDay ?: 0
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val customProgress = CIG_PER_DAY_MIN + (progress * CIG_PER_DAY_STEP)
-                    binding.tvCigPerDayValue.text = customProgress.toString()
+                    binding.tvCigPerDayValue.text = progress.toString()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -101,11 +102,11 @@ class SettingsFragment : Fragment() {
         }
 
         binding.sbCigInPack.apply {
-            max = (CIG_IN_PACK_MAX - CIG_IN_PACK_MIN) / CIG_IN_PACK_STEP
+            max = CIG_IN_PACK_MAX
+            progress = viewModel.user.value?.inPack ?: 0
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val customProgress = CIG_IN_PACK_MIN + (progress * CIG_IN_PACK_STEP)
-                    binding.tvCigInPackValue.text = customProgress.toString()
+                    binding.tvCigInPackValue.text = progress.toString()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -114,11 +115,11 @@ class SettingsFragment : Fragment() {
         }
 
         binding.sbYears.apply {
-            max = (YEARS_MAX - YEARS_MIN) / YEARS_STEP
+            max = YEARS_MAX
+            progress = viewModel.user.value?.years ?: 0
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val customProgress = YEARS_MIN + (progress * YEARS_STEP)
-                    binding.tvYearsValue.text = customProgress.toString()
+                    binding.tvYearsValue.text = progress.toString()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -127,11 +128,12 @@ class SettingsFragment : Fragment() {
         }
 
         binding.sbPrice.apply {
-            max = ((PRICE_MAX - PRICE_MIN) / PRICE_STEP).toInt()
+            max = PRICE_MAX
+            progress = (viewModel.user.value?.price?.div(PRICE_STEP))?.toInt() ?: 0
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 @SuppressLint("SetTextI18n")
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val customProgress = PRICE_MIN + (progress * PRICE_STEP)
+                    val customProgress = progress * PRICE_STEP
                     binding.tvPriceValue.text = "${String.format("%.2f", customProgress)} $CURRENCY"
                 }
 
@@ -143,16 +145,17 @@ class SettingsFragment : Fragment() {
 
     private fun onDateSet(epoch: Long) {
         viewModel.setStartEpoch(epoch)
+        binding.tvDateValue.text = toDateTime(requireContext(), epoch)
     }
 
     private fun createUser(): UserEntity? {
         val epoch = viewModel.getStartEpoch()
         if (epoch == 0L) return null
 
-        val perDay = binding.sbCigPerDay.progress
-        val inPack = binding.sbCigInPack.progress
-        val years = binding.sbYears.progress
-        val price = binding.sbPrice.progress
+        val perDay = binding.sbCigPerDay.progress * CIG_PER_DAY_STEP
+        val inPack = binding.sbCigInPack.progress * CIG_IN_PACK_STEP
+        val years = binding.sbYears.progress * YEARS_STEP
+        val price = binding.sbPrice.progress * PRICE_STEP
 
         return UserEntity(
                 start = epoch,

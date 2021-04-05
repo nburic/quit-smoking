@@ -13,6 +13,7 @@ import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
+import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
 import com.example.sampleapp.util.Epoch.calcDifferenceToDays
 import com.example.sampleapp.util.Epoch.calcLifeLost
@@ -26,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), GoalDialogFragment.Listener {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -96,10 +97,13 @@ class HomeFragment : Fragment(), GoalDialogFragment.Listener {
     }
 
     private fun openDialogSheet() {
-        GoalDialogFragment.newInstance().show(childFragmentManager, GoalDialogFragment.TAG)
+        val dialog = GoalDialogFragment.newInstance()
+
+        dialog.onGoalSelected = ::onGoalClicked
+        dialog.show(childFragmentManager, GoalDialogFragment.TAG)
     }
 
-    override fun onGoalClicked(position: Int) {
+    private fun onGoalClicked(position: Int) {
         viewModel.setGoal(position)
     }
 

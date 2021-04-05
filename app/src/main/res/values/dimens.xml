@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
-    <dimen name="list_item_spacing">16dp</dimen>
-    <dimen name="list_item_spacing_half">8dp</dimen>
+    <dimen name="goal_item_padding_side">16dp</dimen>
+    <dimen name="goal_item_padding_spacing">10dp</dimen>
     <dimen name="health_list_item_spacing">10dp</dimen>
     <dimen name="health_list_item_spacing_half">5dp</dimen>
 </resources>

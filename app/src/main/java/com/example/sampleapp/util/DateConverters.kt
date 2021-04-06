@@ -2,6 +2,7 @@ package com.example.sampleapp.util
 
 import android.content.Context
 import com.example.sampleapp.R
+import com.example.sampleapp.util.Epoch.now
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -104,17 +105,6 @@ object DateConverters {
             }
             else -> "${days}d"
         }
-    }
-
-    /**
-     * Returns progress from 0 to 100 from start to end timestamp
-     */
-    fun getProgress(startDate: Long, endDate: Long): Int {
-        val limit = endDate - startDate
-        val current = System.currentTimeMillis() - startDate
-        val percent = (current.toDouble() / limit.toDouble())
-        val progress = percent * 100
-        return progress.toInt()
     }
 
     /**

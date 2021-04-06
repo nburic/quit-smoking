@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.MainViewModel
 import com.example.sampleapp.R
+import com.example.sampleapp.databinding.FragmentTrophiesBinding
 import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -24,9 +24,11 @@ class TrophiesFragment : Fragment() {
         }
     }
 
+    private var _binding: FragmentTrophiesBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel by activityViewModels<MainViewModel>()
 
-    private lateinit var recycler: RecyclerView
     private var adapter = GroupAdapter<GroupieViewHolder>().apply {
         spanCount = 2
     }
@@ -34,13 +36,11 @@ class TrophiesFragment : Fragment() {
     private val sections: MutableList<HeaderSection> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_trophies, container, false)
-
-        recycler = view.findViewById(R.id.recycler)
+        _binding = FragmentTrophiesBinding.inflate(inflater, container, false)
 
         initRecycler()
 
-        return view
+        return binding.root
     }
 
     private fun initRecycler() {
@@ -48,7 +48,7 @@ class TrophiesFragment : Fragment() {
             spanSizeLookup = adapter.spanSizeLookup
         }
 
-        recycler.apply {
+        binding.recycler.apply {
             layoutManager = lm
             adapter = this@TrophiesFragment.adapter
         }
@@ -108,4 +108,8 @@ class TrophiesFragment : Fragment() {
 
     private fun buildBadgeItem(imgRes: Int, achieved: Boolean) = ImageItem(imgRes, achieved)
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

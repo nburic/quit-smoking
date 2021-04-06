@@ -20,7 +20,7 @@ fun View.invisible() {
 }
 
 object Epoch {
-    private fun now(): Long {
+    fun now(): Long {
         return System.currentTimeMillis()
     }
 
@@ -92,7 +92,7 @@ object Epoch {
         val mYear = c.get(Calendar.YEAR) - 1970
         val mMonth = c.get(Calendar.MONTH)
         val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
-        val mHours = c.get(Calendar.HOUR)
+        val mHours = c.get(Calendar.HOUR_OF_DAY)
         val mMinutes = c.get(Calendar.MINUTE)
         val mSeconds = c.get(Calendar.SECOND)
 
@@ -105,4 +105,5 @@ object Epoch {
             else -> "${mSeconds}s"
         }
     }
+
 }

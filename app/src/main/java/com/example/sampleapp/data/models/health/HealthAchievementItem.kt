@@ -4,8 +4,9 @@ import android.content.Context
 import com.example.sampleapp.R
 import com.example.sampleapp.util.DateConverters
 import com.example.sampleapp.util.DateConverters.getEndTimestamp
-import com.example.sampleapp.util.DateConverters.getProgress
-import java.sql.Date
+import com.example.sampleapp.util.DateConverters.toDateTime
+import com.example.sampleapp.util.Epoch.calcPercentage
+import com.example.sampleapp.util.empty
 
 
 class HealthAchievementItem {
@@ -16,7 +17,7 @@ class HealthAchievementItem {
 
     fun setCardData(context: Context, index: Int, startDate: Long) {
         setDescription(context, index)
-        setFinishDate(index, startDate)
+        setFinishDate(context, index, startDate)
         setProgress(index, startDate)
     }
 
@@ -35,12 +36,12 @@ class HealthAchievementItem {
             10 -> description = context.resources.getString(R.string.health_descr_eleven)
             11 -> description = context.resources.getString(R.string.health_descr_twelve)
             12 -> description = context.resources.getString(R.string.health_descr_thirteen)
-            else -> description = ""
+            else -> description = String.empty
         }
     }
 
-    private fun setFinishDate(index: Int, startDate: Long) {
-        this.finishDate = Date(getEndDate(index, startDate)).toString()
+    private fun setFinishDate(context: Context, index: Int, startDate: Long) {
+        finishDate = toDateTime(context, getEndDate(index, startDate))
     }
 
     private fun getEndDate(index: Int, startDate: Long): Long {
@@ -64,6 +65,6 @@ class HealthAchievementItem {
 
     private fun setProgress(index: Int, startDate: Long) {
         val endDate = getEndDate(index, startDate)
-        this.progress = getProgress(startDate, endDate)
+        progress = calcPercentage(startDate, endDate).toInt()
     }
 }

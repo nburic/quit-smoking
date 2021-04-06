@@ -23,8 +23,8 @@
     <string name="mp_money_saved_label">Prihranjen denar</string>
     <string name="mp_life_regained_label">Pridobljeno življenje</string>
     <string name="mp_cigs_not_smoked_label">Nepokajeni cigareti</string>
-    <string name="mp_history_card_title">V tem času:</string>
-    <string name="mp_stats_card_title">Kot nekadilec:</string>
+    <string name="mp_history_card_title">V času kajenja:</string>
+    <string name="mp_stats_card_title">V času brez kajenja:</string>
     <string name="mp_cigs_smoked_label">Skajene cigarete</string>
     <string name="mp_money_spent_label">Porabljen denar</string>
     <string name="mp_life_lost_label">Izgubljeno življenje</string>

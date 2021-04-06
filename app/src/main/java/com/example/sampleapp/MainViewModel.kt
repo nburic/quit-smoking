@@ -7,6 +7,7 @@ import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.UserEntity
 import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
+import com.example.sampleapp.util.Epoch.calcDifferenceToDays
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,18 +48,17 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
     }
 
     fun calculateNotSmoked(): Int {
-//        userEntity.value?.let {
-//            val days = calculateDifferenceToDays(it.start) ?: return 0
-//
-//            return (days.toFloat() * it.cigPerDay.toFloat()).toInt()
-//        }
-        return 0
+        return user.value?.let {
+            val days = calcDifferenceToDays(it.start)
+
+            (days.toFloat() * it.cigPerDay.toFloat()).toInt()
+        } ?: 0
     }
 
     fun getSmokeFreeDays(): Int {
-//        val startDate = userEntity.value?.start ?: return 0
-//        return calculateDifferenceToDays(startDate) ?: 0
-        return 0
+        return user.value?.let {
+            calcDifferenceToDays(it.start)
+        } ?: 0
     }
 
     fun getRegainedDays(): Int {

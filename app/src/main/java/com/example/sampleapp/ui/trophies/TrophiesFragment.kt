@@ -66,36 +66,36 @@ class TrophiesFragment : Fragment() {
         val regainedDays = viewModel.getRegainedDays()
 
         sectionOne.addAllItems(listOf(
-            buildBadgeItem(R.drawable.cig_not_smoked_20, cigNotSmoked >= 20),
-            buildBadgeItem(R.drawable.cig_not_smoked_100, cigNotSmoked >= 100),
-            buildBadgeItem(R.drawable.cig_not_smoked_1000, cigNotSmoked >= 1000),
-            buildBadgeItem(R.drawable.cig_not_smoked_10000, cigNotSmoked >= 10000)
+                buildBadgeItem(R.drawable.cig_not_smoked_20, cigNotSmoked >= 20),
+                buildBadgeItem(R.drawable.cig_not_smoked_100, cigNotSmoked >= 100),
+                buildBadgeItem(R.drawable.cig_not_smoked_1000, cigNotSmoked >= 1000),
+                buildBadgeItem(R.drawable.cig_not_smoked_10000, cigNotSmoked >= 10000)
         ))
 
         val sectionTwo = HeaderSection(HeaderItem(R.string.trophies_header_title_two))
 
         sectionTwo.addAllItems(listOf(
-            buildBadgeItem(R.drawable.smoke_free_days_1, freeDays > 1),
-            buildBadgeItem(R.drawable.smoke_free_days_3, freeDays > 3),
-            buildBadgeItem(R.drawable.smoke_free_days_5, freeDays > 5),
-            buildBadgeItem(R.drawable.smoke_free_days_7, freeDays > 7),
-            buildBadgeItem(R.drawable.smoke_free_days_10, freeDays > 10),
-            buildBadgeItem(R.drawable.smoke_free_days_14, freeDays > 14),
-            buildBadgeItem(R.drawable.smoke_free_days_30, freeDays > 30),
-            buildBadgeItem(R.drawable.smoke_free_days_90, freeDays > 90),
-            buildBadgeItem(R.drawable.smoke_free_days_180, freeDays > 180),
-            buildBadgeItem(R.drawable.smoke_free_days_365, freeDays > 365)
+                buildBadgeItem(R.drawable.smoke_free_days_1, freeDays > 1),
+                buildBadgeItem(R.drawable.smoke_free_days_3, freeDays > 3),
+                buildBadgeItem(R.drawable.smoke_free_days_5, freeDays > 5),
+                buildBadgeItem(R.drawable.smoke_free_days_7, freeDays > 7),
+                buildBadgeItem(R.drawable.smoke_free_days_10, freeDays > 10),
+                buildBadgeItem(R.drawable.smoke_free_days_14, freeDays > 14),
+                buildBadgeItem(R.drawable.smoke_free_days_30, freeDays > 30),
+                buildBadgeItem(R.drawable.smoke_free_days_90, freeDays > 90),
+                buildBadgeItem(R.drawable.smoke_free_days_180, freeDays > 180),
+                buildBadgeItem(R.drawable.smoke_free_days_365, freeDays > 365)
         ))
 
         val sectionThree = HeaderSection(HeaderItem(R.string.trophies_header_title_three))
 
         sectionThree.addAllItems(listOf(
-            buildBadgeItem(R.drawable.life_regained_1, regainedDays > 1),
-            buildBadgeItem(R.drawable.life_regained_10, regainedDays > 10),
-            buildBadgeItem(R.drawable.life_regained_30, regainedDays > 30),
-            buildBadgeItem(R.drawable.life_regained_90, regainedDays > 90),
-            buildBadgeItem(R.drawable.life_regained_180, regainedDays > 180),
-            buildBadgeItem(R.drawable.life_regained_365, regainedDays > 365)
+                buildBadgeItem(R.drawable.life_regained_1, regainedDays > 1),
+                buildBadgeItem(R.drawable.life_regained_10, regainedDays > 10),
+                buildBadgeItem(R.drawable.life_regained_30, regainedDays > 30),
+                buildBadgeItem(R.drawable.life_regained_90, regainedDays > 90),
+                buildBadgeItem(R.drawable.life_regained_180, regainedDays > 180),
+                buildBadgeItem(R.drawable.life_regained_365, regainedDays > 365)
         ))
 
         sections.add(sectionOne)

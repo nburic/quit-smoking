@@ -97,7 +97,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun openDialogSheet() {
-        val dialog = GoalDialogFragment.newInstance()
+        val selectedIndex = viewModel.getGoal()
+        val dialog = GoalDialogFragment.newInstance(selectedIndex)
 
         dialog.onGoalSelected = ::onGoalClicked
         dialog.show(childFragmentManager, GoalDialogFragment.TAG)

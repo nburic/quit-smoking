@@ -15,15 +15,32 @@ class GoalDialogFragment : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "GoalDialogFragment"
 
-        fun newInstance(): GoalDialogFragment {
-            return GoalDialogFragment()
+        const val ARG_SELECTED_INDEX = "ARG_SELECTED_INDEX"
+
+        fun newInstance(selectedIndex: Int): GoalDialogFragment {
+            val args = Bundle().apply {
+                putInt(ARG_SELECTED_INDEX, selectedIndex)
+            }
+
+            return GoalDialogFragment().apply {
+                arguments = args
+            }
         }
     }
 
     private var _binding: FragmentGoalListDialogBinding? = null
     private val binding: FragmentGoalListDialogBinding get() = _binding!!
 
+    private var selectedIndex: Int = 0
+
     var onGoalSelected: (position: Int) -> Unit = { throw NotImplementedError("onGoalSelected not implemented!") }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
+
+        selectedIndex = arguments?.getInt(ARG_SELECTED_INDEX) ?: 0
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentGoalListDialogBinding.inflate(inflater, container, false)
@@ -51,7 +68,7 @@ class GoalDialogFragment : BottomSheetDialogFragment() {
 
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = AdapterGoals(items, this@GoalDialogFragment::onItemClicked)
+            adapter = AdapterGoals(items, selectedIndex, this@GoalDialogFragment::onItemClicked)
         }
     }
 

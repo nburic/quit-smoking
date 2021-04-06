@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -36,6 +37,13 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
             val timestamp = getGoalTimestamp(position, start)
             repository.updateGoal(timestamp)
         }
+    }
+
+    fun getGoal(): Int {
+        val start = user.value?.start ?: return 0
+        val goal = user.value?.goal ?: return 0
+
+        return getGoalIndex(start, goal)
     }
 
     fun calculateNotSmoked(): Int {

@@ -49,6 +49,26 @@ object DateConverters {
         }
     }
 
+    fun getGoalIndex(start: Long, goal: Long): Int {
+        return when (goal) {
+            getEndTimestamp(start, 2, Duration.DAYS) -> 0
+            getEndTimestamp(start, 3, Duration.DAYS) -> 1
+            getEndTimestamp(start, 4, Duration.DAYS) -> 2
+            getEndTimestamp(start, 5, Duration.DAYS) -> 3
+            getEndTimestamp(start, 6, Duration.DAYS) -> 4
+            getEndTimestamp(start, 1, Duration.WEEKS) -> 5
+            getEndTimestamp(start, 10, Duration.DAYS) -> 6
+            getEndTimestamp(start, 2, Duration.WEEKS) -> 7
+            getEndTimestamp(start, 3, Duration.WEEKS) -> 8
+            getEndTimestamp(start, 1, Duration.MONTHS) -> 9
+            getEndTimestamp(start, 3, Duration.MONTHS) -> 10
+            getEndTimestamp(start, 6, Duration.MONTHS) -> 11
+            getEndTimestamp(start, 1, Duration.YEARS) -> 12
+            getEndTimestamp(start, 5, Duration.YEARS) -> 13
+            else -> 0
+        }
+    }
+
     fun daysToDuration(days: Int): String {
         val mYears = days / 30 / 12
         val mMonths = days / 30

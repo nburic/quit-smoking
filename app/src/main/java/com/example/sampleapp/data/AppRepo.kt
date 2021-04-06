@@ -18,10 +18,6 @@ class AppRepo @Inject constructor(private val userDao: UserDao) {
         userDao.updateGoal(timestamp)
     }
 
-    suspend fun getUser(): UserEntity = withContext(Dispatchers.IO) {
-        userDao.get()
-    }
-
     fun observeUser(): LiveData<UserEntity> {
         return userDao.observeUser()
     }

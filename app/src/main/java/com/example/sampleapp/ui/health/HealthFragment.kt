@@ -21,16 +21,19 @@ class HealthFragment : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
-    private var healthItems: MutableList<HealthAchievementItem> = mutableListOf()
-
-    private var adapter: AdapterCardsHealth = AdapterCardsHealth()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHealthBinding.inflate(inflater, container, false)
 
+        val items = createItems(viewModel.getStartEpoch())
+        setupRecycler(items)
+
+        return binding.root
+    }
+
+    private fun setupRecycler(items: List<HealthAchievementItem>) {
         binding.recycler.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = this@HealthFragment.adapter
+            adapter = AdapterCardsHealth(items)
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                     outRect.apply {
@@ -42,14 +45,11 @@ class HealthFragment : Fragment() {
                 }
             })
         }
-
-        setCards(viewModel.getStartEpoch())
-        adapter.setItems(healthItems)
-
-        return binding.root
     }
 
-    private fun setCards(startDate: Long) {
+    private fun createItems(startDate: Long): List<HealthAchievementItem> {
+        val healthItems = mutableListOf<HealthAchievementItem>()
+
         for (i in 0..12) {
             val card = HealthAchievementItem()
 
@@ -59,6 +59,8 @@ class HealthFragment : Fragment() {
 
             healthItems.add(card)
         }
+
+        return healthItems.toList()
     }
 
     override fun onDestroyView() {

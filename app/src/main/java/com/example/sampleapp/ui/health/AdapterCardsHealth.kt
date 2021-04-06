@@ -1,20 +1,21 @@
 package com.example.sampleapp.ui.health
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
 import com.example.sampleapp.data.models.health.HealthAchievementItem
+import com.example.sampleapp.databinding.MhCardViewBinding
 
 
-class AdapterCardsHealth : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>() {
+class AdapterCardsHealth(private var items: List<HealthAchievementItem>) : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>() {
 
-    private var items: List<HealthAchievementItem> = listOf()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = MhCardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return ViewHolder(binding)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
@@ -22,42 +23,27 @@ class AdapterCardsHealth : RecyclerView.Adapter<AdapterCardsHealth.ViewHolder>()
         holder.bindData(item)
     }
 
-    fun setItems(items: List<HealthAchievementItem>) {
-        this.items = items
-        notifyDataSetChanged()
-    }
-
     override fun getItemCount() = items.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.mh_card_view, parent, false)
-        return ViewHolder(view, parent.context)
-    }
-
-    class ViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
-        private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
-        private val tvProgress: TextView = itemView.findViewById(R.id.tv_progress_value)
-        private val tvStatus: TextView = itemView.findViewById(R.id.tv_task_status)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
-
+    class ViewHolder(val binding: MhCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bindData(item: HealthAchievementItem) {
-            tvDescription.text = item.description
+            binding.tvDescription.text = item.description
 
             val progress = item.progress
             when (progress >= 100) {
                 true -> {
-                    tvStatus.text = context.resources.getString(R.string.health_status_done)
-                    tvProgress.text = "100%"
+                    binding.tvStatus.text = binding.root.context.resources.getString(R.string.health_status_done)
+                    binding.tvProgressValue.text = "100%"
                 }
                 false -> {
-                    tvStatus.text = item.finishDate
-                    tvProgress.text = "$progress%"
+                    binding.tvStatus.text = item.finishDate
+                    binding.tvProgressValue.text = "$progress%"
                 }
 
             }
 
-            progressBar.progress = progress
+            binding.progressBar.progress = progress
         }
     }
 }

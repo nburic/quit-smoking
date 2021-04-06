@@ -2,7 +2,6 @@ package com.example.sampleapp.util
 
 import android.content.Context
 import com.example.sampleapp.R
-import com.example.sampleapp.util.Epoch.now
 import java.text.SimpleDateFormat
 import java.util.*
 

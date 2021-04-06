@@ -1,4 +1,4 @@
-package com.example.sampleapp.ui.views.home
+package com.example.sampleapp.ui.home.views
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint

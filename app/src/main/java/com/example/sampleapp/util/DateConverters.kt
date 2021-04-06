@@ -69,6 +69,26 @@ object DateConverters {
         }
     }
 
+    fun getGoalValue(context: Context, start: Long, goal: Long): String {
+        return when (goal) {
+            getEndTimestamp(start, 2, Duration.DAYS) -> context.resources.getString(R.string.goal_two_days)
+            getEndTimestamp(start, 3, Duration.DAYS) -> context.resources.getString(R.string.goal_three_days)
+            getEndTimestamp(start, 4, Duration.DAYS) -> context.resources.getString(R.string.goal_four_days)
+            getEndTimestamp(start, 5, Duration.DAYS) -> context.resources.getString(R.string.goal_five_days)
+            getEndTimestamp(start, 6, Duration.DAYS) -> context.resources.getString(R.string.goal_six_days)
+            getEndTimestamp(start, 1, Duration.WEEKS) -> context.resources.getString(R.string.goal_one_week)
+            getEndTimestamp(start, 10, Duration.DAYS) -> context.resources.getString(R.string.goal_ten_days)
+            getEndTimestamp(start, 2, Duration.WEEKS) -> context.resources.getString(R.string.goal_two_weeks)
+            getEndTimestamp(start, 3, Duration.WEEKS) -> context.resources.getString(R.string.goal_three_weeks)
+            getEndTimestamp(start, 1, Duration.MONTHS) -> context.resources.getString(R.string.goal_one_month)
+            getEndTimestamp(start, 3, Duration.MONTHS) -> context.resources.getString(R.string.goal_three_months)
+            getEndTimestamp(start, 6, Duration.MONTHS) -> context.resources.getString(R.string.goal_six_months)
+            getEndTimestamp(start, 1, Duration.YEARS) -> context.resources.getString(R.string.goal_one_year)
+            getEndTimestamp(start, 5, Duration.YEARS) -> context.resources.getString(R.string.goal_five_years)
+            else -> String.empty
+        }
+    }
+
     fun daysToDuration(days: Int): String {
         val mYears = days / 30 / 12
         val mMonths = days / 30

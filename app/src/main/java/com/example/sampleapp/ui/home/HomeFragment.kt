@@ -15,6 +15,7 @@ import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
+import com.example.sampleapp.util.DateConverters.getGoalValue
 import com.example.sampleapp.util.Epoch.calcDifferenceToDays
 import com.example.sampleapp.util.Epoch.calcLifeLost
 import com.example.sampleapp.util.Epoch.calcLifeRegained
@@ -70,8 +71,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun onUserDataChanged(userEntity: UserEntity) {
-        binding.progressCard.setProgressValue(calcPassedTime(userEntity.start))
-        binding.progressCard.setGoalPercentage(calcPercentage(userEntity.start, userEntity.goal))
+        binding.progressCard.apply {
+            setProgressValue(calcPassedTime(userEntity.start))
+            setGoalPercentage(calcPercentage(userEntity.start, userEntity.goal))
+            setGoalValue(getGoalValue(requireContext(), userEntity.start, userEntity.goal))
+        }
 
         val smoked = calcSmoked(userEntity.years, userEntity.cigPerDay).toString()
         val notSmoked = calcNotSmoked(userEntity.start, userEntity.cigPerDay).toString()

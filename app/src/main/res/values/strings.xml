@@ -4,6 +4,7 @@
     <string name="nav_progress_title">NAPREDEK</string>
     <string name="nav_trophies_title">ZNAČKE</string>
     <string name="nav_health_title">ZDRAVJE</string>
+    <string name="nav_store_title">TRGOVINA</string>
 
     <string name="menu_settings_title">Nastavitve</string>
 
@@ -66,5 +67,9 @@
     <string name="trophies_header_title_one">Nepokajeni cigareti</string>
     <string name="trophies_header_title_two">Dnevi brez kajenja</string>
     <string name="trophies_header_title_three">Pridobljeno življenje</string>
+
+    <!-- Store -->
+    <string name="store_current_money_title">Trenutna količina denarja</string>
+    <string name="store_all_items_title">Stvari, ki si jih zaslužiš namesto kajenja</string>
 
 </resources>

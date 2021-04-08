@@ -29,6 +29,12 @@
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 
+    <fragment
+        android:id="@+id/storeFragment"
+        android:name="com.example.sampleapp.ui.store.StoreFragment"
+        android:label="fragment_store"
+        tools:layout="@layout/fragment_store" />
+
     <action
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment" />

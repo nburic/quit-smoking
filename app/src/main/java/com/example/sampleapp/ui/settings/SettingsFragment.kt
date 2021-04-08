@@ -29,7 +29,7 @@ class SettingsFragment : Fragment() {
         private const val YEARS_STEP = 1
 
         private const val PRICE_MAX = 100 // 100 / 0,2 = 20
-        private const val PRICE_MIN = 0
+        private const val PRICE_MIN = 0.0f
         private const val PRICE_STEP = 0.2f
 
         private const val DEFAULT_GOAL = 172800000L // 2 days, default goal

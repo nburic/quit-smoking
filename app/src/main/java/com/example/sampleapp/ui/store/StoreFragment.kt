@@ -14,6 +14,7 @@ import com.example.sampleapp.MainViewModel
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentStoreBinding
+import com.example.sampleapp.ui.dialog.AddItemDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment
 import com.example.sampleapp.util.Epoch
 import com.example.sampleapp.util.toPx
@@ -62,8 +63,15 @@ class StoreFragment : Fragment() {
         }
 
         binding.fabAddItem.setOnClickListener {
-            viewModel.addStoreItem(StoreItemEntity(id = 0, title = "Jacket", 350))
+            val dialog = AddItemDialogFragment()
+            dialog.onSubmitClick = this::addItem
+
+            dialog.show(childFragmentManager, AddItemDialogFragment.TAG)
         }
+    }
+
+    private fun addItem(name: String, price: Int) {
+        viewModel.addStoreItem(StoreItemEntity(id = 0, title = name, price = price))
     }
 
     private fun onUserDataChanged(user: UserEntity) {

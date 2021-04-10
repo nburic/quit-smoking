@@ -11,6 +11,7 @@
     <string name="common_date_time_formatting_date_day_month_year">dd.MM.yyyy</string>
     <string name="common_date_time_formatting_time_hour_minute">HH:mm</string>
     <string name="common_submit">Potrdi</string>
+    <string name="common_cancel">Prekliči</string>
     <string name="common_set">Določi</string>
 
     <string name="settings_quit_date_label">Nastavi datum začetka</string>
@@ -72,5 +73,10 @@
     <string name="store_current_money_title">Trenutna količina denarja</string>
     <string name="store_all_items_title">Stvari, ki si jih zaslužiš namesto kajenja</string>
     <string name="store_purchase">Kupi</string>
+    <string name="store_dialog_title">Želja</string>
+    <string name="store_dialog_message">Vpiši ime in ceno tvoje želje.</string>
+    <string name="store_dialog_item_name_hint">Želim si…</string>
+    <string name="store_dialog_item_price_hint">Cena…</string>
+
 
 </resources>

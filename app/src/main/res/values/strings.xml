@@ -71,5 +71,6 @@
     <!-- Store -->
     <string name="store_current_money_title">Trenutna količina denarja</string>
     <string name="store_all_items_title">Stvari, ki si jih zaslužiš namesto kajenja</string>
+    <string name="store_purchase">Kupi</string>
 
 </resources>

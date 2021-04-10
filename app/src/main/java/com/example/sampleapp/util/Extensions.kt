@@ -1,5 +1,6 @@
 package com.example.sampleapp.util
 
+import android.content.Context
 import android.view.View
 import java.util.*
 
@@ -18,6 +19,14 @@ fun View.show() {
 fun View.invisible() {
     visibility = View.INVISIBLE
 }
+
+fun Int.toPx(context: Context): Int = (this * context.resources.displayMetrics.density).toInt()
+
+fun Int.toDp(context: Context): Int = (this / context.resources.displayMetrics.density).toInt()
+
+fun Float.toPx(context: Context): Float = (this * context.resources.displayMetrics.density)
+
+fun Float.toDp(context: Context): Float = (this / context.resources.displayMetrics.density)
 
 object Epoch {
     fun now(): Long {

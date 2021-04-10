@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
-import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.data.db.store.StoreItemEntity
+import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import com.example.sampleapp.util.Epoch.calcDifferenceToDays
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewModel() {
 
     val user: LiveData<UserEntity> = repository.observeUser()
+    val store: LiveData<List<StoreItemEntity>> = repository.observeStore()
     private var startEpoch: Long? = null
 
     fun setStartEpoch(epoch: Long?) {
@@ -68,5 +70,17 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
 
     private fun calculateLifeRegained(notSmoked: Int): Int {
         return notSmoked * 11 / 60 / 24
+    }
+
+    fun addStoreItem(item: StoreItemEntity) {
+        viewModelScope.launch {
+            repository.addStoreItem(item)
+        }
+    }
+
+    fun removeStoreItem(id: Int) {
+        viewModelScope.launch {
+            repository.removeStoreItem(id)
+        }
     }
 }

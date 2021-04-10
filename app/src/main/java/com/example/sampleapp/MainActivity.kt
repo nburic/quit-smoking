@@ -9,7 +9,7 @@ import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.ActivityMainBinding
 import com.example.sampleapp.util.hide
 import com.example.sampleapp.util.show

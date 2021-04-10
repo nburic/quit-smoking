@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.MainViewModel
-import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.data.db.store.StoreItemEntity
+import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentStoreBinding
 import com.example.sampleapp.ui.settings.SettingsFragment
 import com.example.sampleapp.util.Epoch
 import com.example.sampleapp.util.toPx
-import timber.log.Timber
 
 
 class StoreFragment : Fragment() {
@@ -33,14 +33,16 @@ class StoreFragment : Fragment() {
         onUserDataChanged(user)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val storeObserver = Observer { store: List<StoreItemEntity>? ->
+        store ?: return@Observer
+        onStoreDataChanged(store)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentStoreBinding.inflate(inflater, container, false)
 
         viewModel.user.observe(viewLifecycleOwner, userObserver)
+        viewModel.store.observe(viewLifecycleOwner, storeObserver)
 
         return binding.root
     }
@@ -59,12 +61,9 @@ class StoreFragment : Fragment() {
             })
         }
 
-        adapter.setItems(listOf(
-                StoreItem("Jacket", 350), StoreItem("Tennis Racket", 150),
-                StoreItem("Jacket", 350), StoreItem("Tennis Racket", 150),
-                StoreItem("Jacket", 350), StoreItem("Tennis Racket", 150),
-                StoreItem("Jacket", 350), StoreItem("Tennis Racket", 150))
-        )
+        binding.fabAddItem.setOnClickListener {
+            viewModel.addStoreItem(StoreItemEntity(id = 0, title = "Jacket", 350))
+        }
     }
 
     private fun onUserDataChanged(user: UserEntity) {
@@ -73,8 +72,12 @@ class StoreFragment : Fragment() {
         binding.tvCurrentMoney.text = moneySaved
     }
 
-    private fun onDeleteItem(item: StoreItem) {
-        Timber.d("Delete item $item")
+    private fun onStoreDataChanged(store: List<StoreItemEntity>) {
+        adapter.setItems(store)
+    }
+
+    private fun onDeleteItem(item: StoreItemEntity) {
+        viewModel.removeStoreItem(item.id)
     }
 
     override fun onDestroyView() {

@@ -9,7 +9,7 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.sampleapp.MainViewModel
-import com.example.sampleapp.data.db.UserEntity
+import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentSettingsBinding
 import com.example.sampleapp.util.DateConverters.toDateTime
 

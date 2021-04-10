@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.databinding.ItemStoreBinding
 import com.example.sampleapp.ui.settings.SettingsFragment
 
-class AdapterStoreItems(private val onDeleteClick: (item: StoreItem) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
+class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
 
-    private var items: List<StoreItem> = emptyList()
+    private var items: List<StoreItemEntity> = emptyList()
 
-    fun setItems(items: List<StoreItem>) {
+    fun setItems(items: List<StoreItemEntity>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -36,7 +37,7 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItem) -> Unit) : 
     class ViewHolder(val binding: ItemStoreBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: StoreItem) {
+        fun bind(item: StoreItemEntity) {
             binding.tvTitle.text = item.title
             binding.tvPrice.text = item.price.toString() + SettingsFragment.CURRENCY
             binding.pbStatus.progress = 40

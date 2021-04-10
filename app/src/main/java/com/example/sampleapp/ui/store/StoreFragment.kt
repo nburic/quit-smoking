@@ -1,16 +1,19 @@
 package com.example.sampleapp.ui.store
 
+import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.MainViewModel
+import com.example.sampleapp.R
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentStoreBinding
@@ -27,7 +30,7 @@ class StoreFragment : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
-    private val adapter = AdapterStoreItems(this::onDeleteItem)
+    private val adapter = AdapterStoreItems(this::onDeleteItem, this::onPurchaseItem)
 
     private val userObserver = Observer { user: UserEntity? ->
         user ?: return@Observer
@@ -71,13 +74,19 @@ class StoreFragment : Fragment() {
     }
 
     private fun addItem(name: String, price: Int) {
-        viewModel.addStoreItem(StoreItemEntity(id = 0, title = name, price = price))
+        viewModel.addStoreItem(StoreItemEntity(
+                id = 0,
+                title = name,
+                price = price,
+                bought = false))
     }
 
+    @SuppressLint("SetTextI18n")
     private fun onUserDataChanged(user: UserEntity) {
-        val moneySaved = "${Epoch.calcMoney(Epoch.calcDifferenceToDays(user.start), user.cigPerDay, user.inPack, user.price)} ${SettingsFragment.CURRENCY}"
+        val moneySaved = Epoch.calcMoney(Epoch.calcDifferenceToDays(user.start), user.cigPerDay, user.inPack, user.price)
 
-        binding.tvCurrentMoney.text = moneySaved
+        binding.tvCurrentMoney.text = "$moneySaved ${SettingsFragment.CURRENCY}"
+        adapter.setMoney(moneySaved)
     }
 
     private fun onStoreDataChanged(store: List<StoreItemEntity>) {
@@ -86,6 +95,15 @@ class StoreFragment : Fragment() {
 
     private fun onDeleteItem(item: StoreItemEntity) {
         viewModel.removeStoreItem(item.id)
+    }
+
+    private fun onPurchaseItem(item: StoreItemEntity) {
+        if (item.bought) {
+            Toast.makeText(context, R.string.store_toast_item_bought, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        viewModel.buyStoreItem(item.id)
     }
 
     override fun onDestroyView() {

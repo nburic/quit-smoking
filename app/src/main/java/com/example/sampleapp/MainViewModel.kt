@@ -83,4 +83,10 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
             repository.removeStoreItem(id)
         }
     }
+
+    fun buyStoreItem(id: Int) {
+        viewModelScope.launch {
+            repository.buyStoreItem(id)
+        }
+    }
 }

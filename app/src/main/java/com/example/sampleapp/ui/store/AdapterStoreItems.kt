@@ -8,12 +8,19 @@ import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.databinding.ItemStoreBinding
 import com.example.sampleapp.ui.settings.SettingsFragment
 
-class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
+class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Unit,
+                        private val onPurchaseClick: (item: StoreItemEntity) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
 
     private var items: List<StoreItemEntity> = emptyList()
+    private var money: Int = 0
 
     fun setItems(items: List<StoreItemEntity>) {
         this.items = items
+        notifyDataSetChanged()
+    }
+
+    fun setMoney(money: Int) {
+        this.money = money
         notifyDataSetChanged()
     }
 
@@ -29,7 +36,11 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Un
             onDeleteClick.invoke(item)
         }
 
-        holder.bind(item)
+        holder.binding.tvPurchase.setOnClickListener {
+            onPurchaseClick.invoke(item)
+        }
+
+        holder.bind(item, money)
     }
 
     override fun getItemCount() = items.size
@@ -37,10 +48,20 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Un
     class ViewHolder(val binding: ItemStoreBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: StoreItemEntity) {
+        fun bind(item: StoreItemEntity, money: Int) {
             binding.tvTitle.text = item.title
             binding.tvPrice.text = item.price.toString() + SettingsFragment.CURRENCY
-            binding.pbStatus.progress = 40
+
+            when (item.bought) {
+                true -> binding.pbStatus.progress = 100
+                false -> {
+                    val percent = money * 100 / item.price
+                    when {
+                        percent >= 100 -> binding.pbStatus.progress = 100
+                        else -> binding.pbStatus.progress = percent
+                    }
+                }
+            }
         }
     }
 }

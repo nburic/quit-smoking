@@ -9,5 +9,6 @@ data class StoreItemEntity(
         @PrimaryKey(autoGenerate = true)
         var id: Int,
         var title: String = String.empty,
-        var price: Int = 0
+        var price: Int = 0,
+        var bought: Boolean = false
 )

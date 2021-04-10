@@ -31,4 +31,10 @@ interface StoreItemDao {
      */
     @Query("DELETE FROM StoreItem WHERE id = :id")
     suspend fun delete(id: Int)
+
+    /**
+     * Buys store item
+     */
+    @Query("UPDATE StoreItem SET bought = 1 WHERE id = :id")
+    suspend fun buyItem(id: Int)
 }

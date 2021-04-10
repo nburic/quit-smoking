@@ -77,6 +77,7 @@
     <string name="store_dialog_message">Vpiši ime in ceno tvoje želje.</string>
     <string name="store_dialog_item_name_hint">Želim si…</string>
     <string name="store_dialog_item_price_hint">Cena…</string>
+    <string name="store_toast_item_bought">To je že tvoje.</string>
 
 
 </resources>

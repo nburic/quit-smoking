@@ -36,4 +36,8 @@ class AppRepo @Inject constructor(private val userDao: UserDao,
     suspend fun removeStoreItem(id: Int) = withContext(Dispatchers.IO) {
         storeItemDao.delete(id)
     }
+
+    suspend fun buyStoreItem(id: Int) = withContext(Dispatchers.IO) {
+        storeItemDao.buyItem(id)
+    }
 }

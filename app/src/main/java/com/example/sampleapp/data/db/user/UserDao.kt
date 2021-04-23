@@ -21,6 +21,9 @@ interface UserDao {
     fun observeUser(): LiveData<UserEntity>
 
     @Query("SELECT * FROM User WHERE uid = 0")
+    fun observeUserWithStoreItems(): LiveData<UserWithStoreItems>
+
+    @Query("SELECT * FROM User WHERE uid = 0")
     suspend fun get(): UserEntity
 
     /**

@@ -1,6 +1,7 @@
 package com.example.sampleapp.data
 
 import androidx.lifecycle.LiveData
+import com.example.sampleapp.data.db.user.UserWithStoreItems
 import com.example.sampleapp.data.db.store.StoreItemDao
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.data.db.user.UserDao
@@ -23,6 +24,10 @@ class AppRepo @Inject constructor(private val userDao: UserDao,
 
     fun observeUser(): LiveData<UserEntity> {
         return userDao.observeUser()
+    }
+
+    fun observeUserWithStoreItems(): LiveData<UserWithStoreItems> {
+        return userDao.observeUserWithStoreItems()
     }
 
     fun observeStore(): LiveData<List<StoreItemEntity>> {

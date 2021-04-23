@@ -73,11 +73,13 @@
     <string name="store_current_money_title">Trenutna količina denarja</string>
     <string name="store_all_items_title">Stvari, ki si jih zaslužiš namesto kajenja</string>
     <string name="store_purchase">Kupi</string>
+    <string name="store_bought">Kupljeno</string>
     <string name="store_dialog_title">Želja</string>
     <string name="store_dialog_message">Vpiši ime in ceno tvoje želje.</string>
     <string name="store_dialog_item_name_hint">Želim si…</string>
     <string name="store_dialog_item_price_hint">Cena…</string>
     <string name="store_toast_item_bought">To je že tvoje.</string>
+    <string name="store_toast_not_enough_money">Premalo denarja.</string>
 
 
 </resources>

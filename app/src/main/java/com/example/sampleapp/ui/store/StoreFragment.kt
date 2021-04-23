@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.MainViewModel
 import com.example.sampleapp.R
+import com.example.sampleapp.data.db.user.UserWithStoreItems
 import com.example.sampleapp.data.db.store.StoreItemEntity
-import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentStoreBinding
 import com.example.sampleapp.ui.dialog.AddItemDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment
@@ -32,21 +32,17 @@ class StoreFragment : Fragment() {
 
     private val adapter = AdapterStoreItems(this::onDeleteItem, this::onPurchaseItem)
 
-    private val userObserver = Observer { user: UserEntity? ->
-        user ?: return@Observer
-        onUserDataChanged(user)
-    }
+    private var currentMoney: Int = 0
 
-    private val storeObserver = Observer { store: List<StoreItemEntity>? ->
-        store ?: return@Observer
-        onStoreDataChanged(store)
+    private val userWithStoreItemsObserver = Observer { userWithStoreItems: UserWithStoreItems? ->
+        userWithStoreItems ?: return@Observer
+        onUserDataChanged(userWithStoreItems)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentStoreBinding.inflate(inflater, container, false)
 
-        viewModel.user.observe(viewLifecycleOwner, userObserver)
-        viewModel.store.observe(viewLifecycleOwner, storeObserver)
+        viewModel.userWithStoreItems.observe(viewLifecycleOwner, userWithStoreItemsObserver)
 
         return binding.root
     }
@@ -73,6 +69,12 @@ class StoreFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun setCurrentMoney(money: Int) {
+        currentMoney = money
+        binding.tvCurrentMoney.text = "$money ${SettingsFragment.CURRENCY}"
+    }
+
     private fun addItem(name: String, price: Int) {
         viewModel.addStoreItem(StoreItemEntity(
                 id = 0,
@@ -82,15 +84,17 @@ class StoreFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun onUserDataChanged(user: UserEntity) {
-        val moneySaved = Epoch.calcMoney(Epoch.calcDifferenceToDays(user.start), user.cigPerDay, user.inPack, user.price)
+    private fun onUserDataChanged(userWithStoreItems: UserWithStoreItems) {
+        var moneySaved = Epoch.calcMoney(Epoch.calcDifferenceToDays(userWithStoreItems.user.start), userWithStoreItems.user.cigPerDay, userWithStoreItems.user.inPack, userWithStoreItems.user.price)
 
-        binding.tvCurrentMoney.text = "$moneySaved ${SettingsFragment.CURRENCY}"
+        moneySaved -= userWithStoreItems.storeItems
+                .filter { it.bought }
+                .sumBy { it.price }
+
+        setCurrentMoney(moneySaved)
+
         adapter.setMoney(moneySaved)
-    }
-
-    private fun onStoreDataChanged(store: List<StoreItemEntity>) {
-        adapter.setItems(store)
+        adapter.setItems(userWithStoreItems.storeItems)
     }
 
     private fun onDeleteItem(item: StoreItemEntity) {
@@ -103,7 +107,10 @@ class StoreFragment : Fragment() {
             return
         }
 
-        viewModel.buyStoreItem(item.id)
+        when {
+            item.price <= currentMoney -> viewModel.buyStoreItem(item.id)
+            else -> Toast.makeText(context, R.string.store_toast_not_enough_money, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

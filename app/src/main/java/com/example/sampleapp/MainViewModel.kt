@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampleapp.data.AppRepo
+import com.example.sampleapp.data.db.user.UserWithStoreItems
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.util.DateConverters.getGoalIndex
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewModel() {
 
     val user: LiveData<UserEntity> = repository.observeUser()
+    val userWithStoreItems: LiveData<UserWithStoreItems> = repository.observeUserWithStoreItems()
     val store: LiveData<List<StoreItemEntity>> = repository.observeStore()
     private var startEpoch: Long? = null
 

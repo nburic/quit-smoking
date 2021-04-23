@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sampleapp.R
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.databinding.ItemStoreBinding
 import com.example.sampleapp.ui.settings.SettingsFragment
+import com.example.sampleapp.util.hide
+import com.example.sampleapp.util.show
 
 class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Unit,
                         private val onPurchaseClick: (item: StoreItemEntity) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
@@ -49,17 +52,26 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Un
 
         @SuppressLint("SetTextI18n")
         fun bind(item: StoreItemEntity, money: Int) {
+            val context = binding.root.context
             binding.tvTitle.text = item.title
             binding.tvPrice.text = item.price.toString() + SettingsFragment.CURRENCY
 
             when (item.bought) {
-                true -> binding.pbStatus.progress = 100
+                true -> {
+                    binding.wrapper.setBackgroundColor(context.getColor(R.color.lightGreen))
+                    binding.pbStatus.progress = 100
+                    binding.tvPurchase.text = context.getString(R.string.store_bought)
+                    binding.pbStatus.hide()
+                }
                 false -> {
+                    binding.wrapper.setBackgroundColor(0)
                     val percent = money * 100 / item.price
                     when {
                         percent >= 100 -> binding.pbStatus.progress = 100
                         else -> binding.pbStatus.progress = percent
                     }
+                    binding.tvPurchase.text = context.getString(R.string.store_purchase)
+                    binding.pbStatus.show()
                 }
             }
         }

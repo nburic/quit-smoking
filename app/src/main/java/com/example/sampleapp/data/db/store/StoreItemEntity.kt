@@ -10,5 +10,6 @@ data class StoreItemEntity(
         var id: Int,
         var title: String = String.empty,
         var price: Int = 0,
-        var bought: Boolean = false
+        var bought: Boolean = false,
+        var userId: Int = 0
 )

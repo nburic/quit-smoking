@@ -94,7 +94,7 @@ class StoreFragment : Fragment() {
         setCurrentMoney(moneySaved)
 
         adapter.setMoney(moneySaved)
-        adapter.setItems(userWithStoreItems.storeItems)
+        adapter.setItems(userWithStoreItems.storeItems.reversed())
     }
 
     private fun onDeleteItem(item: StoreItemEntity) {

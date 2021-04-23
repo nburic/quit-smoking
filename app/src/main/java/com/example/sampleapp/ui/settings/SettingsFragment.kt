@@ -150,6 +150,18 @@ class SettingsFragment : Fragment() {
     }
 
     private fun onDateSet(epoch: Long) {
+        val dialog = TimePickerFragment.newInstance()
+
+        dialog.apply {
+            onTimeSet = { time ->
+                this@SettingsFragment.onTimeSet(epoch + time)
+            }
+        }
+
+        dialog.show(childFragmentManager, DatePickerFragment.TAG)
+    }
+
+    private fun onTimeSet(epoch: Long) {
         viewModel.setStartEpoch(epoch)
         binding.tvDateValue.text = toDateTime(requireContext(), epoch)
     }

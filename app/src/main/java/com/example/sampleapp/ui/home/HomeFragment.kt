@@ -1,5 +1,9 @@
 package com.example.sampleapp.ui.home
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context.ALARM_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +17,12 @@ import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
+import com.example.sampleapp.data.broadcasts.GoalBroadcastReceiver
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
+import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import com.example.sampleapp.util.DateConverters.getGoalValue
+import com.example.sampleapp.util.Epoch
 import com.example.sampleapp.util.Epoch.calcDifferenceToDays
 import com.example.sampleapp.util.Epoch.calcLifeLost
 import com.example.sampleapp.util.Epoch.calcLifeRegained
@@ -30,6 +37,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -42,6 +50,9 @@ class HomeFragment : Fragment() {
 
     private val adapterStats = AdapterCardStats()
     private val adapterHistory = AdapterCardHistory()
+
+    private var alarmMgr: AlarmManager? = null
+    private lateinit var alarmIntent: PendingIntent
 
     private var uiDisposable: Disposable? = null
 
@@ -137,6 +148,17 @@ class HomeFragment : Fragment() {
 
     private fun onGoalClicked(position: Int) {
         viewModel.setGoal(position)
+
+        val epoch = getGoalTimestamp(position, viewModel.getStartEpoch())
+
+        Timber.d("registering alarm")
+
+        alarmMgr = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmIntent = Intent(context, GoalBroadcastReceiver::class.java).let { intent ->
+            PendingIntent.getBroadcast(context, 0, intent, 0)
+        }
+
+        alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, Epoch.now() + 10 * 1000, alarmIntent)
     }
 
     override fun onDestroy() {

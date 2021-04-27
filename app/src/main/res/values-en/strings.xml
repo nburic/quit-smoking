@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_progress_title">PROGRESS</string>
+    <string name="nav_trophies_title">BADGES</string>
+    <string name="nav_health_title">HEALTH</string>
+    <string name="nav_store_title">STORE</string>
+
+    <string name="menu_settings_title">Settings</string>
+
+    <string name="common_submit">Submit</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_set">Set</string>
+
+    <string name="settings_quit_date_label">Set start date</string>
+    <string name="settings_smoked_per_day_label">Smoked cigarettes daily</string>
+    <string name="settings_cigs_in_pack_label">Cigarettes in package</string>
+    <string name="settings_years_of_smoking_label">Years smoking</string>
+    <string name="settings_price_per_pack_label">Package price</string>
+    <string name="settings_currency_label">Currency</string>
+
+    <string name="mp_smoke_free_label">Time without a cigarette</string>
+    <string name="mp_money_saved_label">Saved money</string>
+    <string name="mp_life_regained_label">Regained life</string>
+    <string name="mp_cigs_not_smoked_label">Cigarettes not smoked</string>
+    <string name="mp_history_card_title">In time of smoking:</string>
+    <string name="mp_stats_card_title">In time without a cigarette:</string>
+    <string name="mp_cigs_smoked_label">Smoked cigarettes</string>
+    <string name="mp_money_spent_label">Spent money</string>
+    <string name="mp_life_lost_label">Lost life</string>
+
+    <string name="goal_title">GOAL</string>
+    <string name="goal_bottom_sheet_title">Goals:</string>
+    <string name="goal_btn_set_title">set a goal</string>
+    <string name="goal_two_days">2 days</string>
+    <string name="goal_three_days">3 days</string>
+    <string name="goal_four_days">4 days</string>
+    <string name="goal_five_days">5 days</string>
+    <string name="goal_six_days">6 days</string>
+    <string name="goal_ten_days">10 days</string>
+    <string name="goal_one_week">1 week</string>
+    <string name="goal_two_weeks">2 weeks</string>
+    <string name="goal_three_weeks">3 weeks</string>
+    <string name="goal_one_month">1 month</string>
+    <string name="goal_three_months">3 months</string>
+    <string name="goal_six_months">6 months</string>
+    <string name="goal_one_year">1 year</string>
+    <string name="goal_five_years">5 years</string>
+
+    <!--    Health   -->
+    <string name="health_status_done">Accomplished</string>
+
+    <string name="health_descr_one">After 20 minutes: Blood pressure and heart rate decrease.</string>
+    <string name="health_descr_two">After 8 hours: The level of carbon monoxide in the blood returns to normal.</string>
+    <string name="health_descr_three">After 24 hours: Your chance of a heart attack decreases.</string>
+    <string name="health_descr_four">After 48 hours: Your ability to taste and smell begins to return.</string>
+    <string name="health_descr_five">After 72 hours: The airways begin to relax.</string>
+    <string name="health_descr_six">After 5 to 8 days: The average number of cravings is reduced to 3 per day.</string>
+    <string name="health_descr_seven">After 10 to 14 days: Blood circulation in the gums and teeth returns to normal. The longing shifts to 2 a day (average).</string>
+    <string name="health_descr_eight">After 2 to 12 weeks: Your blood circulation improves and your lung function increases.</string>
+    <string name="health_descr_nine">After 3 to 4 weeks: Anger, anxiety, restlessness and depression stop.</string>
+    <string name="health_descr_ten">After 2 months: Insulin resistance returned to normal despite an average weight gain of 5.95 lb (2.7 kg).</string>
+    <string name="health_descr_eleven">After 1 to 9 months: Cough and shortness of breath decrease.</string>
+    <string name="health_descr_twelve">After 1 to 5 years: The risk of death from cardiac arrest is about half the risk for a smoker.</string>
+    <string name="health_descr_thirteen">After ten years: Your risk of lung cancer drops to about half the risk of a smoker.</string>
+
+    <!--   Trophies -->
+    <string name="trophies_header_title_one">Cigarettes not smoked</string>
+    <string name="trophies_header_title_two">Days without a smoke</string>
+    <string name="trophies_header_title_three">Regained life</string>
+
+    <!-- Store -->
+    <string name="store_current_money_title">Current amount of money</string>
+    <string name="store_all_items_title">Things you deserve instead of smoking</string>
+    <string name="store_purchase">Buy</string>
+    <string name="store_bought">Bought</string>
+    <string name="store_dialog_title">Wish</string>
+    <string name="store_dialog_message">Type your wish name and price.</string>
+    <string name="store_dialog_item_name_hint">I wish…</string>
+    <string name="store_dialog_item_price_hint">Price…</string>
+    <string name="store_toast_item_bought">This is already yours.</string>
+    <string name="store_toast_not_enough_money">Not enough money.</string>
+</resources>

@@ -8,8 +8,8 @@
 
     <string name="menu_settings_title">Nastavitve</string>
 
-    <string name="common_date_time_formatting_date_day_month_year">dd.MM.yyyy</string>
-    <string name="common_date_time_formatting_time_hour_minute">HH:mm</string>
+    <string name="common_date_time_formatting_date_day_month_year" translatable="false">dd.MM.yyyy</string>
+    <string name="common_date_time_formatting_time_hour_minute" translatable="false">HH:mm</string>
     <string name="common_submit">Potrdi</string>
     <string name="common_cancel">Prekliči</string>
     <string name="common_set">Določi</string>
@@ -32,6 +32,8 @@
     <string name="mp_life_lost_label">Izgubljeno življenje</string>
 
     <string name="goal_title">CILJ</string>
+    <string name="goal_bottom_sheet_title">Cilji:</string>
+    <string name="goal_btn_set_title">nastavi cilj</string>
     <string name="goal_two_days">2 dni</string>
     <string name="goal_three_days">3 dni</string>
     <string name="goal_four_days">4 dni</string>
@@ -59,7 +61,7 @@
     <string name="health_descr_seven">Po 10 do 14 dneh: Krvni obtok v dlesni in zobeh se vrne v normalno stanje. Hrepenenje se pomakne na 2 na dan (povprečno).</string>
     <string name="health_descr_eight">Po 2 do 12 tednih: Izboljša se vam prekrvavitev in poveča delovanje pljuč.</string>
     <string name="health_descr_nine">Po 3 do 4 tednih: Jeza, tesnoba, nemir in depresija prenehajo.</string>
-    <string name="health_descr_ten">Po 2 mesecih: Odpornost na inzulin se je normalizirala kljub povprečnemu povečanju telesne mase 5,95 lb (2,7 kg)</string>
+    <string name="health_descr_ten">Po 2 mesecih: Odpornost na inzulin se je normalizirala kljub povprečnemu povečanju telesne mase 5,95 lb (2,7 kg).</string>
     <string name="health_descr_eleven">Po 1 do 9 mesecih: Kašelj in zasoplost se zmanjšata.</string>
     <string name="health_descr_twelve">Po 1 do 5 letih: Tveganje za smrt zaradi srčnega zastoja je približno polovica od tveganja za kadilca.</string>
     <string name="health_descr_thirteen">Po desetih letih: vaše tveganje za pljučnega raka pade na približno polovico od tveganja za kadilca.</string>

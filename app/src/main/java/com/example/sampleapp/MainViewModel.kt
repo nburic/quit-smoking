@@ -36,6 +36,10 @@ class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewM
         }
     }
 
+    fun getUser(): UserEntity? {
+        return user.value
+    }
+
     fun setGoal(position: Int) {
         viewModelScope.launch {
             val start = user.value?.start ?: return@launch

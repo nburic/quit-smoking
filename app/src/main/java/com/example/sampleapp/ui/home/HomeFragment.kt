@@ -25,21 +25,28 @@ import com.example.sampleapp.util.Epoch.calcPassedTime
 import com.example.sampleapp.util.Epoch.calcPercentage
 import com.example.sampleapp.util.Epoch.calcSmoked
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentHomeBinding
 
     private val viewModel by activityViewModels<MainViewModel>()
 
     private val adapterStats = AdapterCardStats()
     private val adapterHistory = AdapterCardHistory()
 
+    private var uiDisposable: Disposable? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         viewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
             when (user) {
@@ -50,7 +57,6 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,9 +76,30 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val user = viewModel.getUser() ?: return
+        onUserDataChanged(user)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        uiDisposable?.dispose()
+    }
+
     private fun onUserDataChanged(userEntity: UserEntity) {
+        uiDisposable = Observable.interval(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.newThread()) // poll data on a background thread
+                .observeOn(AndroidSchedulers.mainThread()) // populate UI on main thread
+                .subscribe({
+                    binding.progressCard.setProgressValue(calcPassedTime(userEntity.start))
+                }, {
+                    Timber.e(it)
+                }) // your UI code
+
         binding.progressCard.apply {
-            setProgressValue(calcPassedTime(userEntity.start))
             setGoalPercentage(calcPercentage(userEntity.start, userEntity.goal))
             setGoalValue(getGoalValue(requireContext(), userEntity.start, userEntity.goal))
         }
@@ -112,8 +139,9 @@ class HomeFragment : Fragment() {
         viewModel.setGoal(position)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onDestroy() {
+        super.onDestroy()
+
+        uiDisposable?.dispose()
     }
 }

@@ -158,7 +158,7 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        dialog.show(childFragmentManager, DatePickerFragment.TAG)
+        dialog.show(childFragmentManager, TimePickerFragment.TAG)
     }
 
     private fun onTimeSet(epoch: Long) {

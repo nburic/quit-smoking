@@ -79,6 +79,9 @@ dependencies {
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
 
+    implementation "io.reactivex.rxjava3:rxandroid:$rx_android_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rx_android_version"
+
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

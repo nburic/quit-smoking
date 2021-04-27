@@ -106,9 +106,9 @@ object Epoch {
         val mSeconds = c.get(Calendar.SECOND)
 
         return when {
-            mYear > 0 -> "${mYear}y ${mMonth}m ${mDay}d"
-            mMonth > 0 -> "${mMonth}m ${mDay}d ${mHours}h"
-            mDay > 0 -> "${mDay}d ${mHours}h ${mMinutes}min"
+            mYear > 0 -> "${mYear}y ${mMonth}m ${mDay}d ${mHours}h ${mMinutes}min ${mSeconds}s"
+            mMonth > 0 -> "${mMonth}m ${mDay}d ${mHours}h ${mMinutes}min ${mSeconds}s"
+            mDay > 0 -> "${mDay}d ${mHours}h ${mMinutes}min ${mSeconds}s"
             mHours > 0 -> "${mHours}h ${mMinutes}min ${mSeconds}s"
             mMinutes > 0 -> "${mMinutes}min ${mSeconds}s"
             else -> "${mSeconds}s"

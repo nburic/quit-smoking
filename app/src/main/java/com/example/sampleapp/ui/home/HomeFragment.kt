@@ -151,14 +151,18 @@ class HomeFragment : Fragment() {
 
         val epoch = getGoalTimestamp(position, viewModel.getStartEpoch())
 
-        Timber.d("registering alarm")
+        if (epoch > Epoch.now()) {
+            setGoalNotification(epoch)
+        }
+    }
 
+    private fun setGoalNotification(epoch: Long) {
         alarmMgr = context?.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, GoalBroadcastReceiver::class.java).let { intent ->
             PendingIntent.getBroadcast(context, 0, intent, 0)
         }
 
-        alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, Epoch.now() + 10 * 1000, alarmIntent)
+        alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, epoch, alarmIntent)
     }
 
     override fun onDestroy() {

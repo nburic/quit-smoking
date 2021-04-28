@@ -79,4 +79,6 @@
     <string name="store_dialog_item_price_hint">Price…</string>
     <string name="store_toast_item_bought">This is already yours.</string>
     <string name="store_toast_not_enough_money">Not enough money.</string>
+
+    <string name="notification_goal_title">You have reached your goal. Set another one!</string>
 </resources>

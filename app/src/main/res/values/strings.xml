@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">QuitSmoking</string>
+    <string name="channel_name" translatable="false">Goal</string>
+    <string name="channel_description" translatable="false">Notify when goal is done.</string>
 
     <string name="nav_progress_title">NAPREDEK</string>
     <string name="nav_trophies_title">ZNAČKE</string>
@@ -83,5 +85,5 @@
     <string name="store_toast_item_bought">To je že tvoje.</string>
     <string name="store_toast_not_enough_money">Premalo denarja.</string>
 
-
+    <string name="notification_goal_title">Cilj dosežen. Določi naslednjega!</string>
 </resources>

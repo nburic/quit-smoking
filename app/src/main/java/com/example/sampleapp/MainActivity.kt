@@ -13,11 +13,9 @@ import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.ActivityMainBinding
 import com.example.sampleapp.util.hide
 import com.example.sampleapp.util.show
-import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

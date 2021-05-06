@@ -31,7 +31,6 @@ import com.example.sampleapp.util.Epoch.calcNotSmoked
 import com.example.sampleapp.util.Epoch.calcPassedTime
 import com.example.sampleapp.util.Epoch.calcPercentage
 import com.example.sampleapp.util.Epoch.calcSmoked
-import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -41,7 +40,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
@@ -56,10 +55,8 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Groupie
     implementation "com.xwray:groupie:2.7.0"

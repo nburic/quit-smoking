@@ -1,10 +1,11 @@
 package com.example.sampleapp
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.example.sampleapp.di.AppModule
+import com.example.sampleapp.di.DaggerAppComponent
+import com.example.sampleapp.di.DependencyProvider
 import timber.log.Timber
 
-@HiltAndroidApp
 class MainApplication : Application() {
 
     companion object {
@@ -16,5 +17,11 @@ class MainApplication : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
+
+        val component = DaggerAppComponent.builder()
+            .appModule(AppModule(applicationContext))
+            .build()
+
+        DependencyProvider.init(component)
     }
 }

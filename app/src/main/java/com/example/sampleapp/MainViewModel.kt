@@ -7,20 +7,31 @@ import com.example.sampleapp.data.AppRepo
 import com.example.sampleapp.data.db.user.UserWithStoreItems
 import com.example.sampleapp.data.db.store.StoreItemEntity
 import com.example.sampleapp.data.db.user.UserEntity
+import com.example.sampleapp.di.DependencyProvider
 import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import com.example.sampleapp.util.Epoch.calcDifferenceToDays
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor(private val repository: AppRepo) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    val user: LiveData<UserEntity> = repository.observeUser()
-    val userWithStoreItems: LiveData<UserWithStoreItems> = repository.observeUserWithStoreItems()
-    val store: LiveData<List<StoreItemEntity>> = repository.observeStore()
+    @Inject
+    lateinit var repository: AppRepo
+
+    val user: LiveData<UserEntity>
+    val userWithStoreItems: LiveData<UserWithStoreItems>
+    val store: LiveData<List<StoreItemEntity>>
+
     private var startEpoch: Long? = null
+
+    init {
+        DependencyProvider.appComponent.inject(this)
+
+        user = repository.observeUser()
+        userWithStoreItems = repository.observeUserWithStoreItems()
+        store = repository.observeStore()
+    }
 
     fun setStartEpoch(epoch: Long?) {
         startEpoch = epoch

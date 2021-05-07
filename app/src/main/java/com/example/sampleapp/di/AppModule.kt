@@ -14,13 +14,7 @@ class AppModule(private val applicationContext: Context) {
 
     @Provides
     @Singleton
-    fun provideApplicationContext(): Context {
-        return applicationContext
-    }
-
-    @Provides
-    @Singleton
-    fun provideAppDatabase(applicationContext: Context): AppDatabase {
+    fun provideAppDatabase(): AppDatabase {
         return Room.databaseBuilder(applicationContext, AppDatabase::class.java, "app.db").build()
     }
 

@@ -41,6 +41,7 @@ class NavigationTest {
         activityScenario.close()
     }
 
+    // only if app has no user data (observing viewModel data)
     @Test
     fun testFirstRun() {
         val mockNavController = TestNavHostController(ApplicationProvider.getApplicationContext())
@@ -51,8 +52,8 @@ class NavigationTest {
 
         val scenario = launchFragmentInContainer {
             HomeFragment().also { fragment ->
-                fragment.viewLifecycleOwnerLiveData.observeForever{ viewLifecycleOwner ->
-                    if (viewLifecycleOwner != null){
+                fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
+                    if (viewLifecycleOwner != null) {
                         Navigation.setViewNavController(fragment.requireView(), mockNavController)
                     }
                 }

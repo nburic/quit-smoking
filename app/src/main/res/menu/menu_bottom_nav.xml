@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_stars_black_24dp"
         android:title="@string/nav_trophies_title" />
     <item
-        android:id="@+id/progressFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/nav_ic_progress"
         android:title="@string/nav_progress_title" />
     <item

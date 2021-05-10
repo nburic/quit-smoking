@@ -7,7 +7,7 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/nav_ic_progress"
-        android:title="@string/nav_progress_title" />
+        android:title="@string/nav_home_title" />
     <item
         android:id="@+id/healthFragment"
         android:icon="@drawable/ic_health_black_24dp"

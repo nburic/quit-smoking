@@ -18,6 +18,7 @@ import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
 import com.example.sampleapp.data.broadcasts.GoalBroadcastReceiver
+import com.example.sampleapp.ui.base.BaseFragment
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
@@ -40,9 +41,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class HomeFragment : Fragment() {
-
-    private lateinit var binding: FragmentHomeBinding
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
@@ -55,7 +54,7 @@ class HomeFragment : Fragment() {
     private var uiDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
 
         viewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
             when (user) {
@@ -64,7 +63,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        return binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

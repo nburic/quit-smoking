@@ -15,7 +15,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![App Screenshot 1][app-1]]
+[![App Screenshot 2][app-2]]
+[![App Screenshot 3][app-3]]
+[![App Screenshot 4][app-4]]
+[![App Screenshot 5][app-5]]
+[![App Screenshot 6][app-6]]
 
 QuitSmoking lets you track time without a cigarette. User can enter smoking details like number of cigarettes smoked in a day, price, number of cigarettes smoked in a day etc. 
 App calculates saved money and displays health benefits for certain smoke free time. It lets user to create goals and notifies when a certain goal is reached.
@@ -31,4 +36,9 @@ Latest Jetpack libraries used in the project:
 * Coroutines
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[product-screenshot]: images/screenshot.png
+[app-1]: images/app-1.png
+[app-2]: images/app-2.png
+[app-3]: images/app-3.png
+[app-4]: images/app-4.png
+[app-5]: images/app-5.png
+[app-6]: images/app-6.png

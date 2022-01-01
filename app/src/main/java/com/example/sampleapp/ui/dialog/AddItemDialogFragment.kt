@@ -7,6 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.sampleapp.R
 import com.example.sampleapp.databinding.FragmentDialogAddItemBinding
+import timber.log.Timber
+import java.lang.Exception
 
 class AddItemDialogFragment : DialogFragment() {
 
@@ -16,7 +18,7 @@ class AddItemDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentDialogAddItemBinding
 
-    var onSubmitClick: ((name: String, price: Int) -> Unit)? = null
+    var onSubmitClick: ((name: String, price: Float) -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -25,20 +27,24 @@ class AddItemDialogFragment : DialogFragment() {
             binding = FragmentDialogAddItemBinding.inflate(LayoutInflater.from(context))
 
             builder.setView(binding.root)
-                    .setTitle(R.string.store_dialog_title)
-                    .setMessage(R.string.store_dialog_message)
-                    .setPositiveButton(R.string.common_submit) { dialog, _ ->
-                        val name = binding.etItemTitle.text.toString()
-                        val price = binding.etItemPrice.text.toString().toIntOrNull()
+                .setTitle(R.string.store_dialog_title)
+                .setMessage(R.string.store_dialog_message)
+                .setPositiveButton(R.string.common_submit) { dialog, _ ->
+                    val title = binding.etItemTitle.text
+                    val price = binding.etItemPrice.text
+                    if (title.isNullOrEmpty() || price.isNullOrEmpty()) return@setPositiveButton
 
-                        if (name.isEmpty() || price == null) return@setPositiveButton
-
-                        onSubmitClick?.invoke(name, price)
+                    try {
+                        onSubmitClick?.invoke(title.toString(), price.toString().toFloat())
                         dialog.dismiss()
+                    } catch (ex: Exception) {
+                        Timber.e(ex)
+                        return@setPositiveButton
                     }
-                    .setNegativeButton(R.string.common_cancel) { dialog, _ ->
-                        dialog.cancel()
-                    }
+                }
+                .setNegativeButton(R.string.common_cancel) { dialog, _ ->
+                    dialog.cancel()
+                }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

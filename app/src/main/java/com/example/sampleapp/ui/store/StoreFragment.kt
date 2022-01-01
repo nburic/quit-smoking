@@ -32,7 +32,7 @@ class StoreFragment : Fragment() {
 
     private val adapter = AdapterStoreItems(this::onDeleteItem, this::onPurchaseItem)
 
-    private var currentMoney: Int = 0
+    private var currentMoney: Float = 0f
 
     private val userWithStoreItemsObserver = Observer { userWithStoreItems: UserWithStoreItems? ->
         userWithStoreItems ?: return@Observer
@@ -62,38 +62,49 @@ class StoreFragment : Fragment() {
         }
 
         binding.fabAddItem.setOnClickListener {
-            val dialog = AddItemDialogFragment()
-            dialog.onSubmitClick = this::addItem
+            val dialog = AddItemDialogFragment().also {
+                it.onSubmitClick = { title, price ->
+                    addItem(title, price)
+                }
+            }
 
             dialog.show(childFragmentManager, AddItemDialogFragment.TAG)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setCurrentMoney(money: Int) {
+    private fun setCurrentMoney(money: Float) {
         currentMoney = money
         binding.tvCurrentMoney.text = "$money ${SettingsFragment.CURRENCY}"
     }
 
-    private fun addItem(name: String, price: Int) {
-        viewModel.addStoreItem(StoreItemEntity(
+    private fun addItem(name: String, price: Float) {
+        viewModel.addStoreItem(
+            StoreItemEntity(
                 id = 0,
                 title = name,
                 price = price,
-                bought = false))
+                bought = false
+            )
+        )
     }
 
     @SuppressLint("SetTextI18n")
     private fun onUserDataChanged(userWithStoreItems: UserWithStoreItems) {
-        var moneySaved = Epoch.calcMoney(Epoch.calcDifferenceToDays(userWithStoreItems.user.start), userWithStoreItems.user.cigPerDay, userWithStoreItems.user.inPack, userWithStoreItems.user.price)
+        var moneySaved = Epoch.calcMoney(
+            Epoch.calcDifferenceToDays(userWithStoreItems.user.start),
+            userWithStoreItems.user.cigPerDay,
+            userWithStoreItems.user.inPack,
+            userWithStoreItems.user.price
+        ).toDouble()
 
         moneySaved -= userWithStoreItems.storeItems
-                .filter { it.bought }
-                .sumBy { it.price }
+            .filter { it.bought }
+            .sumOf { it.price.toDouble() }
 
-        setCurrentMoney(moneySaved)
+        setCurrentMoney(moneySaved.toFloat())
 
-        adapter.setMoney(moneySaved)
+        adapter.setMoney(moneySaved.toFloat())
         adapter.setItems(userWithStoreItems.storeItems.reversed())
     }
 

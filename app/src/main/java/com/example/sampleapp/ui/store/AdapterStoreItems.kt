@@ -3,6 +3,7 @@ package com.example.sampleapp.ui.store
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.R
 import com.example.sampleapp.data.db.store.StoreItemEntity
@@ -11,18 +12,22 @@ import com.example.sampleapp.ui.settings.SettingsFragment
 import com.example.sampleapp.util.hide
 import com.example.sampleapp.util.show
 
-class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Unit,
-                        private val onPurchaseClick: (item: StoreItemEntity) -> Unit) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
+class AdapterStoreItems(
+    private val onDeleteClick: (item: StoreItemEntity) -> Unit,
+    private val onPurchaseClick: (item: StoreItemEntity) -> Unit
+) : RecyclerView.Adapter<AdapterStoreItems.ViewHolder>() {
 
     private var items: List<StoreItemEntity> = emptyList()
-    private var money: Int = 0
+    private var money: Float = 0f
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<StoreItemEntity>) {
         this.items = items
         notifyDataSetChanged()
     }
 
-    fun setMoney(money: Int) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun setMoney(money: Float) {
         this.money = money
         notifyDataSetChanged()
     }
@@ -51,14 +56,14 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Un
     class ViewHolder(val binding: ItemStoreBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: StoreItemEntity, money: Int) {
+        fun bind(item: StoreItemEntity, money: Float) {
             val context = binding.root.context
             binding.tvTitle.text = item.title
             binding.tvPrice.text = item.price.toString() + SettingsFragment.CURRENCY
 
             when (item.bought) {
                 true -> {
-                    binding.wrapper.setBackgroundColor(context.getColor(R.color.lightGreen))
+                    binding.wrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.lightGreen))
                     binding.pbStatus.progress = 100
                     binding.tvPurchase.text = context.getString(R.string.store_bought)
                     binding.pbStatus.hide()
@@ -68,7 +73,7 @@ class AdapterStoreItems(private val onDeleteClick: (item: StoreItemEntity) -> Un
                     val percent = money * 100 / item.price
                     when {
                         percent >= 100 -> binding.pbStatus.progress = 100
-                        else -> binding.pbStatus.progress = percent
+                        else -> binding.pbStatus.progress = percent.toInt()
                     }
                     binding.tvPurchase.text = context.getString(R.string.store_purchase)
                     binding.pbStatus.show()

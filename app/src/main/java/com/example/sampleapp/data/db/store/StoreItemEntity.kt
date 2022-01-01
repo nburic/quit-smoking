@@ -6,11 +6,10 @@ import com.example.sampleapp.util.empty
 
 @Entity(tableName = "StoreItem")
 data class StoreItemEntity(
-        @PrimaryKey(autoGenerate = true)
-        var id: Int,
-        var title: String = String.empty,
-        //TODO set price to float
-        var price: Int = 0,
-        var bought: Boolean = false,
-        var userId: Int = 0
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
+    var title: String = String.empty,
+    var price: Float = 0f,
+    var bought: Boolean = false,
+    var userId: Int = 0
 )

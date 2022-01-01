@@ -4,20 +4,20 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.*
+import com.example.sampleapp.data.broadcasts.GoalBroadcastReceiver
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
-import com.example.sampleapp.data.broadcasts.GoalBroadcastReceiver
 import com.example.sampleapp.ui.base.BaseFragment
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
@@ -99,13 +99,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun onUserDataChanged(userEntity: UserEntity) {
         uiDisposable = Observable.interval(1000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread()) // poll data on a background thread
-                .observeOn(AndroidSchedulers.mainThread()) // populate UI on main thread
-                .subscribe({
-                    binding.progressCard.setProgressValue(calcPassedTime(userEntity.start))
-                }, {
-                    Timber.e(it)
-                }) // your UI code
+            .subscribeOn(Schedulers.newThread()) // poll data on a background thread
+            .observeOn(AndroidSchedulers.mainThread()) // populate UI on main thread
+            .subscribe({
+                binding.progressCard.setProgressValue(calcPassedTime(userEntity.start))
+            }, {
+                Timber.e(it)
+            }) // your UI code
 
         binding.progressCard.apply {
             setGoalPercentage(calcPercentage(userEntity.start, userEntity.goal))
@@ -120,15 +120,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val lifeLost = calcLifeLost(smoked.toInt())
 
         val stats = listOf(
-                ProgressStatsItem(resources.getString(R.string.mp_money_saved_label), moneySaved, R.drawable.mp_ic_money),
-                ProgressStatsItem(resources.getString(R.string.mp_life_regained_label), lifeRegained, R.drawable.mp_ic_sentiment_satisfied_black),
-                ProgressStatsItem(resources.getString(R.string.mp_cigs_not_smoked_label), notSmoked, R.drawable.mp_ic_smoke_free_black)
+            ProgressStatsItem(resources.getString(R.string.mp_money_saved_label), moneySaved, R.drawable.mp_ic_money),
+            ProgressStatsItem(resources.getString(R.string.mp_life_regained_label), lifeRegained, R.drawable.mp_ic_sentiment_satisfied_black),
+            ProgressStatsItem(resources.getString(R.string.mp_cigs_not_smoked_label), notSmoked, R.drawable.mp_ic_smoke_free_black)
         )
 
         val history = listOf(
-                ProgressHistoryItem(resources.getString(R.string.mp_cigs_smoked_label), smoked, R.drawable.mp_ic_cigarette),
-                ProgressHistoryItem(resources.getString(R.string.mp_money_spent_label), moneySpent, R.drawable.mp_ic_attach_money_black),
-                ProgressHistoryItem(resources.getString(R.string.mp_life_lost_label), lifeLost, R.drawable.mp_ic_sentiment_very_dissatisfied_black)
+            ProgressHistoryItem(resources.getString(R.string.mp_cigs_smoked_label), smoked, R.drawable.mp_ic_cigarette),
+            ProgressHistoryItem(resources.getString(R.string.mp_money_spent_label), moneySpent, R.drawable.mp_ic_attach_money_black),
+            ProgressHistoryItem(resources.getString(R.string.mp_life_lost_label), lifeLost, R.drawable.mp_ic_sentiment_very_dissatisfied_black)
         )
 
         adapterStats.setItems(stats)
@@ -156,10 +156,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun setGoalNotification(epoch: Long) {
         alarmMgr = context?.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, GoalBroadcastReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, 0)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            } else {
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
         }
 
-        alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, epoch, alarmIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, epoch, alarmIntent)
+        }
     }
 
     override fun onDestroy() {

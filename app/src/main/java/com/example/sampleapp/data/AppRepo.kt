@@ -11,8 +11,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class AppRepo @Inject constructor(private val userDao: UserDao,
-                                  private val storeItemDao: StoreItemDao) {
+class AppRepo @Inject constructor(
+    private val userDao: UserDao,
+    private val storeItemDao: StoreItemDao
+) {
 
     suspend fun setUser(userEntity: UserEntity) = withContext(Dispatchers.IO) {
         userDao.setUser(userEntity)

@@ -2,7 +2,7 @@ package com.example.sampleapp.util
 
 import android.content.Context
 import android.view.View
-import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 inline val String.Companion.empty: String
@@ -51,7 +51,7 @@ object Epoch {
     }
 
     fun calcNotSmoked(start: Long, perDay: Int): Int {
-        val days = calcDifferenceToDays(start)
+        val days = differenceBetweenTimestampsInDays(maxTime = now(), minTime = start)
         return days * perDay
     }
 
@@ -72,38 +72,35 @@ object Epoch {
 
     /**
      * Calculates difference from now to past date in days
+     * @param maxTime [Long]
+     * @param minTime [Long]
+     * @return days [Int]
      */
-    fun calcDifferenceToDays(start: Long): Int {
-        val diff = now() - start
-        val c = Calendar.getInstance()
-        c.timeInMillis = diff
+    fun differenceBetweenTimestampsInDays(maxTime: Long, minTime: Long): Int {
+        if (maxTime < minTime) throw IllegalArgumentException("timestamp needs to be less than current time.")
 
-        val mYear = c.get(Calendar.YEAR) - 1970
-        val mMonth = c.get(Calendar.MONTH)
-        val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
-
-        var days = 0
-
-        when {
-            mYear > 0 -> days += mYear * 365
-            mMonth > 0 -> days += mMonth * 30
-            mDay > 0 -> days += mDay
-        }
-
-        return days
+        return TimeUnit.SECONDS.toDays(maxTime - minTime).toInt()
     }
 
-    fun calcPassedTime(timestamp: Long): String {
-        val diff = now() - timestamp
-        val c = Calendar.getInstance()
-        c.timeInMillis = diff
+    fun calcPassedTime(minTime: Long, maxTime: Long = now()): String {
+        var diff = maxTime - minTime
 
-        val mYear = c.get(Calendar.YEAR) - 1970
-        val mMonth = c.get(Calendar.MONTH)
-        val mDay = c.get(Calendar.DAY_OF_MONTH) - 1
-        val mHours = c.get(Calendar.HOUR_OF_DAY)
-        val mMinutes = c.get(Calendar.MINUTE)
-        val mSeconds = c.get(Calendar.SECOND)
+        val mYear = diff / 31556926000 // year in milliseconds
+        if (mYear > 0) diff -= mYear * 31556926000
+
+        val mMonth = diff / 2629743000  // month in milliseconds
+        if (mMonth > 0) diff -= mMonth * 2629743000
+
+        val mDay = diff / 86400000 // day in milliseconds
+        if (mDay > 0) diff -= mDay * 86400000
+
+        val mHours = diff / 3600000 // hour in milliseconds
+        if (mHours > 0) diff -= mHours * 3600000
+
+        val mMinutes = diff / 60000 // minute in milliseconds
+        if (mMinutes > 0) diff -= mMinutes * 60000
+
+        val mSeconds = diff / 1000 // second in milliseconds
 
         return when {
             mYear > 0 -> "${mYear}y ${mMonth}m ${mDay}d ${mHours}h ${mMinutes}min ${mSeconds}s"

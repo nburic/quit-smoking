@@ -10,7 +10,7 @@ import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.di.DependencyProvider
 import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
-import com.example.sampleapp.util.Epoch.calcDifferenceToDays
+import com.example.sampleapp.util.Epoch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,7 +68,7 @@ class MainViewModel : ViewModel() {
 
     fun calculateNotSmoked(): Int {
         return user.value?.let {
-            val days = calcDifferenceToDays(it.start)
+            val days = Epoch.differenceBetweenTimestampsInDays(Epoch.now(), it.start)
 
             (days.toFloat() * it.cigPerDay.toFloat()).toInt()
         } ?: 0
@@ -76,7 +76,7 @@ class MainViewModel : ViewModel() {
 
     fun getSmokeFreeDays(): Int {
         return user.value?.let {
-            calcDifferenceToDays(it.start)
+            Epoch.differenceBetweenTimestampsInDays(Epoch.now(), it.start)
         } ?: 0
     }
 

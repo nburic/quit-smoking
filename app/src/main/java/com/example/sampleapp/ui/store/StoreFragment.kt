@@ -92,7 +92,7 @@ class StoreFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun onUserDataChanged(userWithStoreItems: UserWithStoreItems) {
         var moneySaved = Epoch.calcMoney(
-            Epoch.calcDifferenceToDays(userWithStoreItems.user.start),
+            Epoch.differenceBetweenTimestampsInDays(Epoch.now(), userWithStoreItems.user.start),
             userWithStoreItems.user.cigPerDay,
             userWithStoreItems.user.inPack,
             userWithStoreItems.user.price

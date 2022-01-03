@@ -24,7 +24,6 @@ import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import com.example.sampleapp.util.DateConverters.getGoalValue
 import com.example.sampleapp.util.Epoch
-import com.example.sampleapp.util.Epoch.calcDifferenceToDays
 import com.example.sampleapp.util.Epoch.calcLifeLost
 import com.example.sampleapp.util.Epoch.calcLifeRegained
 import com.example.sampleapp.util.Epoch.calcMoney
@@ -114,8 +113,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         val smoked = calcSmoked(userEntity.years, userEntity.cigPerDay).toString()
         val notSmoked = calcNotSmoked(userEntity.start, userEntity.cigPerDay).toString()
-        val moneySpent = "${calcMoney(userEntity.years * 365, userEntity.cigPerDay, userEntity.inPack, userEntity.price)} $CURRENCY"
-        val moneySaved = "${calcMoney(calcDifferenceToDays(userEntity.start), userEntity.cigPerDay, userEntity.inPack, userEntity.price)} $CURRENCY"
+        val moneySpent = "${
+            calcMoney(
+                days = userEntity.years * 365,
+                perDay = userEntity.cigPerDay,
+                inPack = userEntity.inPack,
+                price = userEntity.price
+            )
+        } $CURRENCY"
+        val moneySaved = "${
+            calcMoney(
+                days = Epoch.differenceBetweenTimestampsInDays(Epoch.now(), userEntity.start),
+                perDay = userEntity.cigPerDay,
+                inPack = userEntity.inPack,
+                price = userEntity.price
+            )
+        } $CURRENCY"
         val lifeRegained = calcLifeRegained(notSmoked.toInt())
         val lifeLost = calcLifeLost(smoked.toInt())
 

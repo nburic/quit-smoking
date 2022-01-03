@@ -84,10 +84,10 @@ class SettingsFragment : Fragment() {
         binding.btnSubmit.setOnClickListener {
             val user = createUser() ?: return@setOnClickListener
 
-            if (user.goal == 0L) {
+//            if (user.goal == 0L) {
                 user.goal = user.start + DEFAULT_GOAL
-            }
-            viewModel.setUserData(user)
+//            }
+            viewModel.setUserData(user, requireContext())
         }
 
         setSeekBars()

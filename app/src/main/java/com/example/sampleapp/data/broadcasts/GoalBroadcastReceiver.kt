@@ -2,11 +2,13 @@ package com.example.sampleapp.data.broadcasts
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.sampleapp.MainActivity
 import com.example.sampleapp.MainApplication.Companion.GOAL_CHANNEL_ID
 import com.example.sampleapp.MainApplication.Companion.GOAL_NOTIFICATION_ID
 import com.example.sampleapp.R
@@ -20,12 +22,29 @@ class GoalBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun createNotification(context: Context) {
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(
+                context,
+                0,
+                Intent(context, MainActivity::class.java),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                context,
+                0,
+                Intent(context, MainActivity::class.java),
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
+
         val notification = NotificationCompat.Builder(context, GOAL_CHANNEL_ID)
-                .setSmallIcon(R.drawable.mp_ic_smoke_free_black)
-                .setContentTitle(context.getString(R.string.notification_goal_title))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .build()
+            .setSmallIcon(R.drawable.mp_ic_smoke_free_black)
+            .setContentText(context.getString(R.string.notification_goal_title))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
 
         // Issue the notification.
         val notificationManager = createNotificationChannel(context)

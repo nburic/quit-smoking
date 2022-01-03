@@ -1,10 +1,5 @@
 package com.example.sampleapp.ui.home
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +8,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.*
-import com.example.sampleapp.data.broadcasts.GoalBroadcastReceiver
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
@@ -46,9 +40,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val adapterStats = AdapterCardStats()
     private val adapterHistory = AdapterCardHistory()
-
-    private var alarmMgr: AlarmManager? = null
-    private lateinit var alarmIntent: PendingIntent
 
     private var uiDisposable: Disposable? = null
 
@@ -162,22 +153,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val epoch = getGoalTimestamp(position, viewModel.getStartEpoch())
 
         if (epoch > Epoch.now()) {
-            setGoalNotification(epoch)
-        }
-    }
-
-    private fun setGoalNotification(epoch: Long) {
-        alarmMgr = context?.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmIntent = Intent(context, GoalBroadcastReceiver::class.java).let { intent ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            } else {
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmMgr?.setExactAndAllowWhileIdle(AlarmManager.RTC, epoch, alarmIntent)
+            viewModel.setGoalNotification(epoch, requireContext())
         }
     }
 

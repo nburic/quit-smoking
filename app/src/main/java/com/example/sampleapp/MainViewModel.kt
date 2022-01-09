@@ -16,8 +16,10 @@ import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.di.DependencyProvider
 import com.example.sampleapp.util.DateConverters.getGoalIndex
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
+import com.example.sampleapp.util.DateConverters.toDateTime
 import com.example.sampleapp.util.Epoch
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel : ViewModel() {
@@ -51,10 +53,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             repository.setUser(user)
             setGoal(0)
-
-            if (user.goal < Epoch.now()) {
-                setGoalNotification(user.goal, context)
-            }
+            setGoalNotification(user.goal, context)
         }
     }
 
@@ -119,6 +118,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun setGoalNotification(epoch: Long, context: Context) {
+        if (epoch <= Epoch.now()) return
+
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -137,12 +138,7 @@ class MainViewModel : ViewModel() {
                 )
             }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmMgr.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                epoch,
-                alarmIntent
-            )
-        }
+        Timber.i("Trigger notification at ${toDateTime(context, epoch)}")
+        alarmMgr.setExact(AlarmManager.RTC, epoch, alarmIntent)
     }
 }

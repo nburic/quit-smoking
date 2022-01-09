@@ -152,9 +152,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         val epoch = getGoalTimestamp(position, viewModel.getStartEpoch())
 
-        if (epoch > Epoch.now()) {
-            viewModel.setGoalNotification(epoch, requireContext())
-        }
+        viewModel.setGoalNotification(epoch, requireContext())
     }
 
     override fun onDestroy() {

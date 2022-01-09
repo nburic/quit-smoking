@@ -7,7 +7,7 @@ import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
-
+//TODO get date from date picker and check if time is in future. Error happens when user selects current day and future time. Fix this!
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     companion object {

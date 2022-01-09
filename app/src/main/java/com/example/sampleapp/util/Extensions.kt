@@ -2,6 +2,7 @@ package com.example.sampleapp.util
 
 import android.content.Context
 import android.view.View
+import java.math.RoundingMode
 import java.util.concurrent.TimeUnit
 
 
@@ -57,7 +58,8 @@ object Epoch {
 
     fun calcMoney(days: Int, perDay: Int, inPack: Int, price: Float): Float {
         val moneyPerDay = (perDay.toFloat() / inPack.toFloat()) * price
-        return days * moneyPerDay
+
+        return (days * moneyPerDay).toBigDecimal().setScale(2, RoundingMode.HALF_UP).toFloat()
     }
 
     fun calcLifeLost(smoked: Int): String {

@@ -91,16 +91,17 @@ class StoreFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun onUserDataChanged(userWithStoreItems: UserWithStoreItems) {
-        var moneySaved = Epoch.calcMoney(
+        var moneySaved: Float = Epoch.calcMoney(
             Epoch.differenceBetweenTimestampsInDays(Epoch.now(), userWithStoreItems.user.start),
             userWithStoreItems.user.cigPerDay,
             userWithStoreItems.user.inPack,
             userWithStoreItems.user.price
-        ).toDouble()
+        )
 
         moneySaved -= userWithStoreItems.storeItems
             .filter { it.bought }
             .sumOf { it.price.toDouble() }
+            .toFloat()
 
         setCurrentMoney(moneySaved.toFloat())
 

@@ -55,9 +55,9 @@ object Epoch {
         return days * perDay
     }
 
-    fun calcMoney(days: Int, perDay: Int, inPack: Int, price: Float): Int {
+    fun calcMoney(days: Int, perDay: Int, inPack: Int, price: Float): Float {
         val moneyPerDay = (perDay.toFloat() / inPack.toFloat()) * price
-        return (days * moneyPerDay).toInt()
+        return days * moneyPerDay
     }
 
     fun calcLifeLost(smoked: Int): String {
@@ -79,7 +79,7 @@ object Epoch {
     fun differenceBetweenTimestampsInDays(maxTime: Long, minTime: Long): Int {
         if (maxTime < minTime) throw IllegalArgumentException("timestamp needs to be less than current time.")
 
-        return TimeUnit.SECONDS.toDays(maxTime - minTime).toInt()
+        return TimeUnit.MILLISECONDS.toDays(maxTime - minTime).toInt()
     }
 
     fun calcPassedTime(minTime: Long, maxTime: Long = now()): String {

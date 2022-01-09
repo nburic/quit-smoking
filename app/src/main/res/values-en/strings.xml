@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nav_home_title">PROGRESS</string>
-    <string name="nav_trophies_title">BADGES</string>
-    <string name="nav_health_title">HEALTH</string>
-    <string name="nav_store_title">STORE</string>
+    <string name="nav_home_title">Progress</string>
+    <string name="nav_trophies_title">Badges</string>
+    <string name="nav_health_title">Health</string>
+    <string name="nav_store_title">Store</string>
+    <string name="nav_settings_title">Settings</string>
 
     <string name="menu_settings_title">Settings</string>
 

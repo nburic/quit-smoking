@@ -5,9 +5,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.ActivityMainBinding
@@ -32,23 +32,25 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment)
 
-        setSupportActionBar(binding.toolbar)
         setupBottomNavMenu(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.d("Current destination ${destination.label}")
 
-            val menu = binding.toolbar.menu
+            val menuItem: MenuItem = binding.toolbar.menu.findItem(R.id.menu_item_settings)
+            binding.toolbar.title = destination.label.toString()
 
             when (destination.id) {
                 R.id.settingsFragment -> {
-                    menu.clear()
+                    menuItem.isVisible = false
                     binding.bottomNav.hide()
                 }
                 else -> {
-                    if (menu.children.count() == 0) {
-                        menuInflater.inflate(R.menu.menu_toolbar_actions_main, menu)
+                    menuItem.setOnMenuItemClickListener {
+                        navController.navigate(NavGraphDirections.actionGlobalSettingsFragment())
+                        true
                     }
+                    menuItem.isVisible = true
                     binding.bottomNav.show()
                 }
             }
@@ -79,17 +81,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
 
-        return when (item.itemId) {
-            R.id.menu_item_settings -> {
-                navController.navigate(NavGraphDirections.actionGlobalSettingsFragment())
-                true
-            }
-            R.id.menu_item_inclusive -> {
-                navController.navigate(NavGraphDirections.actionGlobalInclusiveSettingsFragment())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

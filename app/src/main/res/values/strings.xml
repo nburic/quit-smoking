@@ -3,10 +3,11 @@
     <string name="channel_name" translatable="false">Goal</string>
     <string name="channel_description" translatable="false">Notify when goal is done.</string>
 
-    <string name="nav_home_title">NAPREDEK</string>
-    <string name="nav_trophies_title">ZNAČKE</string>
-    <string name="nav_health_title">ZDRAVJE</string>
-    <string name="nav_store_title">TRGOVINA</string>
+    <string name="nav_home_title">Napredek</string>
+    <string name="nav_trophies_title">Značke</string>
+    <string name="nav_health_title">Zdravje</string>
+    <string name="nav_store_title">Trgovina</string>
+    <string name="nav_settings_title">Nastavitve</string>
 
     <string name="menu_settings_title">Nastavitve</string>
 

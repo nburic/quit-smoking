@@ -9,12 +9,13 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ActionBarThemeOverlay"
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_toolbar_actions_main"
+        app:title="@string/app_name"
         app:titleTextColor="@color/white" />
 
     <fragment

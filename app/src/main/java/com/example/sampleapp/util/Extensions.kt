@@ -1,7 +1,11 @@
 package com.example.sampleapp.util
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.FragmentActivity
 import java.math.RoundingMode
 import java.util.concurrent.TimeUnit
 
@@ -114,4 +118,26 @@ object Epoch {
         }
     }
 
+}
+
+//TODO add lifecycle component to add listener onResume and remove it onPause
+inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            if (measuredWidth > 0 && measuredHeight > 0) {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                f()
+            }
+        }
+    })
+}
+
+fun hideKeyboard(context: Context, view: View) {
+    val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun showKeyboard(context: Context, view: View) {
+    val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(view, 0)
 }

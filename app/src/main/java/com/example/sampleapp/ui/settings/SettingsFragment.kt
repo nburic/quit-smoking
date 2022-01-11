@@ -1,37 +1,26 @@
 package com.example.sampleapp.ui.settings
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
+import android.view.ViewTreeObserver
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.sampleapp.MainViewModel
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.databinding.FragmentSettingsBinding
 import com.example.sampleapp.util.DateConverters.toDateTime
+import com.example.sampleapp.util.empty
+import com.example.sampleapp.util.hideKeyboard
+import timber.log.Timber
+
 
 class SettingsFragment : Fragment() {
 
     companion object {
-        private const val CIG_PER_DAY_MAX = 60
-        private const val CIG_PER_DAY_MIN = 0
-        private const val CIG_PER_DAY_STEP = 1
-
-        private const val CIG_IN_PACK_MAX = 200
-        private const val CIG_IN_PACK_MIN = 0
-        private const val CIG_IN_PACK_STEP = 1
-
-        private const val YEARS_MAX = 50
-        private const val YEARS_MIN = 0
-        private const val YEARS_STEP = 1
-
-        private const val PRICE_MAX = 100 // 100 / 0,2 = 20
-        private const val PRICE_MIN = 0.0f
-        private const val PRICE_STEP = 0.2f
-
         private const val DEFAULT_GOAL = 172800000L // 2 days, default goal
 
         const val CURRENCY = "€"
@@ -42,25 +31,41 @@ class SettingsFragment : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
-    @SuppressLint("SetTextI18n")
+    private val listener = ViewTreeObserver.OnGlobalLayoutListener {
+        view?.let {
+            val r = Rect()
+            it.getWindowVisibleDisplayFrame(r)
+
+            val heightDiff = it.rootView.height - (r.bottom - r.top)
+            if (heightDiff > 500) {
+                Timber.d("Layout observer parent keyboard opened")
+                if (binding.etYears.hasFocus() || binding.etPrice.hasFocus()) {
+                    binding.scroller.scrollTo(0, binding.viewBorder.bottom)
+                }
+            } else {
+                Timber.d("Layout observer parent keyboard closed")
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         viewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
             when (user) {
                 null -> {
-                    binding.tvDateValue.text = toDateTime(requireContext(), 0)
-                    binding.tvCigPerDayValue.text = CIG_PER_DAY_MIN.toString()
-                    binding.tvCigInPackValue.text = CIG_IN_PACK_MIN.toString()
-                    binding.tvYearsValue.text = YEARS_MIN.toString()
-                    binding.tvPriceValue.text = "${String.format("%.2f", PRICE_MIN)} $CURRENCY"
+                    binding.etDate.setText(String.empty)
+                    binding.etCigPerDay.setText(String.empty)
+                    binding.etCigInPack.setText(String.empty)
+                    binding.etYears.setText(String.empty)
+                    binding.etPrice.setText(String.empty)
                 }
                 else -> {
-                    binding.tvDateValue.text = toDateTime(requireContext(), user.start)
-                    binding.tvCigPerDayValue.text = user.cigPerDay.toString()
-                    binding.tvCigInPackValue.text = user.inPack.toString()
-                    binding.tvYearsValue.text = user.years.toString()
-                    binding.tvPriceValue.text = "${String.format("%.2f", user.price)} $CURRENCY"
+                    binding.etDate.setText(toDateTime(requireContext(), user.start))
+                    binding.etCigPerDay.setText(user.cigPerDay.toString())
+                    binding.etCigInPack.setText(user.inPack.toString())
+                    binding.etYears.setText(user.years.toString())
+                    binding.etPrice.setText(String.format("%.2f", user.price).replace(",", "."))
                 }
             }
         })
@@ -68,84 +73,40 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    private fun showDateDialog() {
+        val dialog = DatePickerFragment.newInstance()
+
+        dialog.apply {
+            onDateSet = this@SettingsFragment::onDateSet
+        }
+
+        dialog.show(childFragmentManager, DatePickerFragment.TAG)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view?.viewTreeObserver?.addOnGlobalLayoutListener(listener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        view?.viewTreeObserver?.removeOnGlobalLayoutListener(listener)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnDate.setOnClickListener {
-            val dialog = DatePickerFragment.newInstance()
-
-            dialog.apply {
-                onDateSet = this@SettingsFragment::onDateSet
-            }
-
-            dialog.show(childFragmentManager, DatePickerFragment.TAG)
+        binding.etDate.showSoftInputOnFocus = false
+        binding.etDate.setOnClickListener {
+            hideKeyboard(requireContext(), it)
+            showDateDialog()
         }
 
         binding.btnSubmit.setOnClickListener {
             val user = createUser() ?: return@setOnClickListener
 
-//            if (user.goal == 0L) {
-                user.goal = user.start + DEFAULT_GOAL
-//            }
+            user.goal = user.start + DEFAULT_GOAL
             viewModel.setUserData(user, requireContext())
-        }
-
-        setSeekBars()
-    }
-
-    private fun setSeekBars() {
-        binding.sbCigPerDay.apply {
-            max = CIG_PER_DAY_MAX
-            progress = viewModel.user.value?.cigPerDay ?: 0
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    binding.tvCigPerDayValue.text = progress.toString()
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
-        }
-
-        binding.sbCigInPack.apply {
-            max = CIG_IN_PACK_MAX
-            progress = viewModel.user.value?.inPack ?: 0
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    binding.tvCigInPackValue.text = progress.toString()
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
-        }
-
-        binding.sbYears.apply {
-            max = YEARS_MAX
-            progress = viewModel.user.value?.years ?: 0
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    binding.tvYearsValue.text = progress.toString()
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
-        }
-
-        binding.sbPrice.apply {
-            max = PRICE_MAX
-            progress = (viewModel.user.value?.price?.div(PRICE_STEP))?.toInt() ?: 0
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                @SuppressLint("SetTextI18n")
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val customProgress = progress * PRICE_STEP
-                    binding.tvPriceValue.text = "${String.format("%.2f", customProgress)} $CURRENCY"
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-            })
         }
     }
 
@@ -163,24 +124,29 @@ class SettingsFragment : Fragment() {
 
     private fun onTimeSet(epoch: Long) {
         viewModel.setStartEpoch(epoch)
-        binding.tvDateValue.text = toDateTime(requireContext(), epoch)
+        binding.etDate.setText(toDateTime(requireContext(), epoch))
     }
 
     private fun createUser(): UserEntity? {
         val epoch = viewModel.getStartEpoch()
         if (epoch == 0L) return null
 
-        val perDay = binding.sbCigPerDay.progress * CIG_PER_DAY_STEP
-        val inPack = binding.sbCigInPack.progress * CIG_IN_PACK_STEP
-        val years = binding.sbYears.progress * YEARS_STEP
-        val price = binding.sbPrice.progress * PRICE_STEP
+        val perDay = binding.etCigPerDay.text.toString().toInt()
+        val inPack = binding.etCigInPack.text.toString().toInt()
+        val years = binding.etYears.text.toString().toInt()
+        val price = binding.etPrice.text.toString().run {
+            if (!matches(Regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+                return null
+            }
+            toFloat()
+        }
 
         return UserEntity(
-                start = epoch,
-                cigPerDay = perDay,
-                inPack = inPack,
-                years = years,
-                price = price
+            start = epoch,
+            cigPerDay = perDay,
+            inPack = inPack,
+            years = years,
+            price = price
         )
     }
 

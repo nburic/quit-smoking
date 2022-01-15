@@ -9,27 +9,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.example.sampleapp.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.sampleapp.MainViewModel
+import com.example.sampleapp.R
 import com.example.sampleapp.data.models.health.HealthAchievementItem
 import com.example.sampleapp.ui.theme.Accent
 import com.example.sampleapp.ui.theme.AppTheme
+import timber.log.Timber
 
 class HealthFragment : Fragment() {
 
@@ -39,9 +36,9 @@ class HealthFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppTheme {
-                    val mItems = createItems(requireContext(), viewModel.getStartEpoch())
+                    Surface {
+                        val mItems = createItems(requireContext(), viewModel.getStartEpoch())
 
-                    Column {
                         LazyColumn(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
@@ -55,6 +52,7 @@ class HealthFragment : Fragment() {
                             }
                         }
                     }
+
                 }
             }
         }
@@ -75,6 +73,7 @@ private fun createItems(context: Context, startDate: Long): List<HealthAchieveme
     return healthItems.toList()
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
 fun CardItem(
@@ -84,9 +83,10 @@ fun CardItem(
     finishDate: String = ""
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
         elevation = 2.dp,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        modifier = modifier.fillMaxWidth(),
+        onClick = { Timber.d("Card clicked!") }
     ) {
         Column(
             modifier = Modifier
@@ -95,13 +95,15 @@ fun CardItem(
         ) {
             Text(
                 text = title,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Justify
             )
             Text(
                 text = "${progress.toInt()}%",
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(top = 8.dp)
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                textAlign = TextAlign.Center
             )
             LinearProgressIndicator(
                 backgroundColor = Color(0xFFEEEEEE),
@@ -116,8 +118,9 @@ fun CardItem(
             Text(
                 text = if (progress == 100f) stringResource(R.string.health_status_done) else finishDate,
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(top = 8.dp)
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                textAlign = TextAlign.Center
             )
         }
     }

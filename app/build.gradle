@@ -29,7 +29,12 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
         viewBinding true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.5'
     }
 }
 
@@ -41,6 +46,21 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    // Integration with activities
+    implementation "androidx.activity:activity-compose:$activity_version"
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.0.5'
+    // Animations
+    implementation 'androidx.compose.animation:animation:1.0.5'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.0.5'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
+    implementation 'com.google.accompanist:accompanist-appcompat-theme:0.22.0-rc'
 
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"

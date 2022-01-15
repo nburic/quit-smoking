@@ -1,6 +1,5 @@
 package com.example.sampleapp.ui.settings
 
-import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater

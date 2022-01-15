@@ -14,8 +14,7 @@
     <fragment
         android:id="@+id/healthFragment"
         android:name="com.example.sampleapp.ui.health.HealthFragment"
-        android:label="@string/nav_health_title"
-        tools:layout="@layout/fragment_health" />
+        android:label="@string/nav_health_title" />
 
     <fragment
         android:id="@+id/trophiesFragment"

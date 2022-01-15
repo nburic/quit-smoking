@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.*
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.*
+import com.example.sampleapp.R
 import com.example.sampleapp.data.db.user.UserEntity
 import com.example.sampleapp.data.models.home.ProgressHistoryItem
 import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
-import com.example.sampleapp.ui.base.BaseFragment
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
@@ -34,7 +36,10 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by activityViewModels<MainViewModel>()
 
@@ -44,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var uiDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = super.onCreateView(inflater, container, savedInstanceState)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         viewModel.user.observe(viewLifecycleOwner, { user: UserEntity? ->
             when (user) {
@@ -53,7 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         })
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,6 +90,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onPause()
 
         uiDisposable?.dispose()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun onUserDataChanged(userEntity: UserEntity) {

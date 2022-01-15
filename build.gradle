@@ -2,12 +2,11 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 
     ext.versions = [
-            kotlin    : '1.6.10',
+            kotlin    : '1.5.31',
             navigation: '2.3.5'
     ]
 
@@ -21,7 +20,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 }
@@ -36,4 +34,5 @@ ext {
     fragment_version = '1.4.0'
     rx_android_version = '3.0.0'
     dagger_version = '2.40.5'
+    activity_version = '1.4.0'
 }

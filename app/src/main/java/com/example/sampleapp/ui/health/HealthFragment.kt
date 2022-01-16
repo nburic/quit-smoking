@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -84,7 +83,7 @@ fun CardItem(
 ) {
     Card(
         elevation = 2.dp,
-        shape = RoundedCornerShape(8.dp),
+        shape = MaterialTheme.shapes.medium,
         modifier = modifier.fillMaxWidth(),
         onClick = { Timber.d("Card clicked!") }
     ) {
@@ -113,7 +112,7 @@ fun CardItem(
                     .fillMaxWidth()
                     .height(20.dp)
                     .padding(top = 8.dp)
-                    .clip(shape = RoundedCornerShape(5.dp))
+                    .clip(shape = MaterialTheme.shapes.small)
             )
             Text(
                 text = if (progress == 100f) stringResource(R.string.health_status_done) else finishDate,

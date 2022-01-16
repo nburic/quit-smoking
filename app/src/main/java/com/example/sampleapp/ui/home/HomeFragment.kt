@@ -4,19 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.*
 import com.example.sampleapp.R
 import com.example.sampleapp.data.db.user.UserEntity
-import com.example.sampleapp.data.models.home.ProgressHistoryItem
-import com.example.sampleapp.data.models.home.ProgressStatsItem
 import com.example.sampleapp.databinding.FragmentHomeBinding
 import com.example.sampleapp.ui.home.goal.GoalDialogFragment
 import com.example.sampleapp.ui.settings.SettingsFragment.Companion.CURRENCY
+import com.example.sampleapp.ui.theme.AppTheme
+import com.example.sampleapp.ui.theme.SecondaryTextColor
 import com.example.sampleapp.util.DateConverters.getGoalTimestamp
 import com.example.sampleapp.util.DateConverters.getGoalValue
 import com.example.sampleapp.util.Epoch
@@ -43,9 +56,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel by activityViewModels<MainViewModel>()
 
-    private val adapterStats = AdapterCardStats()
-    private val adapterHistory = AdapterCardHistory()
-
     private var uiDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -63,16 +73,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.rvStats.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = adapterStats
-        }
-
-        binding.rvHistory.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = adapterHistory
-        }
 
         binding.progressCard.apply {
             onSelectGoalClick = this@HomeFragment::openDialogSheet
@@ -133,20 +133,37 @@ class HomeFragment : Fragment() {
         val lifeRegained = calcLifeRegained(notSmoked.toInt())
         val lifeLost = calcLifeLost(smoked.toInt())
 
-        val stats = listOf(
-            ProgressStatsItem(resources.getString(R.string.mp_money_saved_label), moneySaved, R.drawable.mp_ic_money),
-            ProgressStatsItem(resources.getString(R.string.mp_life_regained_label), lifeRegained, R.drawable.mp_ic_sentiment_satisfied_black),
-            ProgressStatsItem(resources.getString(R.string.mp_cigs_not_smoked_label), notSmoked, R.drawable.mp_ic_smoke_free_black)
-        )
+        binding.composeViewStats.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppTheme {
+                    CardStats(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        savedMoney = moneySaved,
+                        regainedLife = lifeRegained,
+                        notSmoked = notSmoked
+                    )
+                }
+            }
+        }
 
-        val history = listOf(
-            ProgressHistoryItem(resources.getString(R.string.mp_cigs_smoked_label), smoked, R.drawable.mp_ic_cigarette),
-            ProgressHistoryItem(resources.getString(R.string.mp_money_spent_label), moneySpent, R.drawable.mp_ic_attach_money_black),
-            ProgressHistoryItem(resources.getString(R.string.mp_life_lost_label), lifeLost, R.drawable.mp_ic_sentiment_very_dissatisfied_black)
-        )
-
-        adapterStats.setItems(stats)
-        adapterHistory.setItems(history)
+        binding.composeViewHistory.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppTheme {
+                    CardHistory(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        smokedCigarettes = smoked,
+                        moneySpent = moneySpent,
+                        lostLife = lifeLost
+                    )
+                }
+            }
+        }
     }
 
     private fun openDialogSheet() {
@@ -171,3 +188,114 @@ class HomeFragment : Fragment() {
         uiDisposable?.dispose()
     }
 }
+
+@Composable
+fun RowStat(
+    image: Int,
+    title: String,
+    value: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    )
+    {
+        Image(painter = painterResource(id = image), contentDescription = null)
+        Text(
+            text = title,
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .weight(1f),
+            color = SecondaryTextColor,
+            fontSize = 14.sp
+        )
+        Text(
+            text = value,
+            color = SecondaryTextColor,
+            fontSize = 14.sp
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview(showBackground = true)
+@Composable
+fun CardStats(
+    modifier: Modifier = Modifier,
+    savedMoney: String,
+    regainedLife: String,
+    notSmoked: String
+) {
+    Card(
+        elevation = 2.dp,
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier,
+        onClick = { Timber.d("Card clicked!") })
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Text(text = stringResource(id = R.string.mp_stats_card_title), modifier = Modifier.fillMaxWidth())
+            RowStat(
+                image = R.drawable.mp_ic_money,
+                title = stringResource(id = R.string.mp_money_saved_label),
+                value = savedMoney
+            )
+            RowStat(
+                image = R.drawable.mp_ic_sentiment_satisfied_black,
+                title = stringResource(id = R.string.mp_life_regained_label),
+                value = regainedLife
+            )
+            RowStat(
+                image = R.drawable.mp_ic_smoke_free_black,
+                title = stringResource(id = R.string.mp_cigs_not_smoked_label),
+                value = notSmoked
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview(showBackground = true)
+@Composable
+fun CardHistory(
+    modifier: Modifier = Modifier,
+    smokedCigarettes: String,
+    moneySpent: String,
+    lostLife: String
+) {
+    Card(
+        elevation = 2.dp,
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier,
+        onClick = { Timber.d("Card clicked!") })
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Text(text = stringResource(id = R.string.mp_history_card_title), modifier = Modifier.fillMaxWidth())
+            RowStat(
+                image = R.drawable.mp_ic_cigarette,
+                title = stringResource(id = R.string.mp_cigs_smoked_label),
+                value = smokedCigarettes
+            )
+            RowStat(
+                image = R.drawable.mp_ic_attach_money_black,
+                title = stringResource(id = R.string.mp_money_spent_label),
+                value = moneySpent
+            )
+            RowStat(
+                image = R.drawable.mp_ic_sentiment_very_dissatisfied_black,
+                title = stringResource(id = R.string.mp_life_lost_label),
+                value = lostLife
+            )
+        }
+    }
+}
+

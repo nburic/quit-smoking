@@ -40,6 +40,7 @@ Latest Jetpack libraries used in the project:
 * Dagger 2
 * RxJava 3
 * Coroutines
+* Jetpack Compose
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [app-1]: images/app-1.png 
